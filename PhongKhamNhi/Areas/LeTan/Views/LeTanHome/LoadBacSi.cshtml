@@ -1,0 +1,6 @@
+﻿@model ICollection<PhongKhamNhi.Models.Entities.BacSi>
+
+@foreach (var item in Model)
+{
+    <option value="@item.MaBS">@item.HoTen</option>
+}

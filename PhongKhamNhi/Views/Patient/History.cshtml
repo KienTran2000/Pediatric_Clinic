@@ -1,0 +1,120 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.DTO.PhieuKhamDTO>
+
+@{
+    ViewBag.Title = "Lịch sử khám bệnh";
+}
+
+@using (Html.BeginForm("History", "Patient", FormMethod.Get))
+{
+    <div class="user-profile__wrap sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="sidebar-profile">
+                        <div class="profiles">
+                            <h3 class="headline" style="font-size: 18px;">Tài khoản của</h3>
+                            <h3 class="username" style="font-size: 21px;">@ViewBag.HoTen</h3>
+                        </div>
+                        <div class="user-profile__menu">
+                            <ul class="user-profile__menu__wrap">
+                                <li class="user-profile__item">
+                                    <a href="/Patient" class="user-profile__link">
+                                        <span class="-ap icon-user6 icon mai-information-circle-outline"></span> <span class="txt">Thông tin tài khoản</span>
+                                    </a>
+                                </li>
+                                <li class="user-profile__item">
+                                    <a href="/Patient/AppointmentHistory" class="user-profile__link">
+                                        <span class="-ap icon-file-text icon mai-time"></span> <span class="txt">Lịch sử hẹn khám</span>
+                                    </a>
+                                </li>
+                                <li class="user-profile__item active">
+                                    <a href="#" class="user-profile__link">
+                                        <span class="-ap icon-file-text icon mai-fitness"></span> <span class="txt">Lịch sử khám bệnh</span>
+                                    </a>
+                                </li>
+                                <li class="user-profile__item">
+                                    <a href="/Patient/EditPassword" class="user-profile__link">
+                                        <i class="icon fa fa-key mai-key" aria-hidden="true"></i><span class="txt">Đổi mật khẩu</span>
+                                    </a>
+                                </li>
+                                <li class="user-profile__item">
+                                    <a href="/Patient/Logout" class="user-profile__link" onclick="return confirm('Bạn chắc chắn muốn đăng xuất?')">
+                                        <i class="icon fa fa-sign-out mai-log-out" aria-hidden="true"></i><span class="txt">Đăng xuất</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="wrap__profile__info">
+                        <h2 class="title-profile">Lịch sử khám bệnh</h2>
+                        <div class="profile-content">
+                            <div class="form-search">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="componet-input-search">
+                                                    <b>Từ:</b>
+                                                    <input type="date" class="form-control" name="tu" value="@ViewBag.tu" title="Thời gian khám bệnh">
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="componet-input-search">
+                                                    <b>Đến:</b>
+                                                    <input type="date" class="form-control" name="den" value="@ViewBag.den" title="Thời gian khám bệnh">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="btn-search">
+                                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                                                        <span class="-ap icon-file-text icon mai-search"></span>
+                                                    </button>
+                                                    <a href="~/Patient/History" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                                        <span class="-ap icon-file-text icon mai-refresh"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Thời gian</th>
+                                        <th class="text-center">Dịch vụ</th>
+                                        <th class="text-center">Bác sĩ</th>
+                                        <th class="text-center">Đơn giá (VNĐ)</th>
+                                        <th class="text-center">Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.ThoiGianLap</td>
+                                            <td>@item.TenDV</td>
+                                            <td>@item.TenBs</td>
+                                            <td class="text-right">@item.DonGia.ToString("N0")</td>
+                                            <td class="text-center">
+                                                <a href="/Patient/HistoryDetail/@item.MaPhieuKB" title="Chi tiết">
+                                                    <span class="-ap icon-user6 icon mai-information-circle-outline"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum }))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

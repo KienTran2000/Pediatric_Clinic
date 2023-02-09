@@ -1,0 +1,252 @@
+﻿@model PhongKhamNhi.Models.Entities.PhieuKhamBenh
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/BacSiArea/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin phiếu khám bệnh</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách phiếu khám", "Index", "BacSiHome")
+                    </li>
+                    <li class="breadcrumb-item active">Thông tin phiếu khám bệnh</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Edit", "BacSiHome", FormMethod.Post, new { }))
+    {
+        @Html.TextBoxFor(model => model.MaPhieuKB, new { @class = "form-control", @type = "hidden" })
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <b class="col-md-2">Mã bệnh nhi:</b>
+                            <div class="col-md-1">
+                                @Model.MaBN
+                            </div>
+                            <b class="col-md-2 text-right">Dịch vụ khám:</b>
+                            <div class="col-md-5">
+                                @Model.DichVuKham.TenDV
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <a href="/BacSiArea/BacSiHome/History/@Model.MaBN" target="_blank" class="btn btn-block btn-info btn-lg">
+                                    <i class="fas fa-search-plus"></i>
+                                    Xem lịch sử khám
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-md-2">Họ tên bệnh nhi:</b>
+                            <div class="col-md-4">
+                                @Model.BenhNhi.HoTen
+                            </div>
+                            <b class="col-md-1 text-right">Ngày sinh:</b>
+                            <div class="col-md-2">
+                                @Model.BenhNhi.NgaySinh.ToString().Split(' ')[0]
+                            </div>
+                            <b class="col-md-1 text-right">Giới tính:</b>
+                            <div class="col-md-2">
+                                @Model.BenhNhi.GioiTinh
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <b>Biểu hiện:</b>
+                                @Html.TextAreaFor(model => model.BieuHien, new { @class = "form-control", @rows = "3" })
+                                @Html.ValidationMessageFor(model => model.BieuHien, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                <b>Kết luận:</b>
+                                @Html.TextAreaFor(model => model.KetLuan, new { @class = "form-control", @rows = "3", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.KetLuan, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div>
+        <!-- ./row -->
+        <button type="submit" id="Submit" style="display:none;"></button>
+        <button type="reset" id="Reset" style="display:none;"></button>
+    }
+    <div class="row">
+        <div class="col-md-6">
+            <div id="xn-cha"  class="card card-outline card-info">
+                @if (Model.PhieuDKXNs.Count > 0)
+                {
+                    <div class="form-group">
+                        <h5 style="margin: 10px 0 0 10px;">Kết quả xét nghiệm</h5>
+                    </div>
+                    <table class="table table-xn">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Tên xét nghiệm</th>
+                                <th class="text-center">Trị số bình thường</th>
+                                <th class="text-center">Đơn vị tính</th>
+                                <th class="text-center">Kết quả</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.PhieuDkXn)
+                            {
+                                <tr>
+                                    <td>@item.TenXN</td>
+                                    <td class="text-center">@item.TriSoBinhThuong</td>
+                                    <td class="text-center">@item.DonViTinh</td>
+                                    <td class="text-center">@item.KetQua</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-block btn-info btn-lg" onclick="XetNghiem()">
+                                    <i class="fas fa-vial"></i>
+                                    Chỉ định xét nghiệm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="phieu-xn" class="card-body">
+
+                    </div>
+                }
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="don-thuoc-cha" class="card card-outline card-info">
+                @if (ViewBag.DonThuoc != null)
+                {
+                    <div class="form-group">
+                        <h5 style="margin: 10px 0 0 10px;">Thuốc chỉ định</h5>
+                    </div>
+                    <table class="table table-xn">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Tên thuốc</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-center">Đơn vị tính</th>
+                                <th class="text-center">Cách dùng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.DonThuoc)
+                            {
+                                <tr>
+                                    <td>@item.TenThuoc</td>
+                                    <td class="text-center">@item.SoLuong</td>
+                                    <td class="text-center">@item.DonViTinh</td>
+                                    <td>@item.CachDung</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div id="luu-don-thuoc" class="row" style="margin: 0 10px 10px;">
+                        <div class="col-md-8">
+
+                        </div>
+                        <div id="s-xn" class="col-md-4">
+                            <a href="~/BacSiArea/BacSiHome/PrintDonThuoc" target="_blank" class="btn btn-block btn-info btn-lg">
+                                <i class="fas fa-print"></i>
+                                In đơn thuốc
+                            </a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button class="btn btn-block btn-info btn-lg" onclick="KeThuoc()">
+                                    <i class="fas fa-pills"></i>
+                                    Kê thuốc
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="don-thuoc" class="card-body">
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (Model.TrangThai == 1)
+    {
+        <div class="row card-footer">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-block btn-success btn-lg" onclick="funcSubmit()">
+                    <i class="ace-icon fa fa-check"></i>
+                    Lưu phiếu khám
+                </button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-block btn-info btn-lg" onclick="funcReset()">
+                    <i class="fas fa-sync"></i>
+                    Nhập lại
+                </button>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+
+    }
+</section>
+
+
+@section script{
+    <script>
+        function XetNghiem() {
+            $("#phieu-xn").load("/BacSiArea/BacSiHome/PhieuXn",
+                { "dv": @Model.MaDV }, function (data) {
+
+            });
+        }
+
+        function KeThuoc() {
+            $("#don-thuoc").load("/BacSiArea/BacSiHome/KeThuoc",
+                { }, function (data) {
+
+            });
+        }
+
+        function funcSubmit() {
+            document.getElementById("Submit").click();
+        }
+
+        function funcReset() {
+            document.getElementById("Reset").click();
+        }
+    </script>
+}

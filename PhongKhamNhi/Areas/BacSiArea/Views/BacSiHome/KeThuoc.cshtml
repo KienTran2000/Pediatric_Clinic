@@ -1,0 +1,172 @@
+﻿
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-spinner"></i>
+            </span>
+        </div>
+        <input id="thuoc" type="text" class="form-control" placeholder="Nhập tên thuốc ...">
+    </div>
+</div>
+<table class="table table-thuoc">
+    <thead>
+        <tr>
+            <th>Tên thuốc</th>
+            <th>Số lượng</th>
+            <th>Đơn vị tính</th>
+            <th>Cách dùng</th>
+            <th class="text-center">
+                <i class="fas fa-cogs"></i>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<div id="luu-don-thuoc" class="row" style="margin-top:10px; display:none;">
+    <div class="col-md-8">
+
+    </div>
+    <div id="s-xn" class="col-md-4">
+        <button class="btn btn-block btn-info btn-lg" onclick="return SubmitDt()">
+            <i class="ace-icon fa fa-check"></i>
+            Lưu đơn thuốc
+        </button>
+    </div>
+</div>
+
+<button id="chon-thuoc" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg" style="display:none;">
+    Launch Large Modal
+</button>
+
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="ten-thuoc" class="modal-title">
+
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-md-2">Số lượng:</label>
+                    <input id="sl" class="form-control col-md-1" name="slChon" type="number" value="1" />
+                    <span id="dvt" class="col-md-1 text-right"></span>
+                </div>
+                <div class="form-group">
+                    <label>Cách dùng:</label>
+                    <textarea id="cd" class="form-control" name="cachDung" rows="3"></textarea>
+                    
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ChonThuoc()">Chọn</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+    var idT = 0;
+    var common2 = {
+        init: function () {
+            common2.registerEvent();
+        },
+        registerEvent: function () {
+            $("#thuoc").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/BacSiHome/ListThuoc",
+                        dataType: "json",
+                        data: {
+                            key: request.term
+                        },
+                        success: function (res) {
+                            response(res.data);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    $("#thuoc").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    var tmp = $('.table-thuoc').find('[id="thuoc-' + ui.item.MaThuoc + '"]');
+                    if (tmp.length == 0) {
+                        idT = ui.item.MaThuoc;
+                        $('#ten-thuoc').html(ui.item.TenThuoc);
+                        $('#dvt').html(ui.item.DonViTinh);
+                        $("#cd").val("");
+                        document.getElementById("chon-thuoc").click();
+                    }
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    return $("<li>")
+                        .append("<div id = \"" + item.MaThuoc + "\" class = \"add-product\">" +
+                        item.TenThuoc + "</div>")
+                        .appendTo(ul);
+                };
+        }
+    }
+    common2.init();
+
+    function ChonThuoc() {
+        $('#luu-don-thuoc')[0].style.display = "block";
+        $(".table-thuoc tbody").load("/BacSiArea/BacSiHome/ChonThuoc",
+            { "idT": idT, "sl": $('#sl').val(), "cd": $('#cd').val()}, function (data) {
+
+            });
+    }
+
+    // Find and remove selected table rows
+    $(document).on('click', '.delete-row-thuoc', function () {
+        $.ajax({
+            url: "/BacSiHome/DeleteThuoc",
+            dataType: "json",
+            data: { id: $(this)[0].parentElement.parentElement.id },
+            success: function (res) {
+
+            }
+        });
+        $(this).parents("tr").remove();
+    });
+
+    $(document).on('click', '.edit-row-thuoc', function () {
+        $.ajax({
+            url: "/BacSiHome/EditThuoc",
+            dataType: "json",
+            data: { id: $(this)[0].parentElement.parentElement.id },
+            success: function (res) {
+                $('#ten-thuoc').html(res.data.TenThuoc);
+                $('#dvt').html(res.data.DonViTinh);
+                $("#cd").val(res.data.CachDung);
+                $("#sl").val(res.data.SoLuong);
+                document.getElementById("chon-thuoc").click();
+            }
+        });
+    });
+
+    function SubmitDt() {
+        if (confirm("Bạn chắc chắn muốn lưu đơn thuốc?")) {
+            $("#don-thuoc-cha").load("/BacSiArea/BacSiHome/SaveDonThuoc",
+                {}, function (data) {
+
+                });
+            return true;
+        }
+        return false;
+    }
+
+</script>

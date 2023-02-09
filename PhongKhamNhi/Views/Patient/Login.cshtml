@@ -1,0 +1,28 @@
+﻿@model PhongKhamNhi.Models.Entities.BenhNhi
+
+@{
+    ViewBag.Title = "Đăng nhập";
+}
+
+<div class="container" style="padding: 20px 250px;">
+    <h4 class="text-center">Đăng nhập</h4>
+    <div class="d-flex flex-column text-center">
+        @using (Html.BeginForm("Login", "Patient", FormMethod.Post, new { }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.TenDangNhap, new { @class = "form-control", @type = "text", @placeholder = "Tên đăng nhập", required = true })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.MatKhau, new { @class = "form-control", @type = "password", @placeholder = "Mật khẩu", required = true })
+            </div>
+            @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-block btn-round" style="width: 50%; margin-left: 50%; transform: translateX(-50%);">Đăng nhập</button>
+            </div>
+        }
+        <a href="#" class="text-center text-muted delimiter">Quên mật khẩu?</a>
+    </div>
+    <div class="signup-section text-center">Bạn chưa có tài khoản? <a href="/Patient/Registrie" class="text-info"> Đăng ký ngay</a></div>
+</div>
+

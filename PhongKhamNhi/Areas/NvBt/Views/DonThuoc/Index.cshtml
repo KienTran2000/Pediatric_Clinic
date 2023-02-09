@@ -1,0 +1,123 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.DTO.DonThuocDTO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/NvBt/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách đơn thuốc</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <div class="form-search">
+            @using (Html.BeginForm("Index", "DonThuoc", FormMethod.Get, new { }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Mã phiếu khám bệnh</b>
+                                    <input type="text" class="form-control" name="maPk" value="@ViewBag.maPk">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Tên bênh nhi</b>
+                                    <input type="text" class="form-control" name="ten" value="@ViewBag.ten">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Từ ngày</b>
+                                    <input type="date" class="form-control" name="tu" value="@ViewBag.tu">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Đến ngày</b>
+                                    <input type="date" class="form-control" name="den" value="@ViewBag.den">
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="btn-search">
+                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <a href="~/NvBt/DonThuoc" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        @using (Html.BeginForm("Index", "DonThuoc", FormMethod.Post, new { }))
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Mã phiếu khám
+                        </th>
+                        <th class="text-center">
+                            Thời gian lập
+                        </th>
+                        <th class="text-center">
+                            Tên bệnh nhi
+                        </th>
+                        <th class="text-center">
+                            Bác sĩ khám
+                        </th>
+                        <th class="text-center">
+                            Tạo hóa đơn
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.MaPhieuKB)
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.ThoiGianLap)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HoTen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenBs)
+                            </td>
+                            <td class="text-center">
+                                <a href="~/NvBt/DonThuoc/CreateByMaPk/@item.MaPhieuKB" title="Tạo hóa đơn">
+                                    <i class="fas fa-file-invoice"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @maPk = @ViewBag.maPk, @ten = @ViewBag.ten, @tu = @ViewBag.tu, @den = @ViewBag.den }))
+            </div>
+        </div>
+    </div>
+</section>

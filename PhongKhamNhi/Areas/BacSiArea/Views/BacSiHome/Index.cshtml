@@ -1,0 +1,198 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.DTO.PhieuKhamDTO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/BacSiArea/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách phiếu khám bệnh</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <div class="form-search">
+            @using (Html.BeginForm("Index", "BacSiHome", FormMethod.Get, new { }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Tên bênh nhi</b>
+                                    <input type="text" class="form-control" name="ten" value="@ViewBag.ten">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Từ ngày</b>
+                                    <input type="date" class="form-control" name="tu" value="@ViewBag.tu">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Đến ngày</b>
+                                    <input type="date" class="form-control" name="den" value="@ViewBag.den">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Dịch vụ</b>
+                                    <select id="dichVu" class="form-control" name="dv">
+                                        <option value="0">- Chọn dịch vụ -</option>
+                                        @foreach (var item in ViewBag.ListDichVu)
+                                        {
+                                            if (@item.MaDV == ViewBag.dv)
+                                            {
+                                                <option selected value="@item.MaDV">@item.TenDV</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.MaDV">@item.TenDV</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Trạng thái</b>
+                                    <select class="form-control" name="trangThai">
+                                        <option value="3">Trạng thái</option>
+                                        @{ var m = "";
+                                            var h = "";
+                                            if (ViewBag.trangThai == 1)
+                                            {
+                                                m = "selected";
+                                            }
+                                            else if (ViewBag.trangThai == 2)
+                                            {
+                                                h = "selected";
+                                            }
+                                            <option @m value="1">Chờ khám</option>
+                                            <option @h value="2">Đã khám</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="btn-search">
+                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <a href="~/BacSiArea/BacSiHome" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        @using (Html.BeginForm("Index", "PhieuKham", FormMethod.Post, new { }))
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Mã
+                        </th>
+                        <th class="text-center">
+                            Thời gian lập
+                        </th>
+                        <th class="text-center">
+                            Tên bệnh nhi
+                        </th>
+                        <th class="text-center">
+                            Ngày sinh
+                        </th>
+                        <th class="text-center">
+                            Dịch vụ đăng ký
+                        </th>
+                        <th class="text-center">
+                            Thời gian hẹn
+                        </th>
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+                        <th class="text-center">
+                            <i class="fas fa-cogs"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.MaPhieuKB)
+                        </td>
+                        <td class="text-right">
+                            @Html.DisplayFor(modelItem => item.ThoiGianLap)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoTen)
+                        </td>
+                        <td class="text-right">
+                            @Html.DisplayFor(modelItem => item.NgaySinh.ToString().Split(' ')[0])
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenDV)
+                        </td>
+                        <td class="text-right">
+                            @{ if (item.ThoiGianKham != null)
+                                {
+                                    @Html.DisplayFor(modelItem => item.ThoiGianKham)
+                                }
+                            }
+                        </td>
+                        <td class="text-center">
+                            @{ if (item.TrangThai == 1)
+                                {
+                                    <p id="tt-@item.MaPhieuKB" class="pro-status" style="background: #ffeb3b;">Chờ khám</p>
+                                }
+                                else
+                                {
+                                    <p class="pro-status pro-status-finish">Đã khám</p>
+                                }
+                            }
+                        </td>
+                        <td class="text-center">
+                            <a href="~/BacSiArea/BacSiHome/Edit/@item.MaPhieuKB" title="Sửa">
+                                <i class="fas fa-edit" aria-hidden="true"></i>
+                            </a>
+                            @{ if (item.TrangThai == 2)
+                                {
+                                    <a href="~/BacSiArea/BacSiHome/PrintPkb/@item.MaPhieuKB" target="_blank" title="In">
+                                        <i class="fas fa-print"></i>
+                                    </a>
+                                }   
+                            }
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @ten = @ViewBag.ten, @tu = @ViewBag.tu, @den = @ViewBag.den, @dv = @ViewBag.dv, @trangThai = @ViewBag.trangThai }))
+            </div>
+        </div>
+    </div>
+</section>
+
+@section script{
+    
+}

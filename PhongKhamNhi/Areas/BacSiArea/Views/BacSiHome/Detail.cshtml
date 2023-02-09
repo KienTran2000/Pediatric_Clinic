@@ -1,0 +1,163 @@
+﻿@model PhongKhamNhi.Models.Entities.PhieuKhamBenh
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/BacSiArea/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin phiếu khám bệnh</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách phiếu khám", "Index", "BacSiHome")
+                    </li>
+                    <li class="breadcrumb-item active">Thông tin phiếu khám bệnh</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-outline card-info">
+                <div class="card-header">
+                    <h4 class="">
+                        Thông tin chính
+                    </h4>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-2">Mã bệnh nhi:</label>
+                        <div class="col-md-1">
+                            @Model.MaBN
+                        </div>
+                        <label class="col-md-2 text-right">Dịch vụ khám:</label>
+                        <div class="col-md-5">
+                            @Model.DichVuKham.TenDV
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2">Họ tên bệnh nhi:</label>
+                        <div class="col-md-4">
+                            @Model.BenhNhi.HoTen
+                        </div>
+                        <label class="col-md-1 text-right">Ngày sinh:</label>
+                        <div class="col-md-2">
+                            @Model.BenhNhi.NgaySinh.ToString().Split(' ')[0]
+                        </div>
+                        <label class="col-md-1 text-right">Giới tính:</label>
+                        <div class="col-md-2">
+                            @Model.BenhNhi.GioiTinh
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label>Biểu hiện:</label>
+                            @Model.BieuHien
+                        </div>
+                        <div class="col-md-6">
+                            <label>Kết luận:</label>
+                            @Model.KetLuan
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.col-->
+    </div>
+    <!-- ./row -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-outline card-info">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>Kết quả xét nghiệm</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-xn">
+                        <thead>
+                            <tr>
+                                <th>Tên xét nghiệm</th>
+                                <th>Trị số bình thường</th>
+                                <th>Đơn vị tính</th>
+                                <th>Kết quả</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.kqxn)
+                            {
+                                <tr>
+                                    <td>@item.TenXN</td>
+                                    <td>@item.TriSoBinhThuong</td>
+                                    <td>@item.DonViTinh</td>
+                                    <td>@item.KetQua</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-outline card-info">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4>Đơn thuốc</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-thuoc">
+                        <thead>
+                            <tr>
+                                <th>Tên thuốc</th>
+                                <th>Số lượng</th>
+                                <th>Đơn vị tính</th>
+                                <th>Cách dùng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.donThuoc)
+                            {
+                                <tr>
+                                    <td>@item.TenThuoc</td>
+                                    <td>@item.SoLuong</td>
+                                    <td>@item.DonViTinh</td>
+                                    <td>@item.CachDung</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-md-8">
+
+                        </div>
+                        <div id="s-xn" class="col-md-4">
+                            <button class="btn btn-block btn-info btn-lg">
+                                <i class="fas fa-print"></i>
+                                In đơn thuốc
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

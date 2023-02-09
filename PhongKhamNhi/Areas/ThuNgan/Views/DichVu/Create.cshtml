@@ -1,0 +1,232 @@
+﻿@model PhongKhamNhi.Models.Entities.DichVuKham
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/ThuNgan/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm dịch vụ khám</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách dịch vụ", "Index", "DichVu")
+                    </li>
+                    <li class="breadcrumb-item active">Thêm dịch vụ</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Create", "DichVu", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>
+                                Tên dịch vụ
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            @Html.EditorFor(model => model.TenDV, new { htmlAttributes = new { @class = "form-control", required = true } })
+                            @Html.ValidationMessageFor(model => model.TenDV, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group news-description">
+                            <label for="summernote">Mô tả</label>
+                            @Html.TextAreaFor(model => model.MoTa)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+            <div class="col-md-4">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Cập nhật
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="submit" id="Submit" class="btn btn-block btn-success btn-lg">
+                                        <i class="ace-icon fa fa-check"></i>
+                                        Thêm mới
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="reset" class="btn btn-block btn-info btn-lg">
+                                        <i class="fas fa-sync"></i>
+                                        Nhập lại
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-money-bill-alt"></i>
+                                Giá dịch vụ:
+                            </label>
+                            @*<input class = "form-control" name="DonGia"  />*@
+                            @Html.EditorFor(model => model.DonGia, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <i class="far fa-image"></i>
+                                Ảnh đại diện:
+                            </label>
+                            <input type="file" id="photo" name="photo" onchange="previewFile(this);">
+                            <img id="previewImg" src="~/Content/assets/img/blog/noimage.jpg" style="width: 90px; display: block; margin-top: 10px;">
+                            @Html.HiddenFor(model => model.Anh)
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-spinner"></i>
+                                    </span>
+                                </div>
+                                <input id="xn" type="text" class="form-control" placeholder="Nhập tên xét nghiệm ...">
+                            </div>
+                        </div>
+                        <table id="id-table-xn" class="table table-xn">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Tên xét nghiệm
+                                    </th>
+                                    <th class="text-center">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</section>
+
+@section linkCss{
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/Areas/Content/plugins/summernote/summernote-bs4.min.css">
+}
+
+@section script{
+    <script>
+        $(function () {
+            // Summernote
+            $('#MoTa').summernote()
+        });
+
+        function previewFile(input) {
+            var file = $("#photo").get(0).files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        var common = {
+            init: function () {
+                common.registerEvent();
+            },
+            registerEvent: function () {
+                $("#xn").autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "/ThuNgan/DichVu/ListXn",
+                            dataType: "json",
+                            data: {
+                                key: request.term
+                            },
+                            success: function (res) {
+                                response(res.data);
+                            }
+                        });
+                    },
+                    focus: function (event, ui) {
+                        $("#xn").val(ui.item.label);
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        var tmp = $('.table-xn').find('[id="xn-' + ui.item.MaXN + '"]');
+                        if (tmp.length == 0) {
+                            var markup = "<tr id = \"xn-" + ui.item.MaXN + "\">"
+                                + "<td>" + ui.item.TenXN + "</td>"
+                                + "<td class=\"text-center delete-row\">"
+                                + "<i class=\"fas fa-trash-alt\"></i>"
+                                + "</td>"
+                                + "</tr>";
+                            $("#id-table-xn tbody").append(markup);
+
+                            $.ajax({
+                                url: "/ThuNgan/DichVu/AddXn",
+                                dataType: "json",
+                                data: { id: ui.item.MaXN },
+                                success: function (res) {
+
+                                }
+                            });
+                        }
+                        return false;
+                    }
+                })
+                    .autocomplete("instance")._renderItem = function (ul, item) {
+                        return $("<li>")
+                            .append("<div id = \"" + item.MaXN + "\" class = \"add-product\">" +
+                                item.TenXN + "</div>")
+                            .appendTo(ul);
+                    };
+            }
+        }
+        common.init();
+
+        // Find and remove selected table rows
+        $(document).on('click', '.delete-row', function () {
+            $.ajax({
+                url: "/ThuNgan/DichVu/DeleteXn",
+                dataType: "json",
+                data: { id: $(this)[0].parentElement.id },
+                success: function (res) {
+
+                }
+            });
+            $(this).parents("tr").remove();
+        });
+
+    </script>
+
+    <!-- Summernote -->
+    <script src="~/Areas/Content/plugins/summernote/summernote-bs4.min.js"></script>
+}

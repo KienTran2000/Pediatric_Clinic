@@ -1,0 +1,128 @@
+﻿@model ICollection<PhongKhamNhi.Models.Entities.XetNghiem>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-spinner"></i>
+            </span>
+        </div>
+        <input id="xn" type="text" class="form-control" placeholder="Nhập tên xét nghiệm ...">
+    </div>
+</div>
+<table class="table table-xn">
+    <thead>
+        <tr>
+            <th>
+                Tên xét nghiệm
+            </th>
+            <th class="text-center">
+                <i class="fas fa-trash-alt"></i>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="xn-@item.MaXN">
+                <td>@item.TenXN</td>
+                <td class="text-center delete-row"><i class="fas fa-trash-alt"></i></td>
+            </tr>
+        }
+    </tbody>
+    
+</table>
+<div class="row" style="margin-top:10px;">
+    <div class="col-md-8">
+
+    </div>
+    <div id="s-xn" class="col-md-4">
+        <button class="btn btn-block btn-info btn-lg" onclick="return SubmitXn()">
+            <i class="ace-icon fa fa-check"></i>
+            Lưu phiếu chỉ định
+        </button>
+    </div>
+</div>
+
+<script>
+    var common = {
+        init: function () {
+            common.registerEvent();
+        },
+        registerEvent: function () {
+            $("#xn").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/BacSiHome/ListXn",
+                        dataType: "json",
+                        data: {
+                            key: request.term
+                        },
+                        success: function (res) {
+                            response(res.data);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    $("#xn").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    var tmp = $('.table-xn').find('[id="xn-' + ui.item.MaXN + '"]');
+                    if (tmp.length == 0) {
+                        var markup = "<tr id = \"xn-" + ui.item.MaXN + "\">"
+                            + "<td>" + ui.item.TenXN + "</td>"
+                            + "<td class=\"text-center delete-row\">"
+                            + "<i class=\"fas fa-trash-alt\"></i>"
+                            + "</td>"
+                            + "</tr>";
+                        $("#phieu-xn table tbody").append(markup);
+
+                        $.ajax({
+                            url: "/BacSiHome/AddXn",
+                            dataType: "json",
+                            data: { id: ui.item.MaXN },
+                            success: function (res) {
+
+                            }
+                        });
+                    }
+                    return false;
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    return $("<li>")
+                        .append("<div id = \"" + item.MaXN + "\" class = \"add-product\">" +
+                            item.TenXN + "</div>")
+                        .appendTo(ul);
+                };
+        }
+    }
+    common.init();
+
+    // Find and remove selected table rows
+    $(document).on('click', '.delete-row', function () {
+        $.ajax({
+            url: "/BacSiHome/DeleteXn",
+            dataType: "json",
+            data: { id: $(this)[0].parentElement.id },
+            success: function (res) {
+
+            }
+        });
+        $(this).parents("tr").remove();
+    });
+
+    function SubmitXn() {
+        if (confirm("Bạn chắc chắn muốn lưu phiếu đăng ký xét nghiệm?")) {
+            $("#xn-cha").load("/BacSiArea/BacSiHome/SavePhieuDkXn",
+                { }, function (data) {
+
+            });
+            return true;
+        }
+        return false;
+    }
+
+</script>

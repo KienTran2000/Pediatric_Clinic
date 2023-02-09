@@ -1,0 +1,195 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.Entities.HoaDonBanThuoc>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ThuNgan/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách hóa đơn thuốc</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <div class="form-search">
+            @using (Html.BeginForm("Index", "NvBtHome", FormMethod.Get, new { }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Mã hóa đơn</b>
+                                    <input type="text" class="form-control" name="maPk" value="@ViewBag.maHd">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Tên khách hàng</b>
+                                    <input type="text" class="form-control" name="ten" value="@ViewBag.ten">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Từ ngày</b>
+                                    <input type="date" class="form-control" name="tu" value="@ViewBag.tu">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Đến ngày</b>
+                                    <input type="date" class="form-control" name="den" value="@ViewBag.den">
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="btn-search">
+                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <a href="~/NvBt/NvBtHome" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @using (Html.BeginForm("Index", "NvBtHome", FormMethod.Post, new { }))
+        {
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Mã hóa đơn
+                        </th>
+                        <th class="text-center">
+                            Thời gian lập
+                        </th>
+                        <th class="text-center">
+                            Tên khách hàng
+                        </th>
+                        <th class="text-center">
+                            Số điện thoại
+                        </th>
+                        <th class="text-center">
+                            Địa chỉ
+                        </th>
+                        <th class="text-center">
+                            Tổng tiền
+                        </th>
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+                        <th class="text-center">
+                            <i class="fas fa-cogs"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.MaHoaDon)
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.ThoiGian)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenKH)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Sdt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiaChi)
+                            </td>
+                            <td class="text-right">
+                                @item.TongTien.ToString("N0")
+                            </td>
+                            <td class="text-center">
+                                @{ if (item.TrangThai == false)
+                                    {
+                                        <p id="tt-@item.MaHoaDon" class="pro-status ">Chưa thanh toán</p>
+                                    }
+                                    else
+                                    {
+                                        <p id="tt-@item.MaHoaDon" class="pro-status pro-status-finish">Đã thanh toán</p>
+                                    }
+                                }
+                            </td>
+                            <td class="text-center">
+                                @{ if (item.TrangThai == false)
+                                    {
+                                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                            <input type="checkbox" class="custom-control-input" id="@item.MaHoaDon" onclick="return check(@item.MaHoaDon)">
+                                            <label class="custom-control-label" for="@item.MaHoaDon"></label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                            <input type="checkbox" checked class="custom-control-input" id="@item.MaHoaDon" onclick="return check(@item.MaHoaDon)">
+                                            <label class="custom-control-label" for="@item.MaHoaDon"></label>
+                                        </div>
+                                    }
+                                    <a href="~/NvBt/NvBtHome/Print/@item.MaHoaDon" target="_blank" title="In hóa đơn">
+                                        <i class="fas fa-print"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @maHd = @ViewBag.maPk, @ten = @ViewBag.ten, @tu = @ViewBag.tu, @den = @ViewBag.den }))
+            </div>
+        </div>
+    </div>
+</section>
+
+@section script{
+    <script>
+        function check(id) {
+            console.log(id);
+            if (confirm("Bạn chắc chắn muốn chuyển trạng thái hóa đơn thuốc?")) {
+                var tt = "#tt-" + id;
+                $.ajax({
+                    url: "/HoaDon/ChangeStatus",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (res) {
+                        if ($(tt).hasClass("pro-status-finish")) {
+                            $(tt).removeClass("pro-status-finish");
+                            $(tt)[0].innerText = "Chưa thanh toán";
+                        }
+                        else {
+                            $(tt).addClass("pro-status-finish");
+                            $(tt)[0].innerText = "Đã thanh toán";
+                        }
+                    }
+                });
+                return true;
+            }
+            return false;
+        }
+
+    </script>
+}

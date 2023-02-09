@@ -1,0 +1,99 @@
+﻿@model PhongKhamNhi.Models.Entities.Thuoc
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/NvBt/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm mới thuốc</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách thuốc", "Index", "Thuoc")
+                    </li>
+                    <li class="breadcrumb-item active">Thêm mới thuốc</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Create", "Thuoc", FormMethod.Post, new { }))
+    {
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Tên thuốc:</label>
+                            @Html.EditorFor(model => model.TenThuoc, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.TenThuoc, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Đơn vị tính</label>
+                            @Html.EditorFor(model => model.DonViTinh, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Đơn giá</label>
+                            @Html.EditorFor(model => model.DonGia, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+            <div class="col-md-3">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Cập nhật
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                        <i class="ace-icon fa fa-check"></i>
+                                        Thêm mới
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="reset" class="btn btn-block btn-info btn-lg">
+                                        <i class="fas fa-sync"></i>
+                                        Nhập lại
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label>Loại thuốc</label>
+                            <select id="dichVu" class="form-control" name="lt">
+                                @foreach (var item in ViewBag.ListLoaiThuoc)
+                                {
+                                    <option value="@item.MaLoaiThuoc">@item.TenLoaiThuoc</option>
+                                }
+                            </select>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div> <!-- ./row -->}
+</section>

@@ -1,0 +1,196 @@
+﻿@model PhongKhamNhi.Models.Entities.PhieuDangKyKham
+
+@{
+    ViewBag.Title = "Đặt lịch hẹn";
+}
+
+<div class="container" style="padding: 20px;">
+    <h4 class="text-center">Đăng ký hẹn khám</h4>
+    @using (Html.BeginForm("AppointmentDetail", "Patient", FormMethod.Post, new { @id = "frm-res", @onsubmit = "return validateForm()" }))
+    {
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.MaPhieuDKK)
+                        <label class="control-label col-md-12">Họ tên bệnh nhi:&emsp; @Model.BenhNhi.HoTen</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Giới tính: </label> @Model.BenhNhi.GioiTinh
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Ngày sinh: </label>@Model.BenhNhi.NgaySinh.ToString("dd/MM/yyyy")
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Chọn bác sĩ</label>
+                        <div class="col-md-12">
+                            <select id="bacSi" class="form-control" name="bacSi">
+                                <option value="0">-- Chọn bác sĩ --</option>
+                                @foreach (var item in ViewBag.ListBacSi)
+                                {
+                                    if (item.MaBS == Model.MaBS)
+                                    {
+                <option selected="selected" value="@item.MaBS">@item.HocVi @item.HoTen</option>
+ }
+            else
+            {
+<option value="@item.MaBS">@item.HocVi @item.HoTen</option>}
+
+                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Ngày hẹn</label>
+                        <div class="col-md-12">
+                            <input id="ThoiGianHen" name="ThoiGianHen" class="form-control" type="date" value="@ViewBag.tgHen" min="@ViewBag.tgmin" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Giờ hẹn</label>
+                        <div class="col-md-12">
+                            <select id="gioHen" class="form-control" name="gioHen">
+                                @foreach (var item in ViewBag.ListGioHen)
+                                {
+                                    if (item == ViewBag.gioHen)
+                                    {
+                <option selected="selected" value="@item">@item</option>
+ }
+            else
+            {
+<option value="@item">@item</option>}
+                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col-7">
+                    <span style="color: gray; font-size: 13px; float: right; margin-right: 13px;">(*) Thời gian hẹn có sẵn phụ thuộc vào lượng bệnh nhi đã đăng ký khám ngày hôm đó.</span>
+                    <i id="error-time" class="error-time bg-danger"><b>Thời gian hẹn khám của phòng khám từ thứ 2 đến thứ 7 hàng tuần!</b></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Lời nhắn</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control" name="loiNhan" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="list-appo">
+                        <div>
+                            <h4 style="font-weight: bold; display: inline-block; ">Thời gian không hẹn khám được:</h4>
+                        </div>
+                        <div class="l-content">
+                            <table id="table-t" class="table table-time">
+                                <tbody>
+                                    @foreach (var item in ViewBag.ListBacSi)
+                                    {
+                                        <tr>
+                                            <td style="width: 25%; border-right: 1px solid #dee2e6;">@item.HocVi @item.HoTen</td>
+                                            <td>
+                                                @foreach (var item1 in item.PhieuDangKyKhams)
+                                                {
+                                                    <span id="@item.MaBS-@item1.MaPhieuDKK" class="p-time">
+                                                        @item1.ThoiGianHen.Hour<span>giờ</span>@item1.ThoiGianHen.Minute @item1.ThoiGianHen.Day/@item1.ThoiGianHen.Month/@item1.ThoiGianHen.Year
+                                                    </span>
+                                                }
+                                            </td>
+                                        </tr>
+}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-block btn-round" style="width: 30%; margin-left: 50%; transform: translateX(-50%);">Cập nhật</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script>
+        var checkT = false;
+
+        $(document).ready(function () {
+            $(document).on('input', '#ThoiGianHen', function () {
+                $('#error-time')[0].style.display = "none";
+                $('#ThoiGianHen').removeClass('bg-danger');
+                const dt = new Date($(this).val());
+                if (dt.getDay() == 0) {
+                    $('#error-time')[0].style.display = "inline-block";
+                    $('#ThoiGianHen').addClass('bg-danger');
+                    checkT = false;
+                }
+                else
+                    checkTime();
+            });
+
+            $(document).on('change', '#bacSi', checkTime);
+            $(document).on('change', '#gioHen', function () {
+                checkT = true;
+            });
+        });
+
+        function validateForm() {
+            if (checkT == false) {
+                alert("Thông tin không hợp lệ. Vui lòng chọn lại!");
+                return false;
+            }
+        }
+
+        function checkTime() {
+            $.ajax({
+                url: "/Patient/CheckTime",
+                dataType: "json",
+                method: "POST",
+                data: {
+                    time: $('#ThoiGianHen').val(),
+                    bacSi: $('#bacSi').val()
+                },
+                success: function (res) {
+                    var markup = "";
+                    if (res.data.length > 0) {
+                        checkT = true;
+                        $('#bacSi').removeClass('bg-danger');
+                        $('#ThoiGianHen').removeClass('bg-danger');
+                        $('#gioHen').removeClass('bg-danger');
+                        for (var i in res.data) {
+                            markup += `<option value=\"${res.data[i]}\">${res.data[i]}</option>`;
+                        }
+                    }
+                    else {
+                        checkT = false;
+                        $('#bacSi').addClass('bg-danger');
+                        $('#ThoiGianHen').addClass('bg-danger');
+                        $('#gioHen').addClass('bg-danger');
+                        markup = `<option value=\"0\">Không khả dụng</option>`;
+                    }
+                    $("#gioHen").html(markup);
+                }
+            });
+        }
+    </script>
+}

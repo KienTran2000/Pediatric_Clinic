@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+
+    @*<link rel="icon" type="image/png" href="~/Content/dist/img/mta_icon.ico" />*@
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Areas/Content/plugins/fontawesome-free/css/all.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="~/Areas/Content/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- jquery-ui -->
+    <link href="~/Areas/Content/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" />
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/Areas/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    @*<link rel="stylesheet" href="~/Areas/Content/plugins/jqvmap/jqvmap.min.css">*@
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Areas/Content/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/Areas/Content/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
+    <!-- css_custom -->
+    <link href="~/Areas/Content/css_custom_admin.css" rel="stylesheet" />
+
+    @RenderSection("linkCss", required: false)
+    
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <!-- Navbar -->
+        @RenderPage("~/Areas/LeTan/Views/Shared/_Header.cshtml")
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="/Admin/AdminHome" class="brand-link" title="Trang chủ">
+                <img src="~/Areas/Content/dist/img/logo.jpg" alt="AdminWebsite Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">Phòng khám nhi</span>
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="/NvXnHome/Index" class="nav-link">
+                                <i class="nav-icon fas fa-file-invoice"></i>
+                                <p>
+                                    Đăng ký xét nghiệm
+                                    <span class="badge badge-info right">@Html.Action("SlPhieuDkXn", "NvXnHome")</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/NvXn/XetNghiem" class="nav-link">
+                                <i class="nav-icon fas fa-vial"></i>
+                                <p>
+                                    Xét nghiệm
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/NvXn/XetNghiem/Index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách xét nghiệm</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/NvXn/XetNghiem/Create" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm xét nghiệm</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content">
+                @RenderBody()
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2021 AdminWebsite</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    @*<script src="~/Areas/Content/plugins/jquery/jquery.min.js"></script>*@
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/Areas/Content/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>$.widget.bridge('uibutton', $.ui.button)</script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Areas/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="~/Areas/Content/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Areas/Content/dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Areas/Content/dist/js/demo.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    @*<script src="~/Areas/Content/dist/js/pages/dashboard.js"></script>*@@*warning*@
+    <!-- js_custom -->
+    @*<script src="~/Content/js/js_custom.js"></script>*@
+
+    <script>
+        $('.nav-sidebar, .nav-treeview').on('click', 'li a', function () {
+            $('.nav-sidebar li a.active, .nav-treeview li a.active').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $(document).ready(function () {
+            try {
+                var url = window.location.pathname;
+                var arr = url.split('/');
+                var urlParent = "/" + arr[1] + "/" + arr[2];
+                $('.sidebar').find('[href="' + urlParent + '"]').addClass('active');
+                if (arr.length == 4) {
+                    $('.sidebar').find('[href="' + urlParent + '"]')[0].parentElement.classList.add('menu-is-opening');
+                    $('.sidebar').find('[href="' + urlParent + '"]')[0].parentElement.classList.add('menu-open');
+                    var urlChild = "/" + arr[1] + "/" + arr[2] + "/" + arr[3];
+                    try {
+                        $('.sidebar').find('[href="' + urlChild + '"]')[0].parentElement.parentElement.style.display = "block";
+                        $('.sidebar').find('[href="' + urlChild + '"]').addClass('active');
+                    }
+                    catch { }
+                }
+            } catch { }
+        });
+
+    </script>
+
+    @RenderSection("script", required: false)
+</body>
+</html>

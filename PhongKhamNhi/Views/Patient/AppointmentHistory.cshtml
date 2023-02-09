@@ -1,0 +1,162 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.DTO.PhieuDangKyKhamDTO>
+
+@{
+    ViewBag.Title = "Lịch sử hẹn khám";
+}
+
+@using (Html.BeginForm("AppointmentHistory", "Patient", FormMethod.Get))
+{
+    <div class="user-profile__wrap sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="sidebar-profile">
+                        <div class="profiles">
+                            <h3 class="headline" style="font-size: 18px;">Tài khoản của</h3>
+                            <h3 class="username" style="font-size: 21px;">@ViewBag.HoTen</h3>
+                        </div>
+                        <div class="user-profile__menu">
+                            <ul class="user-profile__menu__wrap">
+                                <li class="user-profile__item">
+                                    <a href="/Patient" class="user-profile__link">
+                                        <span class="-ap icon-user6 icon mai-information-circle-outline"></span> <span class="txt">Thông tin tài khoản</span>
+                                    </a>
+                                </li>
+                                <li class="user-profile__item active">
+                                    <a href="#" class="user-profile__link">
+                                        <span class="-ap icon-file-text icon mai-time"></span> <span class="txt">Lịch sử hẹn khám</span>
+                                    </a>
+                                </li>
+                                <li class="user-profile__item">
+                                    <a href="/Patient/History" class="user-profile__link">
+                                        <span class="-ap icon-file-text icon mai-fitness"></span> <span class="txt">Lịch sử khám bệnh</span>
+                                    </a>
+                                </li>
+                                <li class="user-profile__item">
+                                    <a href="/Patient/EditPassword" class="user-profile__link">
+                                        <i class="icon fa fa-key mai-key" aria-hidden="true"></i><span class="txt">Đổi mật khẩu</span>
+                                    </a>
+                                </li>
+                                <li class="user-profile__item">
+                                    <a href="/Patient/Logout" class="user-profile__link" onclick="return confirm('Bạn chắc chắn muốn đăng xuất?')">
+                                        <i class="icon fa fa-sign-out mai-log-out" aria-hidden="true"></i><span class="txt">Đăng xuất</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="wrap__profile__info">
+                        <h2 class="title-profile">Lịch sử hẹn khám</h2>
+                        <a href="#" id="hen-kham2" class="a-appoint">Đặt lịch hẹn ngay</a>
+                        <div class="profile-content">
+                            <div class="form-search">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="componet-input-search">
+                                                    <b>Từ:</b>
+                                                    <input type="date" class="form-control" name="tu" value="@ViewBag.tu" title="Thời gian hẹn khám">
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="componet-input-search">
+                                                    <b>Đến:</b>
+                                                    <input type="date" class="form-control" name="den" value="@ViewBag.den" title="Thời gian hẹn khám">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="btn-search">
+                                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                                                        <span class="-ap icon-file-text icon mai-search"></span>
+                                                    </button>
+                                                    <a href="~/Patient/AppointmentHistory" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                                        <span class="-ap icon-file-text icon mai-refresh"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Thời gian đăng ký</th>
+                                        <th class="text-center">Bác sĩ</th>
+                                        <th class="text-center">Thời gian hẹn</th>
+                                        <th class="text-center">Loại</th>
+                                        <th class="text-center">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.ThoiGianDKK</td>
+                                            <td>@item.TenBacSi</td>
+                                            <td>@item.ThoiGianHen</td>
+                                            <td>
+                                                @if(item.Type.Value)
+                    {
+                        <span>Khám tại nhà</span>
+                                                }
+                                                else
+                    {
+                        <span>Khám tại trung tâm</span>
+                    }
+                                            </td>
+                                            <td class="text-center">
+                                                @if (item.TrangThai == false)
+                                                {
+                                                    @*<a href="~/Patient/AppointmentDetail/@item.MaPhieuDKK" title="Sửa">
+                                                        <span class="-ap icon-file-text icon mai-pencil"></span>
+                                                    </a>*@
+                                                    <a href="~/Patient/DeleteAppointment/@item.MaPhieuDKK" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                                                        <span class="-ap icon-file-text icon mai-trash"></span>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>Đã xử lý</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            @Html.PagedListPager(Model, PageNum => Url.Action("AppointmentHistory", new { PageNum }))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section scripts{
+    <script>
+        document.getElementById("hen-kham2").onclick = function () {
+            if ('@Session["patient"]') {
+                $.ajax({
+                    url: "/Patient/CheckAppointment",
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.data)
+                            MessageBox("Bạn đang có lịch hẹn chờ xác nhận. Trong thời gian này, bạn không thể thực hiện đặt thêm lịch hẹn. Chúng tôi sẽ liên hệ với bạn sớm nhất có thể!", "warning");
+                        else
+                            window.location = "/Patient/Appointment";
+                    }
+                });
+            }
+            else
+                MessageBox("Bạn cần đăng nhập để thực hiện đặt lịch hẹn!", "error");
+        };
+    </script>
+}

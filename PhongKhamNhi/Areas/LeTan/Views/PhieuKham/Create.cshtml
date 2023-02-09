@@ -1,0 +1,195 @@
+﻿@model PhongKhamNhi.Models.Entities.PhieuKhamBenh
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm mới phiếu khám bệnh</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách phiếu khám", "Index", "PhieuKham")
+                    </li>
+                    <li class="breadcrumb-item active">Thêm mới phiếu khám bệnh</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Create", "PhieuKham", FormMethod.Post, new { }))
+    {
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <b class="col-md-2">Mã bệnh nhi:</b>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.MaBN, new { htmlAttributes = new { @type = "hidden" } })
+                                @Model.MaBN
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-md-2">Họ tên bệnh nhi:</b>
+                            <div class="col-md-5">
+                                @ViewBag.benhNhi.HoTen
+                            </div>
+                            <b class="col-md-2 text-right">Ngày sinh:</b>
+                            <div class="col-md-3">
+                                @ViewBag.benhNhi.NgaySinh.ToString().Split(' ')[0]
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-md-2">Giới tính:</b>
+                            <div class="col-md-2">
+                                @ViewBag.benhNhi.GioiTinh
+                            </div>
+                            <b class="col-md-2 text-right">Địa chỉ:</b>
+                            <div class="col-md-6">
+                                @ViewBag.benhNhi.DiaChi
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-md-2">Dịch vụ khám:</b>
+                            <div class="col-md-5">
+                                @Html.EditorFor(model => model.MaDV, new { htmlAttributes = new { @type = "hidden" } })
+                                <select id="dichVu" class="form-control" name="dichVu">
+                                    @foreach (var item in ViewBag.ListDv)
+                                    {
+                                        if (item.MaDV == Model.MaDV)
+                                        {
+                                            <option selected="selected" value="@item.MaDV">@item.TenDV - @item.DonGia.ToString("N0")</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.MaDV">@item.TenDV - @item.DonGia.ToString("N0")</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <b class="col-md-2 text-right"><b>Thành tiền:</b></b>
+                            <div class="col-md-3">
+                                <b id="tong">@ViewBag.ListDv[0].DonGia.ToString("N0")</b><b>VNĐ</b>
+                            </div>
+                        </div>
+                        @{if (Model.ThoiGianKham != null)
+                            {
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <b>Thời gian hẹn khám: @Model.ThoiGianKham</b>
+                                        @Html.EditorFor(model => model.ThoiGianKham, new { htmlAttributes = new { @type = "hidden" } })
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+            <div class="col-md-3">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Cập nhật
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                        <i class="ace-icon fa fa-check"></i>
+                                        Thêm mới
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="reset" class="btn btn-block btn-info btn-lg">
+                                        <i class="fas fa-sync"></i>
+                                        Nhập lại
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Bác sĩ:</label>
+                            @Html.EditorFor(model => model.MaBS, new { htmlAttributes = new { @type = "hidden" } })
+                            <select id="bacSi" class="form-control" name="bs">
+                                @foreach (var item in ViewBag.ListBacSi)
+                                {
+                                    if (item.MaBS == Model.MaBS)
+                                    {
+                                        <option selected="selected" value="@item.MaBS">@item.HoTen</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.MaBS">@item.HoTen</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ./row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h5 style="display:inline-block;">
+                            Số lượng bệnh nhi đăng ký các bác sĩ:
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        @foreach (var item in ViewBag.ListBacSi)
+                        {
+                            <span class="p-time" style="margin-right:5px;">@item.HoTen: @item.sldk</span>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+
+@section script{
+    <script>
+        $(document).on('change', '#dichVu', function () {
+            console.log($(this).val());
+            $.ajax({
+                url: "/PhieuKham/GetDonGia",
+                dataType: "json",
+                data: {
+                    id: $(this).val()
+                },
+                success: function (res) {
+                    $('#tong').html(String(res.data).replace(/(.)(?=(\d{3})+$)/g, '$1,'));
+                }
+            });
+        });
+
+    </script>
+}
+
+

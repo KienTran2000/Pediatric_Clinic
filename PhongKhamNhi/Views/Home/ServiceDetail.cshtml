@@ -1,0 +1,169 @@
+﻿@model PhongKhamNhi.Models.Entities.DichVuKham
+
+@{
+    ViewBag.Title = "ServiceDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-section pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <nav aria-label="Breadcrumb">
+                    <ol class="breadcrumb bg-transparent py-0 mb-5">
+                        <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="blog.html">Dịch vụ khám</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@Model.TenDV</li>
+                    </ol>
+                </nav>
+            </div>
+        </div> <!-- .row -->
+
+        <div class="row">
+            <div class="col-lg-8">
+                <article class="blog-details">
+                    <div class="post-thumb">
+                        <img src="/Content/assets/img/blog/@Model.Anh" alt="">
+                    </div>
+                    @*<div class="post-meta">
+                        <div class="post-author">
+                            <span class="text-grey">By</span> <a href="#">Admin</a>
+                        </div>
+                        <span class="divider">|</span>
+                        <div class="post-date">
+                            <a href="#">22 Jan, 2018</a>
+                        </div>
+                        <span class="divider">|</span>
+                        <div>
+                            <a href="#">StreetStyle</a>, <a href="#">Fashion</a>, <a href="#">Couple</a>
+                        </div>
+                        <span class="divider">|</span>
+                        <div class="post-comment-count">
+                            <a href="#">8 Comments</a>
+                        </div>
+                    </div>*@
+                    <h2 class="post-title h1">@Model.TenDV</h2>
+                    <div class="post-content">
+                        @Html.Raw(Model.MoTa)
+                    </div>
+                    <div class="post-tags">
+                        <a href="#" class="tag-link">Dinh dưỡng</a>
+                        <a href="#" class="tag-link">Hô hấp</a>
+                        <a href="#" class="tag-link">Tai, mũi, họng</a>
+                        <a href="#" class="tag-link">Mắt</a>
+                        <a href="#" class="tag-link">Răng lợi</a>
+                    </div>
+                </article> <!-- .blog-details -->
+
+                <div class="comment-form-wrap pt-5">
+                    <h3 class="mb-5">Bình luận</h3>
+                    <form action="#" class="">
+                        <div class="form-row form-group">
+                            <div class="col-md-6">
+                                <label for="name">Tên *</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email">Email *</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="url" class="form-control" id="website">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Lời nhắn</label>
+                            <textarea name="msg" id="message" cols="30" rows="8" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Đăng bình luận" class="btn btn-primary">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Tìm kiếm</h3>
+                        <form action="#" class="search-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Nhập từ khóa để tìm kiếm">
+                                <button type="submit" class="btn"><span class="icon mai-search"></span></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Dịch vụ</h3>
+                        <ul class="categories">
+                            <li><a href="#">Khám tổng quát <span>12</span></a></li>
+                            <li><a href="#">Khám đường ruột <span>22</span></a></li>
+                            <li><a href="#">Cấp cứu <span>37</span></a></li>
+                            <li><a href="#">Khám nha khoa <span>42</span></a></li>
+                            <li><a href="#">Khám mắt <span>14</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Blog gần đây</h3>
+                        <div class="blog-item">
+                            <a class="post-thumb" href="">
+                                <img src="../assets/img/blog/blog_1.jpg" alt="">
+                            </a>
+                            <div class="content">
+                                <h5 class="post-title"><a href="#">Ngay cả Pointing toàn năng cũng không có quyền kiểm soát</a></h5>
+                                <div class="meta">
+                                    <a href="#"><span class="mai-calendar"></span> 12/07/2018</a>
+                                    <a href="#"><span class="mai-person"></span> Admin</a>
+                                    <a href="#"><span class="mai-chatbubbles"></span> 19</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <a class="post-thumb" href="">
+                                <img src="../assets/img/blog/blog_2.jpg" alt="">
+                            </a>
+                            <div class="content">
+                                <h5 class="post-title"><a href="#">Ngay cả Pointing toàn năng cũng không có quyền kiểm soát</a></h5>
+                                <div class="meta">
+                                    <a href="#"><span class="mai-calendar"></span> 12/07/2018</a>
+                                    <a href="#"><span class="mai-person"></span> Admin</a>
+                                    <a href="#"><span class="mai-chatbubbles"></span> 19</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <a class="post-thumb" href="">
+                                <img src="../assets/img/blog/blog_3.jpg" alt="">
+                            </a>
+                            <div class="content">
+                                <h5 class="post-title"><a href="#">Ngay cả Pointing toàn năng cũng không có quyền kiểm soát</a></h5>
+                                <div class="meta">
+                                    <a href="#"><span class="mai-calendar"></span> 12/07/2018</a>
+                                    <a href="#"><span class="mai-person"></span> Admin</a>
+                                    <a href="#"><span class="mai-chatbubbles"></span> 19</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Thẻ</h3>
+                        <div class="tagcloud">
+                            <a href="#" class="tag-cloud-link">Khám tổng quát</a>
+                            <a href="#" class="tag-cloud-link">Khám đường ruột</a>
+                            <a href="#" class="tag-cloud-link">Cấp cứu</a>
+                            <a href="#" class="tag-cloud-link">Khám nha khoa</a>
+                            <a href="#" class="tag-cloud-link">Khám mắt</a>
+                            <a href="#" class="tag-cloud-link">Khám đường hô hấp</a>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div> <!-- .row -->
+    </div> <!-- .container -->
+</div> <!-- .page-section -->

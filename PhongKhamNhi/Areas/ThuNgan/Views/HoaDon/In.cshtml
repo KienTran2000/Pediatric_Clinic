@@ -1,0 +1,147 @@
+﻿@model List<PhongKhamNhi.Models.DTO.CtHdThuocDTO>
+
+@{ Layout = null; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice</title>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Areas/Content/dist/css/adminlte.min.css">
+    <!-- css_custom -->
+    <link href="~/Areas/Content/css_custom_admin.css" rel="stylesheet" />
+    <style>
+        .table-sign, .table-sign tr, .table-sign td {
+            border: none;
+        }
+
+            .table-sign th {
+                border: none;
+                background-color: #e9ecef00;
+            }
+
+            .table-sign.table-infor td {
+                vertical-align: top !important;
+            }
+    </style>
+</head>
+<body style="padding: 50px 100px;">
+    <section class="content" style="width: 1200px; margin: auto;">
+        <div class="row">
+            <div class="col-12">
+                <h2><b>PHÒNG KHÁM NHI MTA</b></h2>
+                <p>Địa chỉ: @ViewBag.hd.ChiNhanh.DiaChi</p>
+                <p>Điện thoại: 1900 1009</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <h1>HÓA ĐƠN BÁN THUỐC</h1>
+                    <p>Mã hóa đơn: @ViewBag.hd.MaHoaDon</p>
+                    <p>Ngày: @ViewBag.ngay</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sign table-infor">
+                    <tbody>
+                        <tr>
+                            <td style="width: 180px;">
+                                <p>Họ tên khách hàng:</p>
+                                <p>Số điện thoại:</p>
+                                <p>Địa chỉ:</p>
+                            </td>
+
+                            <td>
+                                <p>@ViewBag.hd.TenKH</p>
+                                <p>@ViewBag.hd.Sdt</p>
+                                <p>@ViewBag.hd.DiaChi</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-order">
+                    <thead>
+                        <tr>
+                            <th class="text-center">STT</th>
+                            <th>Tên thuốc</th>
+                            <th class="text-center">Đơn vị tính</th>
+                            <th class="text-center">Số lượng</th>
+                            <th class="text-right">Đơn giá</th>
+                            <th class="text-center">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @(i + 1)
+                                </td>
+                                <td>@Model[i].TenThuoc</td>
+                                <td class="text-center">
+                                    @Model[i].DonViTinh
+                                </td>
+                                <td class="text-center">
+                                    @Model[i].SoLuong
+                                </td>
+                                <td class="text-right">
+                                    @Model[i].DonGia.ToString("N0")
+                                </td>
+                                <td class="text-right">
+                                    @((Model[i].SoLuong * Model[i].DonGia).ToString("N0"))
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-right">
+                                <b>Tổng tiền: </b>
+                            </td>
+                            <td colspan="2" class="text-right">
+                                <b>@ViewBag.tong.ToString("N0")</b>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.col-->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sign">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <b>Khách hàng</b>
+                                <p>(Ký, ghi rõ họ tên)</p>
+                            </td>
+                            <td>
+                            </td>
+                            <td class="text-center">
+                                <b>Thu ngân</b>
+                                <p>(Ký, ghi rõ họ tên)</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+
+

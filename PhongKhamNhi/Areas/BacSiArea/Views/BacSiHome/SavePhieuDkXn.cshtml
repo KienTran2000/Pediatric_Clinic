@@ -1,0 +1,45 @@
+﻿@model ICollection<PhongKhamNhi.Models.Entities.XetNghiem>
+
+<div class="form-group">
+    <h5 style="margin: 10px 0 0 5px;">Danh sách xét nghiệm chỉ định</h5>
+</div>
+<table class="table table-xn">
+    <thead>
+        <tr>
+            <th>
+                Tên xét nghiệm
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenXN</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="row" style="margin-top:10px;">
+    <div class="col-md-8">
+
+    </div>
+    <div id="s-xn" class="col-md-4" style="">
+        <div id="s-xn" class="col-md-4" style="padding: 0 20px 10px 0; max-width: 100%; ">
+            <button class="btn btn-block btn-info btn-lg" onclick="ViewResult()">
+                <i class="ace-icon fa fa-check"></i>
+                Xem kết quả
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function ViewResult() {
+            $("#xn-cha").load("/BacSiArea/BacSiHome/ViewResult",
+                {}, function (data) {
+
+                });
+        }
+
+    </script>
+

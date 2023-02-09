@@ -1,0 +1,19 @@
+﻿@model ICollection<PhongKhamNhi.Models.DTO.ChiTietDonThuocDTO>
+
+@foreach (var item in Model)
+{
+    <tr id="thuoc-@item.MaThuoc">
+        <td>@item.TenThuoc</td>
+        <td class="text-center">@item.SoLuong</td>
+        <td class="text-center">@item.DonViTinh</td>
+        <td>@item.CachDung</td>
+        <td class="text-center">
+            <a class="edit-row-thuoc" title="Sửa">
+                <i class="fas fa-edit" aria-hidden="true"></i>
+            </a>
+            <a class="delete-row-thuoc" title="Xóa">
+                <i class="fas fa-trash-alt" style="color:red;"></i>
+            </a>
+        </td>
+    </tr>
+}

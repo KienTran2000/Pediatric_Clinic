@@ -1,0 +1,135 @@
+﻿@model PhongKhamNhi.Models.Entities.PhieuKhamBenh
+
+@{ Layout = null; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice</title>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Areas/Content/dist/css/adminlte.min.css">
+    <!-- css_custom -->
+    <link href="~/Areas/Content/css_custom_admin.css" rel="stylesheet" />
+    <style>
+        .table-sign, .table-sign tr, .table-sign td {
+            border: none;
+        }
+
+            .table-sign th {
+                border: none;
+                background-color: #e9ecef00;
+            }
+
+            .table-sign.table-infor td {
+                vertical-align: top !important;
+            }
+    </style>
+</head>
+<body style="padding: 50px 100px;">
+    <section class="content" style="width: 1200px; margin: auto;">
+        <div class="row">
+            <div class="col-12">
+                <h2><b>PHÒNG KHÁM NHI MTA</b></h2>
+                <p>Địa chỉ: @Model.ChiNhanh.DiaChi</p>
+                <p>Điện thoại: 1900 1009</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <h1>PHIẾU KHÁM BỆNH</h1>
+                    <p>Mã phiếu khám: @Model.MaPhieuKB</p>
+                    <p>Ngày: @ViewBag.ngay</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sign table-infor">
+                    <tbody>
+                        <tr>
+                            <td style="width: 180px;">
+                                <p>Mã bệnh nhi:</p>
+                                <p>Họ tên bệnh nhi:</p>
+                                <p>Ngày sinh:</p>
+                                <p>Giới tính:</p>
+                                <p>Địa chỉ:</p>
+                            </td>
+
+                            <td>
+                                <p>@Model.BenhNhi.MaBN</p>
+                                <p>@Model.BenhNhi.HoTen</p>
+                                <p>@Model.BenhNhi.NgaySinh.ToString().Split(' ')[0]</p>
+                                <p>@Model.BenhNhi.GioiTinh</p>
+                                <p>@Model.BenhNhi.DiaChi</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+            <div class="col-12">
+                <table class="table table-sign table-infor">
+                    <tbody>
+                        <tr>
+                            <td style="width: 180px;">
+                                <p>Bác sĩ khám:</p>
+                                <p>Loại dịch vụ:</p>
+                            </td>
+
+                            <td>
+                                <p>@Model.BacSi.HoTen</p>
+                                <p>@Model.DichVuKham.TenDV</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+            <div class="col-12">
+                <table class="table table-sign table-infor">
+                    <tbody>
+                        <tr>
+                            <td style="width: 180px;">
+                                <b>Tổng tiền:</b>
+                            </td>
+
+                            <td>
+                                <p>@Model.DonGia.ToString("N0")</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sign">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <b>Nhân viên lập phiếu</b>
+                                <p>(Ký, ghi rõ họ tên)</p>
+                            </td>
+                            <td>
+                            </td>
+                            <td class="text-center">
+                                <b>Thu ngân</b>
+                                <p>(Ký, ghi rõ họ tên)</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+
+

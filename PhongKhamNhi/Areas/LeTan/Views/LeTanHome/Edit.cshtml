@@ -1,0 +1,264 @@
+﻿@model PhongKhamNhi.Models.Entities.PhieuDangKyKham
+
+@{ ViewBag.Title = "Thông tin hẹn khám";
+                Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml"; }
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin hẹn khám</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách lịch hẹn", "Index", "LeTanHome")
+                    </li>
+                    <li class="breadcrumb-item active">Thông tin hẹn khám</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Edit", "LeTanHome", FormMethod.Post, new { @onsubmit = "return validateForm()" }))
+    {
+@Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                                @Html.HiddenFor(model => model.MaPhieuDKK)
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="card card-outline card-info">
+                                                            <div class="card-header">
+                                                                <div class="row" style="align-items: center;">
+                                                                    <div class="col-9">
+                                                                        <label style="margin-bottom: 0;">TRẠNG THÁI:</label>
+                                                                        <div class="form-group clearfix" style="display: inline; margin-left: 24px;">
+                                                                            @{ var f = "";
+                                                                                var t = "";
+                                                                                if (Model.TrangThai == true)
+                                                                                {
+                                                                                    t = "checked";
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    f = "checked";
+                                                                                } }
+                                                                            <div class="icheck-danger d-inline">
+                                                                                <input type="radio" name="tt" value="0" @f id="radioDanger1">
+                                                                                <label for="radioDanger1">Chờ xử lý</label>
+                                                                            </div>
+                                                                            <div class="icheck-danger d-inline" style="margin-left: 50px;">
+                                                                                <input type="radio" name="tt" value="1" @t id="radioDanger2">
+                                                                                <label class="a-done" for="radioDanger2">Đã xử lý</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <a href="~/Staff/StaffHome/Delete/@Model.MaPhieuDKK" class="btn btn-block btn-success btn-lg" onclick="return confirm('Bạn chắc chắn muốn xóa?')" style="background-color: red; border-color: red;">
+                                                                            <i class="fas fa-trash-alt"></i>
+                                                                            Xóa yêu cầu
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- /.card-header -->
+                                                            <div class="card-body">
+                                                                <div class="form-group row">
+                                                                    <label class="col-md-3">Họ tên bệnh nhi:</label>
+                                                                    <label class="col-md-5">@Model.BenhNhi.HoTen</label>
+
+                                                                    <label class="col-md-2 text-right">Ngày sinh:</label>
+                                                                    <div class="col-md-2" style="margin-bottom: 0.5rem;">
+                                                                        @Model.BenhNhi.NgaySinh.ToString("dd-MM-yyyy")
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group row">
+                                                                    <label class="col-md-2">Tên thân nhân:</label>
+                                                                    <div class="col-md-5" style="margin-bottom: 0.5rem;">
+                                                                        @Model.BenhNhi.TenThanNhan
+                                                                    </div>
+                                                                    <label class="col-md-3">Số điện thoại thân nhân:</label>
+                                                                    <div class="col-md-2" style="margin-bottom: 0.5rem;">
+                                                                        @Model.BenhNhi.SdtThanNhan
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Loại:</label>
+                                                                    @if (Model.Type)
+                                                                    {
+<span>Khám tại nhà</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>Khám tại phòng khám</span>
+                                                                    }
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Lời nhắn:</label>
+                                                                    @Html.TextAreaFor(model => model.LoiNhan, new { @class = "form-control", @rows = "3" })
+                                                                    @Html.ValidationMessageFor(model => model.LoiNhan, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.col-->
+                                                    <div class="col-md-4">
+                                                        <div class="card card-outline card-info">
+                                                            <div class="card-header">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                                                            <i class="ace-icon fa fa-check"></i>
+                                                                            Cập nhật
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <a href="~/LeTan/LeTanHome/Edit/@Model.MaPhieuDKK" class="btn btn-block btn-info btn-lg">
+                                                                            <i class="fas fa-sync"></i>
+                                                                            Nhập lại
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <label>Bác sĩ:</label>
+                                                                    <select id="bacSi" class="form-control" name="bs">
+                                                                        @foreach (var item in ViewBag.ListBacSi)
+                                                                        {
+                                                                            if (item.MaBS == Model.MaBS)
+                                                                            {
+                                                        <option selected="selected" value="@item.MaBS">@item.HoTen</option>
+ }
+                                                    else
+                                                    {
+                                <option value="@item.MaBS">@item.HoTen</option>}
+                                                }
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Ngày hẹn khám:</label>
+                                                                    <input id="ThoiGianHen" name="ThoiGianHen" class="form-control" type="date" value="@ViewBag.tgHen" min="@ViewBag.tgmin" required="required" />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Giờ hẹn:</label>
+                                                                    <select id="gioHen" class="form-control" name="gioHen">
+                                                                        @foreach (var item in ViewBag.ListGioHen)
+                                                                        {
+                                                                            if (item == ViewBag.gioHen)
+                                                                            {
+                                                        <option selected="selected" value="@item">@item</option>
+ }
+                                                    else
+                                                    {
+                                <option value="@item">@item</option>}
+                                                }
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- ./row -->
+                                                                                @*<div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        <i id="error-time" class="error-time bg-danger"><b>Thời gian hẹn khám của phòng khám từ thứ 2 đến thứ 7 hàng tuần!</b></i>
+                                                                                    </div>
+                                                                                </div>*@
+                                                                                                <div class="row">
+                                                                                                    <div class="col-md-12">
+                                                                                                        <div class="card card-outline card-info">
+                                                                                                            <div class="card-header">
+                                                                                                                <h5 style="display:inline-block;">
+                                                                                                                    Thời gian không hẹn khám được:
+                                                                                                                </h5>
+                                                                                                                <i id="alert-time" class="alert-time bg-danger"><b>Thời gian này bác sĩ đang thăm khám cho bệnh nhi khác!</b></i>
+                                                                                                            </div>
+                                                                                                            <div class="card-body">
+                                                                                                                <table id="table-t" class="table table-time">
+                                                                                                                    @foreach (var item in ViewBag.ListBacSi)
+                                                                                                                    {
+                                                                                                    <tr>
+                                                                                                        <td>@item.HoTen</td>
+                                                                                                        <td>
+                                                                                                            @foreach (var item1 in item.PhieuDangKyKhams)
+                                                                                                            {
+                                                                                        <span id="@item.MaBS-@item1.MaPhieuDKK" class="p-time">@item1.ThoiGianHen</span>}
+                                                                                                        </td>
+                                                                                                    </tr>}
+                                                                                                                </table>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>}
+</section>
+
+
+@section script{
+    <script>
+        var checkT = true;
+
+        $(document).ready(function () {
+            $(document).on('input', '#ThoiGianHen', function () {
+                $('#error-time')[0].style.display = "none";
+                $('#ThoiGianHen').removeClass('bg-danger');
+                //const dt = new Date($(this).val());
+                //if (dt.getDay() == 0) {
+                //    $('#error-time')[0].style.display = "inline-block";
+                //    $('#ThoiGianHen').addClass('bg-danger');
+                //    checkT = false;
+                //}
+                //else
+                    checkTime();
+            });
+
+            $(document).on('change', '#bacSi', checkTime);
+        });
+
+        function validateForm() {
+            if (checkT == false) {
+                alert("Bạn chưa chọn đủ thông tin. Vui lòng chọn lại!");
+                return false;
+            }
+        }
+
+        function checkTime() {
+            $.ajax({
+                url: "/LeTanHome/CheckTime",
+                dataType: "json",
+                method: "POST",
+                data: {
+                    time: $('#ThoiGianHen').val(),
+                    bacSi: $('#bacSi').val(),
+                    chiNhanh: @Model.MaChiNhanh,
+                    type: '@Model.Type'
+                },
+                success: function (res) {
+                    var markup = "";
+                    if (res.data.length > 0) {
+                        checkT = true;
+                        $('#bacSi').removeClass('bg-danger');
+                        $('#ThoiGianHen').removeClass('bg-danger');
+                        $('#gioHen').removeClass('bg-danger');
+                        for (var i in res.data) {
+                            markup += `<option value=\"${res.data[i]}\">${res.data[i]}</option>`;
+                        }
+                    }
+                    else {
+                        checkT = false;
+                        $('#bacSi').addClass('bg-danger');
+                        $('#ThoiGianHen').addClass('bg-danger');
+                        $('#gioHen').addClass('bg-danger');
+                        markup = `<option value=\"0\">Không khả dụng</option>`;
+                    }
+                    $("#gioHen").html(markup);
+                }
+            });
+        }
+
+    </script>
+}

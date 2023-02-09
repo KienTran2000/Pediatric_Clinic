@@ -1,0 +1,37 @@
+﻿@model ICollection<PhongKhamNhi.Models.DTO.ChiTietDonThuocDTO>
+
+<div class="form-group">
+    <h5 style="margin: 10px 0 0 10px;">Thuốc chỉ định</h5>
+</div>
+<table class="table table-xn">
+    <thead>
+        <tr>
+            <th class="text-center">Tên thuốc</th>
+            <th class="text-center">Số lượng</th>
+            <th class="text-center">Đơn vị tính</th>
+            <th class="text-center">Cách dùng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenThuoc</td>
+                <td class="text-center">@item.SoLuong</td>
+                <td class="text-center">@item.DonViTinh</td>
+                <td>@item.CachDung</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div id="luu-don-thuoc" class="row" style="margin: 0 10px 10px;">
+    <div class="col-md-8">
+
+    </div>
+    <div id="s-xn" class="col-md-4">
+        <a href="~/BacSiArea/BacSiHome/PrintDonThuoc" target="_blank" class="btn btn-block btn-info btn-lg">
+            <i class="fas fa-print"></i>
+            In đơn thuốc
+        </a>
+    </div>
+</div>

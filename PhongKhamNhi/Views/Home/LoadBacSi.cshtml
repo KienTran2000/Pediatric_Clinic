@@ -1,0 +1,7 @@
+﻿@model ICollection<PhongKhamNhi.Models.Entities.BacSi>
+
+<option value="">-- Chọn bác sĩ --</option>
+@foreach (var item in Model)
+{
+    <option value="@item.MaBS">@item.HoTen</option>
+}

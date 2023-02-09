@@ -1,0 +1,210 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.DTO.PhieuDkXnDTO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ThuNgan/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách phiếu đăng ký xét nghiệm</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <div class="form-search">
+            @using (Html.BeginForm("Index", "DkXn", FormMethod.Get, new { }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="">
+                                    <b>Tên bênh nhi</b>
+                                    <input type="text" class="form-control" name="bn" placeholder="" value="@ViewBag.bn">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Từ ngày</b>
+                                    <input type="date" class="form-control" name="tu" value="@ViewBag.tu">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Đến ngày</b>
+                                    <input type="date" class="form-control" name="den" value="@ViewBag.den">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Trạng thái</b>
+                                    <select class="form-control" name="trangThai">
+                                        <option value="">Trạng thái</option>
+                                        @{ if (ViewBag.trangThai == 0)
+                                            {
+                                                <option selected value="0">Chưa thanh toán</option>
+                                                <option value="1">Đã thanh toán</option>
+                                                <option value="2">Đã xét nghiệm</option>
+                                            }
+                                            else if (ViewBag.trangThai == 1)
+                                            {
+                                                <option value="0">Chưa thanh toán</option>
+                                                <option selected value="1">Đã thanh toán</option>
+                                                <option value="2">Đã xét nghiệm</option>
+                                            }
+                                            else if (ViewBag.trangThai == 2)
+                                            {
+                                                <option value="0">Chưa thanh toán</option>
+                                                <option value="1">Đã thanh toán</option>
+                                                <option selected value="2">Đã xét nghiệm</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="0">Chưa thanh toán</option>
+                                                <option value="1">Đã thanh toán</option>
+                                                <option value="2">Đã xét nghiệm</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="btn-search">
+                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <a href="~/ThuNgan/ThuNganHome/DkXn" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        Mã phiếu khám
+                    </th>
+                    <th class="text-center">
+                        Thời gian đăng ký xét nghiệm
+                    </th>
+                    <th class="text-center">
+                        Tên bệnh nhi
+                    </th>
+                    <th class="text-center">
+                        Tổng tiền
+                    </th>
+                    <th class="text-center">
+                        Trạng thái
+                    </th>
+                    <th class="text-center">
+                        <i class="fas fa-cogs"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.MaPhieuKB)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.ThoiGianLap)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoTen)
+                        </td>
+                        <td class="text-right">
+                            @item.TongTien.ToString("N0")
+                        </td>
+                        <td class="text-center">
+                            @{ if (item.TrangThai == 0)
+                                {
+                                    <p id="tt-@item.MaPhieuDKXN" class="pro-status ">Chưa thanh toán</p>
+                                }
+                                else
+                                {
+                                    <p id="tt-@item.MaPhieuDKXN" class="pro-status pro-status-finish">Đã thanh toán</p>
+                                }
+
+                            }
+                        </td>
+                        <td class="text-center">
+                            @{ if (item.TrangThai == 0)
+                                {
+                                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox" class="custom-control-input" id="@item.MaPhieuDKXN" onclick="return check(@item.MaPhieuDKXN)">
+                                        <label class="custom-control-label" for="@item.MaPhieuDKXN"></label>
+                                    </div>
+                                }
+                                else if (item.TrangThai == 1)
+                                {
+                                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox" checked class="custom-control-input" id="@item.MaPhieuDKXN" onclick="return check(@item.MaPhieuDKXN)">
+                                        <label class="custom-control-label" for="@item.MaPhieuDKXN"></label>
+                                    </div>
+                                }
+                                <a href="~/ThuNgan/DkXn/PrintDkXn/@item.MaPhieuDKXN" target="_blank" title="In phiếu">
+                                    <i class="fas fa-print"></i>
+                                </a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-12">
+                @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @bn = @ViewBag.bn, @tu = @ViewBag.tu, @den = @ViewBag.den, @trangThai = @ViewBag.trangThai }))
+            </div>
+        </div>
+    </div>
+</section>
+
+@section script{
+    <script>
+        function check(id) {
+            console.log(id);
+            if (confirm("Bạn chắc chắn muốn chuyển trạng thái phiếu đăng ký xét nghiệm?")) {
+                var tt = "#tt-" + id;
+                $.ajax({
+                    url: "/DkXn/ChangeStatus",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (res) {
+                        if ($(tt).hasClass("pro-status-finish")) {
+                            $(tt).removeClass("pro-status-finish");
+                            $(tt)[0].innerText = "Chưa thanh toán";
+                        }
+                        else {
+                            $(tt).addClass("pro-status-finish");
+                            $(tt)[0].innerText = "Đã thanh toán";
+                        }
+                    }
+                });
+                return true;
+            }
+            return false;
+        }
+
+    </script>
+}

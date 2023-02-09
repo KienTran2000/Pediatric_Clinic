@@ -1,0 +1,53 @@
+﻿@model List<PhongKhamNhi.Models.Entities.DichVuKham>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách dịch vụ khám</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Tên dịch vụ</th>
+                    <th class="text-center">Ảnh đại diện</th>
+                    <th class="text-center">Đơn giá</th>
+                    <th class="text-center">Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenDV)
+                        </td>
+                        <td class="text-center">
+                            <img src="/Content/assets/img/blog/@item.Anh" style="width: 80px;" />
+                        </td>
+                        <td class="text-right">
+                            @item.DonGia.ToString("N0")
+                        </td>
+                        <td class="text-center">
+                            <a href="~/Service/Detail/@item.MaDV" target="_blank" title="Chi tiết">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</section>

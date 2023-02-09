@@ -1,0 +1,113 @@
+﻿@model PhongKhamNhi.Models.Entities.BenhNhi
+
+@{
+    ViewBag.Title = "Registrie";
+}
+
+<div class="container" style="padding: 20px;">
+    <h4 class="text-center">Đăng ký tài khoản</h4>
+    @using (Html.BeginForm("Registrie", "Patient", FormMethod.Post, new { @id = "frm-res" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Họ tên bệnh nhi</label>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Ngày sinh</label>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control", @type = "date", @required = true } })
+                            @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Giới tính</label>
+                        <div class="col-md-12">
+                            <select class="form-control" name="GioiTinh">
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Tên thân nhân</label>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.TenThanNhan, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.TenThanNhan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Số điện thoại</label>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.SdtThanNhan, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.SdtThanNhan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Tên đăng nhập</label>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Địa chỉ</label>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Mật khẩu</label>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control", @type = "password", @required = true } })
+                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Nhập lại mật khẩu</label>
+                        <div class="col-md-12">
+                            <input class="form-control" type="password" name="repassword" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-block btn-round" style="width: 30%; margin-left: 50%; transform: translateX(-50%);">Đăng ký</button>
+            </div>
+        </div>
+    }
+    <div class="signup-section text-center">Bạn đã có tài khoản? <a href="/Patient/Login" class="text-info"> Đăng nhập ngay</a></div>
+</div>
+
+<script>
+    document.getElementById("frm-res").onsubmit = function () {
+        var x = document.forms["frm-res"]["MatKhau"].value;
+        var y = document.forms["frm-res"]["repassword"].value;
+        if (x != y) {
+            MessageBox("Xác nhận mật khẩu chưa chính xác!", "error");
+            return false;
+        }
+    }
+</script>

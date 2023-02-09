@@ -1,0 +1,159 @@
+﻿@model List<PhongKhamNhi.Models.Entities.DichVuKham>
+
+@{
+    ViewBag.Title = "Service";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-banner overlay-dark bg-image" style="background-image: url(/Content/assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Dịch vụ</li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal">Dịch vụ khám</h1>
+        </div> <!-- .container -->
+    </div> <!-- .banner-section -->
+</div> <!-- .page-banner -->
+
+<div class="page-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-sm-6 py-3">
+                            <div class="card-blog">
+                                <div class="header">
+                                    @*<div class="post-category">
+                                        <a href="#">Covid19</a>
+                                    </div>*@
+                                    <a href="/Home/ServiceDetail/@item.MaDV" class="post-thumb">
+                                        <img src="/Content/assets/img/blog/@item.Anh" alt="">
+                                    </a>
+                                </div>
+                                <div class="body">
+                                    <h4 class="post-title"><a href="/Home/ServiceDetail/@item.MaDV">@item.TenDV</a></h4>
+                                    <div class="site-info">
+                                        @*<div class="avatar mr-2">
+                                            <div class="avatar-img">
+                                                <img src="/Content/assets/img/person/person_1.jpg" alt="">
+                                            </div>
+                                            <span>Roger Adams</span>
+                                        </div>*@
+                                        @*<span class="mai-time"></span>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                    <div class="col-12 my-5" style="text-align: center;">
+                        <nav aria-label="Page Navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Trước</a>
+                                </li>
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Sau</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div> <!-- .row -->
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Tìm kiếm</h3>
+                        <form action="#" class="search-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Nhập từ khóa để tìm kiếm">
+                                <button type="submit" class="btn"><span class="icon mai-search"></span></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Dịch vụ</h3>
+                        <ul class="categories">
+                            <li><a href="#">Khám tổng quát <span>12</span></a></li>
+                            <li><a href="#">Khám đường ruột <span>22</span></a></li>
+                            <li><a href="#">Cấp cứu <span>37</span></a></li>
+                            <li><a href="#">Khám nha khoa <span>42</span></a></li>
+                            <li><a href="#">Khám mắt <span>14</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Blog gần đây  </h3>
+                        <div class="blog-item">
+                            <a class="post-thumb" href="">
+                                <img src="/Content/assets/img/blog/blog_1.jpg" alt="">
+                            </a>
+                            <div class="content">
+                                <h5 class="post-title"><a href="#">Ngay cả Pointing toàn năng cũng không có quyền kiểm soát</a></h5>
+                                <div class="meta">
+                                    <a href="#"><span class="mai-calendar"></span> 12/07/2018</a>
+                                    <a href="#"><span class="mai-person"></span> Admin</a>
+                                    <a href="#"><span class="mai-chatbubbles"></span> 19</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <a class="post-thumb" href="">
+                                <img src="/Content/assets/img/blog/blog_2.jpg" alt="">
+                            </a>
+                            <div class="content">
+                                <h5 class="post-title"><a href="#">Ngay cả Pointing toàn năng cũng không có quyền kiểm soát</a></h5>
+                                <div class="meta">
+                                    <a href="#"><span class="mai-calendar"></span> 12/07/2018</a>
+                                    <a href="#"><span class="mai-person"></span> Admin</a>
+                                    <a href="#"><span class="mai-chatbubbles"></span> 19</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <a class="post-thumb" href="">
+                                <img src="/Content/assets/img/blog/blog_3.jpg" alt="">
+                            </a>
+                            <div class="content">
+                                <h5 class="post-title"><a href="#">Ngay cả Pointing toàn năng cũng không có quyền kiểm soát</a></h5>
+                                <div class="meta">
+                                    <a href="#"><span class="mai-calendar"></span> 17/07/2018</a>
+                                    <a href="#"><span class="mai-person"></span> Admin</a>
+                                    <a href="#"><span class="mai-chatbubbles"></span> 19</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Thẻ</h3>
+                        <div class="tagcloud">
+                            <a href="#" class="tag-cloud-link">Khám tổng quát</a>
+                            <a href="#" class="tag-cloud-link">Khám đường ruột</a>
+                            <a href="#" class="tag-cloud-link">Cấp cứu</a>
+                            <a href="#" class="tag-cloud-link">Khám nha khoa</a>
+                            <a href="#" class="tag-cloud-link">Khám mắt</a>
+                            <a href="#" class="tag-cloud-link">Khám đường hô hấp</a>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div> <!-- .row -->
+    </div> <!-- .container -->
+</div> <!-- .page-section -->

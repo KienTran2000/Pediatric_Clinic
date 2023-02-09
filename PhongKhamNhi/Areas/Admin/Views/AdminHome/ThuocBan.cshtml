@@ -1,0 +1,121 @@
+﻿@model List<PhongKhamNhi.Models.DTO.ThuocBanDTO>
+
+@{
+    ViewBag.Title = "ThuocBan";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Số lượng thuốc bán</h1>
+            </div>
+            @*<div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            @Html.ActionLink("Trang chủ", "Index", "AdminHome")
+                        </li>
+                        <li class="breadcrumb-item active">Sản phẩm bán chạy</li>
+                    </ol>
+                </div>*@
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <div class="form-input-infor">
+            @using (Html.BeginForm("ThuocBan", "AdminHome", FormMethod.Get, new { @style= "margin: 8px 5px 20px;" }))
+            {
+                <div class="row" style="align-items: center;">
+                    <div class="col-2">
+                        <label>Năm</label>
+                        <select class="form-control" name="year">
+                            @foreach (var item in ViewBag.year)
+                            {
+                                var select = "";
+                                if (item == ViewBag.yearSelected)
+                                {
+                                    select = "selected";
+                                }
+                                <option @select value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label>Tháng</label>
+                        <select class="form-control" name="month">
+                            @for (var i = 1; i < 13; i++)
+                            {
+                                var select = "";
+                                if (i == ViewBag.month)
+                                {
+                                    select = "selected";
+                                }
+                                <option @select value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label>Chi nhánh</label>
+                        <select class="form-control" name="cn">
+                            <option value="0">Toàn bộ</option>
+                            @foreach (var item in ViewBag.lstCn)
+                            {
+                                var select = "";
+                                if (item.MaChiNhanh == ViewBag.cnSelected)
+                                {
+                                    select = "selected";
+                                }
+                                <option @select value="@item.MaChiNhanh">@item.TenChiNhanh</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <div class="btn-search" style="margin: 0;">
+                            <button type="submit" id="Submit" class="btn btn-block btn-success btn-lg" style="padding: 0.35rem 0rem;">
+                                Xem
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-4 text-right">
+                        <b>Tổng doanh thu: @ViewBag.total.ToString("N0") VND</b>
+                    </div>
+                </div>
+            }
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Mã thuốc</th>
+                    <th class="text-center">Tên thuốc</th>
+                    <th class="text-center">Đơn vị tính</th>
+                    <th class="text-center">Số lượng bán</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.MaThuoc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenThuoc)
+                            <a href="~/Product/Details/@item.MaThuoc" target="_blank" title="Xem trước">
+                                <i class="fas fa-link" style="font-size: 11px;"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.DonViTinh)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Sl)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

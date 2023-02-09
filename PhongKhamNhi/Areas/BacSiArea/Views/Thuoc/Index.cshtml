@@ -1,0 +1,100 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.Entities.Thuoc>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/BacSiArea/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách thuốc</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <div class="form-search">
+            @using (Html.BeginForm("Index", "Thuoc", FormMethod.Get, new { }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="">
+                                    <b>Tên thuốc</b>
+                                    <input type="text" class="form-control" name="ten" value="@ViewBag.ten">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Dịch vụ</b>
+                                    <select id="dichVu" class="form-control" name="lt">
+                                        <option value="0">- Chọn loại thuốc -</option>
+                                        @foreach (var item in ViewBag.ListLoaiThuoc)
+                                        {
+                                            if (@item.MaLoaiThuoc == ViewBag.lt)
+                                            {
+                                                <option selected value="@item.MaLoaiThuoc">@item.TenLoaiThuoc</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.MaLoaiThuoc">@item.TenLoaiThuoc</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="btn-search">
+                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <a href="~/BacSiArea/Thuoc" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>      }
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        Tên thuốc
+                    </th>
+                    <th class="text-center">
+                        Đơn vị tính
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenThuoc)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.DonViTinh)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @ten = @ViewBag.ten, @lt = @ViewBag.lt }))
+            </div>
+        </div>
+    </div>
+</section>
+

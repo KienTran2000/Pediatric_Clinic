@@ -1,0 +1,83 @@
+﻿@model PhongKhamNhi.Models.Entities.BacSi
+
+@{
+    ViewBag.Title = Model.HoTen;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-section pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <nav aria-label="Breadcrumb">
+                    <ol class="breadcrumb bg-transparent py-0 mb-5">
+                        <li class="breadcrumb-item"><a href="/DoctorTeam">Đội ngũ bác sĩ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@Model.HoTen</li>
+                    </ol>
+                </nav>
+            </div>
+        </div> <!-- .row -->
+
+        <div class="row">
+            <div class="col-lg-8">
+                <article class="blog-details">
+                    <div class="post-thumb">
+                        <img src="/Content/assets/img/doctors/@Model.Anh" alt="">
+                    </div>
+                    <h2 class="post-title h1">@Model.HocVi @Model.HoTen</h2>
+                    <div class="post-content">
+                        @Html.Raw(Model.GioiThieu)
+                    </div>
+                </article> <!-- .blog-details -->
+
+                @*<div class="comment-form-wrap pt-5">
+                    <h3 class="mb-5">Để lại lời nhắn</h3>
+                    <form action="#" class="">
+                        <div class="form-row form-group">
+                            <div class="col-md-6">
+                                <label for="name">Họ tên *</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email">Email *</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="website">Số điện thoại</label>
+                            <input type="text" class="form-control" id="website">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Lời nhắn</label>
+                            <textarea name="msg" id="message" cols="30" rows="8" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Post Comment" class="btn btn-primary">
+                        </div>
+
+                    </form>
+                </div>*@
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <div class="sidebar-block">
+                        <h3 class="sidebar-title">Đội ngũ bác sĩ</h3>
+                        @foreach (var item in ViewBag.lstBs)
+                        {
+                            <div class="blog-item">
+                                <a class="post-thumb" href="">
+                                    <img src="/Content/assets/img/doctors/@item.Anh" alt="">
+                                </a>
+                                <div class="content">
+                                    <h5 class="post-title"><a href="/DoctorTeam/Detail/@item.MaBS">@item.HoTen</a></h5>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .row -->
+    </div> <!-- .container -->
+</div> <!-- .page-section -->

@@ -1,0 +1,32 @@
+﻿@model ICollection<PhongKhamNhi.Models.Entities.BacSi>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.HoTen</td>
+        <td>
+            @foreach (var item1 in item.PhieuDangKyKhams)
+            {
+                var cla = "";
+                foreach (var item2 in ViewBag.ListLh.pdk)
+                {
+                    if (item1.MaPhieuDKK == item2)
+                    {
+                        cla = "bg-danger";
+                    }
+                }
+                <span id="@item.MaBS-@item1.MaPhieuDKK" class="p-time @cla">@item1.ThoiGianHen</span>
+            }
+        </td>
+    </tr>
+}
+
+
+@if (ViewBag.ListLh.pdk.Count > 0)
+{
+    <script>
+        $('#alert-time')[0].style.display = "block";
+        $('#ThoiGianHen').addClass('bg-danger');
+        var checkT = false;
+    </script>
+}

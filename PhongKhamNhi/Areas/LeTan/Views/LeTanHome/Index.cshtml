@@ -1,0 +1,231 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.DTO.PhieuDangKyKhamDTO2>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách hẹn khám</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <div class="form-search">
+            @using (Html.BeginForm("Index", "LeTanHome", FormMethod.Get, new { }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="">
+                                    <b>Số điện thoại</b>
+                                    <input type="text" class="form-control" name="sdt" placeholder="" value="@ViewBag.sdt">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Ngày đăng ký</b>
+                                    <input type="date" class="form-control" name="tgDk" value="@ViewBag.tgDk">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Ngày hẹn đến khám</b>
+                                    <input type="date" class="form-control" name="tgHen" value="@ViewBag.tgHen">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Loại</b>
+                                    <select class="form-control" name="type">
+                                        <option value="">Tất cả</option>
+                                        @{ if (ViewBag.type == "0")
+                                            {
+                                    <option selected value="0">Khám tại phòng khám</option>
+                                                        <option value="1">Khám tại nhà</option> }
+                                                                        else if (ViewBag.type == "1")
+                                                                        {
+                                                        <option value="0">Khám tại phòng khám</option>
+                                                                            <option value="1" selected>Khám tại nhà</option> }
+                                                                                            else
+                                                                                            {
+                                                                            <option value="0">Khám tại phòng khám</option>
+                                                                                                <option value="1">Khám tại nhà</option> } }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Trạng thái</b>
+                                    <select class="form-control" name="trangThai">
+                                        <option value="">Tất cả</option>
+                                        @{ if (ViewBag.trangThai == "0")
+                                            {
+                            <option selected value="0">Mới</option>
+                                                <option value="1">Đã xử lý</option> }
+                                                                else if (ViewBag.trangThai == "1")
+                                                                {
+                                                <option value="0">Mới</option>
+                                                                    <option selected value="1">Đã xử lý</option> }
+                                                                                    else
+                                                                                    {
+                                                                    <option value="0">Mới</option>
+                                                                                        <option value="1">Đã xử lý</option> } }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="btn-search">
+                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <a href="~/LeTan/LeTanHome/Index" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        @using (Html.BeginForm("Index", "LeTanHome", FormMethod.Post, new { }))
+        {
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @*<a href="~/LeTan/LeTanHome/Create" class="create-new">
+                            <i class="fas fa-plus"></i>
+                            Thêm mới
+                        </a>*@
+                        <button type="submit" class="btn-delete" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                            <i class="fa fa-trash-alt"></i>
+                            Xóa
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @sdt = @ViewBag.sdt, @tgDk = @ViewBag.tgDk, @tgHen = @ViewBag.tgHen, @trangThai = @ViewBag.trangThai }))
+                    </div>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            <input type="checkbox" id="checkBoxAll" />
+                        </th>
+                        <th class="text-center">
+                            Thời gian đăng ký
+                        </th>
+                        <th class="text-center">
+                            Họ và tên
+                        </th>
+                        <th class="text-center">
+                            Số điện thoại
+                        </th>
+                        <th class="text-center">
+                            Thời gian hẹn
+                        </th>
+                        <th class="text-center">
+                            Loại
+                        </th>
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+                        <th class="text-center">
+                            <i class="fas fa-cogs"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="text-center">
+                            <input type="checkbox" class="checkBoxId" value="@item.MaPhieuDKK" name="checkBoxId" />
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.ThoiGianDKK)
+                        </td>
+                        <td>
+                            <a href="~/LeTan/BenhNhi/Edit/@item.MaBN">@item.HoTen</a>
+                        </td>
+                        <td class="text-center">
+                            <a href="tel:@item.SdtThanNhan">@item.SdtThanNhan</a>
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.ThoiGianHen)
+                        </td>
+                        <td>
+                            @{ if (item.Type == true)
+                                {
+                        <span>Khám tại nhà</span> }
+                    else
+                    {
+                        <span>Khám tại phòng khám</span> } }
+                        </td>
+                        <td class="text-center">
+                            @{ if (item.TrangThai == false)
+                                {
+                    <p class="pro-status">Mới</p> }
+                                        else
+                                        {
+                    <p class="pro-status pro-status-finish">Đã xử lý</p> } }
+                        </td>
+                        <td class="text-center">
+                            @{ if (item.TrangThai == true)
+                                {
+                    <a href="~/LeTan/PhieuKham/CreateByPdk/@item.MaPhieuDKK" title="Tạo phiếu khám bệnh">
+                        <i class="fas fa-notes-medical"></i>
+                    </a> } }
+                            <a href="~/LeTan/LeTanHome/Edit/@item.MaPhieuDKK" title="Sửa">
+                                <i class="fas fa-edit" aria-hidden="true"></i>
+                            </a>
+                            <a href="~/LeTan/LeTanHome/Delete/@item.MaPhieuDKK" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                                <i class="fas fa-trash-alt" style="color:red;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        <p class="text-center" style="margin: 0; padding-bottom: 4px;">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+
+    </div>
+</section>
+
+<div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
+
+</div>
+
+@section script{
+    <script>
+        $(document).ready(function () {
+            $('#checkBoxAll').click(function () {
+                if ($(this).is(":checked"))
+                    $('.checkBoxId').prop('checked', true);
+                else
+                    $('.checkBoxId').prop('checked', false);
+            });
+        });
+
+    </script>
+}
+
+
+
+
+

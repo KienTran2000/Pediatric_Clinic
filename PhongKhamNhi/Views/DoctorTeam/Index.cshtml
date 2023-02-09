@@ -1,0 +1,72 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.Entities.BacSi>
+
+@{ ViewBag.Title = "Đội ngũ bác sĩ"; }
+
+<div class="page-banner overlay-dark bg-image" style="background-image: url(/Content/assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+
+    </div> <!-- .banner-section -->
+</div> <!-- .page-banner -->
+
+<div class="page-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+        <div class="col-md-6 col-lg-4 py-3 wow zoomIn">
+            <div class="card-doctor">
+                <div class="header">
+                    <img src="~/Content/assets/img/doctors/@item.Anh" alt="">
+                    <div class="meta">
+                        <a href="#"><span class="mai-call"></span></a>
+                        <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                    </div>
+                </div>
+                <div class="body">
+                    <a href="/DoctorTeam/Detail/@item.MaBS" class="text-xl mb-0">@item.HoTen</a><br />
+                    <span class="text-sm text-grey">@item.HocVi</span>
+                </div>
+            </div>
+        </div>}
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- .container -->
+</div> <!-- .page-section -->
+
+@*<div class="page-section">
+    <div class="container">
+        <h1 class="text-center wow fadeInUp">Đăng ký tư vấn ngay</h1>
+
+        <form class="contact-form mt-5">
+            <div class="row mb-3">
+                <div class="col-sm-6 py-2 wow fadeInLeft">
+                    <label for="fullName">Họ và tên</label>
+                    <input type="text" id="fullName" class="form-control" ">
+                </div>
+                <div class="col-sm-6 py-2 wow fadeInRight">
+                    <label for="emailAddress">Số điện thoại</label>
+                    <input type="text" id="emailAddress" class="form-control">
+                </div>
+                <div class="col-12 py-2 wow fadeInUp">
+                    <label for="subject">Email</label>
+                    <input type="email" id="subject" class="form-control">
+                </div>
+                <div class="col-12 py-2 wow fadeInUp">
+                    <label for="message">Nội dung</label>
+                    <textarea id="message" class="form-control" rows="8" placeholder="Nhập nội dung.."></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary wow zoomIn">Gửi yêu cầu</button>
+        </form>
+    </div>
+</div>*@
