@@ -86,11 +86,11 @@
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <b>Biểu hiện:</b>
-                                @Html.TextAreaFor(model => model.BieuHien, new { @class = "form-control", @rows = "3" })
+                                @Html.TextAreaFor(model => model.BieuHien, new { @class = "form-control", @rows = "3", @readonly = "readonly" })
                             </div>
                             <div class="col-md-6">
                                 <b>Kết luận:</b>
-                                @Html.TextAreaFor(model => model.KetLuan, new { @class = "form-control", @rows = "3", @required = "required" })
+                                @Html.TextAreaFor(model => model.KetLuan, new { @class = "form-control", @rows = "3", , @readonly = "readonly" })
                             </div>
                         </div>
                         <div class="row">
