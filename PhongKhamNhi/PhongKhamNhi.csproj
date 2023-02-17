@@ -148,6 +148,7 @@
     <Compile Include="Areas\LeTan\Controllers\DichVuController.cs" />
     <Compile Include="Areas\LeTan\Controllers\LeTanHomeController.cs" />
     <Compile Include="Areas\LeTan\Controllers\PhieuKhamController.cs" />
+    <Compile Include="Areas\LeTan\Controllers\TaiKhoanController.cs" />
     <Compile Include="Areas\LeTan\LeTanAreaRegistration.cs" />
     <Compile Include="Areas\NvBt\Controllers\DonThuocController.cs" />
     <Compile Include="Areas\NvBt\Controllers\NvBtHomeController.cs" />
@@ -1005,6 +1006,9 @@
     <Content Include="Areas\NvXn\Views\NvXnHome\In.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Header.cshtml" />
     <Content Include="Areas\Admin\Views\AdminHome\ThuocBan.cshtml" />
+    <Content Include="Areas\LeTan\Views\TaiKhoan\Index.cshtml" />
+    <Content Include="Areas\LeTan\Views\BenhNhi\EditPasswordBN.cshtml" />
+    <Content Include="Areas\LeTan\Views\PhieuKham\Detail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />

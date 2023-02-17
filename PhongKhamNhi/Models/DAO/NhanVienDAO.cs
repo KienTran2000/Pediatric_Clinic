@@ -20,5 +20,21 @@ namespace PhongKhamNhi.Models.DAO
                 return res.FirstOrDefault();
             return null;
         }
+
+        public int Update(NhanVien nv)
+        {
+            NhanVien tmp = db.NhanViens.Find(nv.MaNV);
+            if (tmp != null)
+            {
+                tmp.GioiTinh = nv.GioiTinh;
+                tmp.ChucVu = nv.ChucVu;
+                tmp.HoTen = nv.HoTen;
+                tmp.NgaySinh = nv.NgaySinh;
+                tmp.NgayVaoLam = nv.NgayVaoLam;
+                tmp.Sdt = nv.Sdt;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.MaNV;
+        }
     }
 }

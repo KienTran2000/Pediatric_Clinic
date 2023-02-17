@@ -1,4 +1,5 @@
 ﻿using PhongKhamNhi.Models.DAO;
+using PhongKhamNhi.Models.DTO;
 using PhongKhamNhi.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -147,6 +148,19 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
         {
             new PhieuKhamBenhDAO().Delete(id);
             return RedirectToAction("Index", "PhieuKham");
+        }
+
+        public ActionResult Detail(int id)
+        {
+            PhieuKhamBenh p = new PhieuKhamBenhDAO().FindByID(id);
+            PhieuDkXnDAO dao = new PhieuDkXnDAO();
+            PhieuDKXN x = dao.FindByMaPk(id);
+            if (x != null)
+                ViewBag.PhieuDkXn = dao.ListKqXn(x.MaPhieuDKXN);
+            List<ChiTietDonThuocDTO> lst = new ThuocDAO().lstThuocByMaPk(id);
+            if (lst.Count > 0)
+                ViewBag.DonThuoc = lst;
+            return View(p);
         }
     }
 }

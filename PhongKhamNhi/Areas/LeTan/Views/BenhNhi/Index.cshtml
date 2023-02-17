@@ -2,10 +2,8 @@
 
 @model PagedList.IPagedList<PhongKhamNhi.Models.Entities.BenhNhi>
 
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml";
-}
+@{ ViewBag.Title = "Index";
+                Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml"; }
 
 <section class="content-header">
     <div class="container-fluid">
@@ -22,136 +20,141 @@
         <div class="form-search">
             @using (Html.BeginForm("Index", "BenhNhi", FormMethod.Get, new { }))
             {
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="">
-                                    <b>Họ tên bệnh nhi</b>
-                                    <input type="text" class="form-control" name="ten" value="@ViewBag.ten">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="">
-                                    <b>Ngày sinh</b>
-                                    <input type="date" class="form-control" name="ns" value="@ViewBag.ns">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="">
-                                    <b>SĐT thân nhân</b>
-                                    <input type="text" class="form-control" name="sdt" placeholder="" value="@ViewBag.sdt">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="">
-                                    <b>Điạ chỉ</b>
-                                    <input type="text" class="form-control" name="dc" placeholder="" value="@ViewBag.dc">
-                                </div>
-                            </div>
-                            <div class="col-1">
-                                <div class="btn-search">
-                                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                    <a href="~/LeTan/BenhNhi/Index" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
-                                        <i class="fas fa-sync-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-3">
+                <div class="">
+                    <b>Họ tên bệnh nhi</b>
+                    <input type="text" class="form-control" name="ten" value="@ViewBag.ten">
                 </div>
-            }
+            </div>
+            <div class="col-3">
+                <div class="">
+                    <b>Ngày sinh</b>
+                    <input type="date" class="form-control" name="ns" value="@ViewBag.ns">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="">
+                    <b>SĐT thân nhân</b>
+                    <input type="text" class="form-control" name="sdt" placeholder="" value="@ViewBag.sdt">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="">
+                    <b>Điạ chỉ</b>
+                    <input type="text" class="form-control" name="dc" placeholder="" value="@ViewBag.dc">
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="btn-search">
+                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <a href="~/LeTan/BenhNhi/Index" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                        <i class="fas fa-sync-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>            }
         </div>
 
         @using (Html.BeginForm("Index", "BenhNhi", FormMethod.Post, new { }))
         {
-            <div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <a href="~/LeTan/BenhNhi/Create" class="create-new">
-                            <i class="fas fa-plus"></i>
-                            Thêm mới
-                        </a>
-                        <button type="submit" class="btn-delete" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
-                            <i class="fa fa-trash-alt"></i>
-                            Xóa
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @sdt = @ViewBag.sdt, @ten = @ViewBag.ten, @ns = @ViewBag.ns, @dc = @ViewBag.dc }))
-                    </div>
-                </div>
-            </div>
+<div>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="~/LeTan/BenhNhi/Create" class="create-new">
+                <i class="fas fa-plus"></i>
+                Thêm mới
+            </a>
+            <button type="submit" class="btn-delete" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                <i class="fa fa-trash-alt"></i>
+                Xóa
+            </button>
+        </div>
+        <div class="col-md-6">
+            @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @sdt = @ViewBag.sdt, @ten = @ViewBag.ten, @ns = @ViewBag.ns, @dc = @ViewBag.dc }))
+        </div>
+    </div>
+</div>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="text-center"><input type="checkbox" id="checkBoxAll" /></th>
-                        <th class="text-center">Mã</th>
-                        <th class="text-center">Họ và tên</th>
-                        <th class="text-center">Giới tính</th>
-                        <th class="text-center">Ngày sinh</th>
-                        <th class="text-center">Thân nhân</th>
-                        <th class="text-center">SĐT thân nhân</th>
-                        <th class="text-center">Địa chỉ</th>
-                        <th class="text-center"><i class="fas fa-cogs"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                    <tr>
-                        <td class="text-center">
-                            <input type="checkbox" class="checkBoxId" value="@item.MaBN" name="checkBoxId" />
-                        </td>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => item.MaBN)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.HoTen)
-                        </td>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => item.GioiTinh)
-                        </td>
-                        <td class="text-center">
-                            @Html.DisplayFor(modelItem => item.NgaySinh.ToString().Split(' ')[0])
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TenThanNhan)
-                        </td>
-                        <td class="text-center">
-                            <a href="tel:@item.SdtThanNhan">@item.SdtThanNhan</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DiaChi)
-                        </td>
-                        <td class="text-center">
-                            <a href="~/LeTan/PhieuKham/Create/@item.MaBN" title="Tạo phiếu khám bệnh">
-                                <i class="fas fa-notes-medical"></i>
-                            </a>
-                            <a href="~/LeTan/BenhNhi/History/@item.MaBN" title="Lịch sử khám bệnh">
-                                <i class="fas fa-history"></i>
-                            </a>
-                            <a href="~/LeTan/BenhNhi/Edit/@item.MaBN" title="Sửa">
-                                <i class="fas fa-edit" aria-hidden="true"></i>
-                            </a>
-                            <a href="~/LeTan/BenhNhi/Delete/@item.MaBN" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
-                                <i class="fas fa-trash-alt" style="color:red;"></i>
-                            </a>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><input type="checkbox" id="checkBoxAll" /></th>
+                            <th class="text-center">Mã</th>
+                            <th class="text-center">Họ và tên</th>
+                            <th class="text-center">Giới tính</th>
+                            <th class="text-center">Ngày sinh</th>
+                            <th class="text-center">Thân nhân</th>
+                            <th class="text-center">SĐT thân nhân</th>
+                            <th class="text-center">Địa chỉ</th>
+                            <th class="text-center"><i class="fas fa-cogs"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+        <tr>
+            <td class="text-center">
+                <input type="checkbox" class="checkBoxId" value="@item.MaBN" name="checkBoxId" />
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.MaBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.GioiTinh)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.NgaySinh.ToString().Split(' ')[0])
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenThanNhan)
+            </td>
+            <td class="text-center">
+                <a href="tel:@item.SdtThanNhan">@item.SdtThanNhan</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td class="text-center">
+                <a href="~/LeTan/PhieuKham/Create/@item.MaBN" title="Tạo phiếu khám bệnh">
+                    <i class="fas fa-notes-medical"></i>
+                </a>
+                <a href="~/LeTan/BenhNhi/History/@item.MaBN" title="Lịch sử khám bệnh">
+                    <i class="fas fa-history"></i>
+                </a>
+                <a href="~/LeTan/BenhNhi/Edit/@item.MaBN" title="Sửa">
+                    <i class="fas fa-edit" aria-hidden="true"></i>
+                </a>
+                <a href="#" onclick="funcEditPassword(@item.MaBN)" title="Đặt lại mật khẩu" style="color: darkorange;">
+                    <i class="fas fa-key"></i>
+                </a>
+                <a href="~/LeTan/BenhNhi/Delete/@item.MaBN" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                    <i class="fas fa-trash-alt" style="color:red;"></i>
+                </a>
 
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
-        }
+            </td>
+        </tr>}
+                    </tbody>
+                </table>}
         <p class="text-center" style="margin: 0; padding-bottom: 4px;">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
 
     </div>
 </section>
+
+<div class="modal fade" id="modalEditPassword" role="dialog" aria-hidden="true">
+
+</div>
+
 
 @section script{
     <script>
@@ -163,6 +166,12 @@
                     $('.checkBoxId').prop('checked', false);
             });
         });
-
+        function funcEditPassword(id) {
+            var url = "/LeTan/BenhNhi/EditPasswordBN?id=" + id;
+            $("#modalEditPassword").load(url, function (data) {
+                $("#modalEditPassword").html(data);
+                $("#modalEditPassword").modal("show");
+            });
+        }
     </script>
 }

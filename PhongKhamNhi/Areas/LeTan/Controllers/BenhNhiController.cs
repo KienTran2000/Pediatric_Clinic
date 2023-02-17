@@ -1,4 +1,5 @@
 ﻿using PhongKhamNhi.Models.DAO;
+using PhongKhamNhi.Models.DTO;
 using PhongKhamNhi.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -78,5 +79,7 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
             new BenhNhiDAO().Delete(id);
             return RedirectToAction("Index", "BenhNhi");
         }
+
+        
     }
 }

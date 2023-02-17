@@ -188,6 +188,24 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
             NhanVien nv = (NhanVien)Session["user"];
             return PartialView(new PhieuDangKyKhamDAO().SlPhieuDk(nv.MaChiNhanh));
         }
+
+        public ActionResult EditPasswordBN(int id)
+        {
+            return View(id);
+        }
+        [HttpPost]
+        public ActionResult EditPasswordBN(int id, string password)
+        {
+            if (ModelState.IsValid)
+            {
+                BenhNhiDAO dao = new BenhNhiDAO();
+                BenhNhi bn = dao.FindByID(id);
+                bn.MatKhau = password;
+                dao.Update(bn);
+                return RedirectToAction("Index", "LeTanHome");
+            }
+            return PartialView();
+        }
     }
     public class ResultLichHen
     {

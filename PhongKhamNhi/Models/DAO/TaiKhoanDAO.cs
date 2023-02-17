@@ -27,5 +27,24 @@ namespace PhongKhamNhi.Models.DAO
         //        return true;
         //    return false;
         //}
+
+        public TaiKhoan FindByID(int id)
+        {
+            return db.TaiKhoans.Find(id);
+        }
+
+        public int Update(TaiKhoan tk)
+        {
+            TaiKhoan tmp = db.TaiKhoans.Find(tk.IdTaiKhoan);
+            if (tmp != null)
+            {
+                tmp.MaQuyen = tk.MaQuyen;
+                tmp.MatKhau = tk.MatKhau;
+                tmp.TenDangNhap = tk.TenDangNhap;
+                tmp.TrangThai = tk.TrangThai;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.IdTaiKhoan;
+        }
     }
 }
