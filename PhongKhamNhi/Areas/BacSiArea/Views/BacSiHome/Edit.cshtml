@@ -33,9 +33,31 @@
             <div class="col-md-12">
                 <div class="card card-outline card-info">
                     <div class="card-header">
-                        <h4 class="">
-                            Thông tin chính
-                        </h4>
+                        @if (Model.TrangThai == 2)
+                        {
+
+
+                            <h4 class="">
+                                Thông tin chính
+                            </h4>
+                        }
+                        else
+                        {
+                            <div class="row" style="align-items: center;">
+                                <div class="col-12">
+                                    <label style="margin-bottom: 0;">TRẠNG THÁI:</label>
+                                    <div class="form-group clearfix" style="display: inline; margin-left: 24px;">
+
+                                        <div class="icheck-danger d-inline" style="margin-left: 50px;">
+                                            <input type="radio" name="tt" value="2" id="radioDanger2">
+                                            <label class="a-done" for="radioDanger2">Đã khám</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">

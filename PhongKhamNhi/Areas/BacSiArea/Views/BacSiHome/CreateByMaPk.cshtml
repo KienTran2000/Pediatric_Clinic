@@ -1,0 +1,295 @@
+﻿@model PhongKhamNhi.Models.Entities.HoaDonBanThuoc
+
+@{
+    ViewBag.Title = "CreateByMaPk";
+    Layout = "~/Areas/BacSiArea/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm mới hóa đơn thuốc</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách hóa đơn", "Index", "BacSiHome")
+                    </li>
+                    <li class="breadcrumb-item active">Thêm mới hóa đơn</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    @using (Html.BeginForm("CreateByMaPk", "BacSiHome", FormMethod.Post, new { @onsubmit = "return validateForm()" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin thuốc
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-spinner"></i>
+                                    </span>
+                                </div>
+                                <input id="thuoc" type="text" class="form-control" placeholder="Nhập tên thuốc">
+                            </div>
+                        </div>
+                        <table class="table table-order">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        Tên thuốc
+                                    </th>
+                                    <th class="text-center">
+                                        Giá
+                                    </th>
+                                    <th class="text-center">
+                                        Số lượng
+                                    </th>
+                                    <th class="text-center">
+                                        Đơn vị tính
+                                    </th>
+                                    <th class="text-center">
+                                        Tổng
+                                    </th>
+                                    <th class="text-center">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center no-product" style="display: none">
+                                        <p style="margin-bottom: 0;">Chưa có thuốc nào được chọn</p>
+                                    </td>
+                                </tr>
+                                @foreach (var item in ViewBag.ListThuoc)
+                                {
+                                    <tr id="@item.MaThuoc">
+                                        <td>@item.TenThuoc</td>
+                                        <td class="text-right">@item.DonGia.ToString("N0")</td>
+                                        <td class="text-center">
+                                            <input class="input-quantity" type="number" value="@item.SoLuong" min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        </td>
+                                        <td class="text-center">@item.DonViTinh</td>
+                                        <td id="sum-@item.MaThuoc" class="text-right">@((item.DonGia * @item.SoLuong).ToString("N0"))</td>
+                                        <td class="text-center delete-row">
+                                            <i class="fas fa-trash-alt" style="color: red;"></i>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" class="text-right">
+                                        <b>Tổng phải trả: </b>
+                                    </td>
+                                    <td colspan="2" class="text-right">
+                                        <b id="total-money" name="totalMoney">@ViewBag.tong.ToString("N0")</b>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-block btn-success btn-lg">
+                                    <i class="ace-icon fa fa-check"></i>
+                                    Cập nhật
+                                </button>
+                            </div>
+                            <div class="col-2">
+                                <button type="reset" class="btn btn-block btn-info btn-lg">
+                                    <i class="fas fa-sync"></i>
+                                    Nhập lại
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+            <div class="col-md-4">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Khách hàng
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>
+                                Họ tên:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                </div>
+                                @*<input id="fullName" name="fullName" type="text" class="form-control" required>
+                                    <input id="idUs" name="idUs" style="display:none">*@
+                                @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Số điện thoại:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </span>
+                                </div>
+                                @*<input id="phone" name="phone" type="tel" class="form-control" maxlength="10" , onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
+                                    <input id="phoneUs" name="phoneUs" style="display:none">*@
+                                @Html.EditorFor(model => model.Sdt, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                @Html.ValidationMessageFor(model => model.Sdt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Địa chỉ:
+                                @*<i class="fas fa-asterisk"></i>*@
+                            </label>
+                            @Html.TextAreaFor(model => model.DiaChi, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+@section script{
+    <script>
+        var tMoney = @ViewBag.tong;
+        var common = {
+            init: function () {
+                common.registerEvent();
+            },
+            registerEvent: function () {
+                $("#thuoc").autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "/BacSiHome/ListThuoc",
+                            dataType: "json",
+                            data: {
+                                key: request.term
+                            },
+                            success: function (res) {
+                                response(res.data);
+                            }
+                        });
+                    },
+                    focus: function (event, ui) {
+                        $("#thuoc").val(ui.item.label);
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        $('.no-product')[0].style.display = "none";
+                        var tmp = $('.table-order').find('[id="' + ui.item.MaThuoc + '"]');
+                        if (tmp.length == 0) {
+                            var price = String(ui.item.DonGia).replace(/(.)(?=(\d{3})+$)/g, '$1,');
+                            var markup = "<tr id = \"" + ui.item.MaThuoc + "\">"
+                                + "<td>" + ui.item.TenThuoc + "</td>"
+                                + "<td class=\"text-right\">" + price + "</td>"
+                                + "<td class=\"text-center\">"
+                                + "<input class=\"input-quantity\" type=\"number\" value=\"1\" min=\"1\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\">"
+                                + "</td>"
+                                + "<td class=\"text-center\">" + ui.item.DonViTinh + "</td>"
+                                + "<td id = \"sum-" + ui.item.MaThuoc + "\" class=\"text-right\">" + price + "</td>"
+                                + "<td class=\"text-center delete-row\">"
+                                + "<i class=\"fas fa-trash-alt\" style=\"color: red;\"></i>"
+                                + "</td>"
+                                + "</tr>";
+                            $("table tbody").append(markup);
+
+                            $.ajax({
+                                url: "/BacSiHome/AddThuoc",
+                                dataType: "json",
+                                data: { id: ui.item.MaThuoc },
+                                success: function (res) {
+                                    $('#total-money').html(String(res.data.totalMoney).replace(/(.)(?=(\d{3})+$)/g, '$1,'));
+                                    tMoney = res.data.totalMoney;
+                                }
+                            });
+                        }
+                        return false;
+                    }
+                })
+                    .autocomplete("instance")._renderItem = function (ul, item) {
+                        return $("<li>")
+                            .append("<div id = \"" + item.MaThuoc + "\" class = \"add-product\">" +
+                            item.TenThuoc + " - " + String(item.DonGia).replace(/(.)(?=(\d{3})+$)/g, '$1,') +
+                                "đ</div>")
+                            .appendTo(ul);
+                    };
+            }
+        }
+        common.init();
+
+        // Find and remove selected table rows
+        $(document).on('click', '.delete-row', function () {
+            $.ajax({
+                url: "/BacSiHome/DeleteThuoc",
+                dataType: "json",
+                data: { id: $(this)[0].parentElement.id },
+                success: function (res) {
+                    $('#total-money').html(String(res.data.totalMoney).replace(/(.)(?=(\d{3})+$)/g, '$1,'));
+                    if (res.data.totalMoney == 0) {
+                        tMoney = 0;
+                        $('.no-product')[0].style.display = "revert";
+                    }
+                }
+            });
+            $(this).parents("tr").remove();
+        });
+
+        //Update item quantity
+        $(document).on('input', '.input-quantity', function () {
+            $.ajax({
+                url: "/BacSiHome/UpdateThuoc",
+                dataType: "json",
+                data: {
+                    id: $(this)[0].parentElement.parentElement.id,
+                    quantity: $(this).val()
+                },
+                success: function (res) {
+                    $('#sum-' + res.data.id).html(String(res.data.value).replace(/(.)(?=(\d{3})+$)/g, '$1,'));
+                    $('#total-money').html(String(res.data.totalMoney).replace(/(.)(?=(\d{3})+$)/g, '$1,'));
+                    tMoney = res.data.totalMoney;
+                }
+            });
+        });
+
+        function validateForm() {
+            if (tMoney == 0) {
+                alert("Bạn chưa chọn thuốc!");
+                return false;
+            }
+        }
+    </script>
+}

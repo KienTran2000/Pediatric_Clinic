@@ -42,7 +42,7 @@ namespace PhongKhamNhi.Models.DAO
         }
         public int SlPhieuDkXn(int cn)
         {
-            var res = (from s in db.PhieuDKXNs where s.PhieuKhamBenh.MaChiNhanh == cn && s.TrangThai != 0 select s);
+            var res = (from s in db.PhieuDKXNs where s.PhieuKhamBenh.MaChiNhanh == cn && s.TrangThai == 1 select s);
             return res.Count();
         }
 

@@ -38,5 +38,38 @@ namespace PhongKhamNhi.Models.DAO
         {
             return db.XetNghiems.Find(id);
         }
+
+        public int Delete(int id)
+        {
+            XetNghiem xn = db.XetNghiems.Find(id);
+            if (xn != null)
+            {
+                db.XetNghiems.Remove(xn);
+                return db.SaveChanges();
+            }
+            else
+                return -1;
+        }
+
+        public int Insert(XetNghiem xn)
+        {
+            db.XetNghiems.Add(xn);//luu tren RAM
+            db.SaveChanges();//luu vao o dia
+            return xn.MaXN;
+        }
+
+        public int Update(XetNghiem xn)
+        {
+            XetNghiem tmp = db.XetNghiems.Find(xn.MaXN);
+            if (tmp != null)
+            {
+                tmp.TenXN = xn.TenXN;
+                tmp.TriSoBinhThuong = xn.TriSoBinhThuong;
+                tmp.DonViTinh = xn.DonViTinh;
+                tmp.DonGia = xn.DonGia;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.MaXN;
+        }
     }
 }

@@ -142,6 +142,7 @@
     <Compile Include="Areas\BacSiArea\BacSiAreaRegistration.cs" />
     <Compile Include="Areas\BacSiArea\Controllers\BacSiHomeController.cs" />
     <Compile Include="Areas\BacSiArea\Controllers\BenhNhiController.cs" />
+    <Compile Include="Areas\BacSiArea\Controllers\TaiKhoanController.cs" />
     <Compile Include="Areas\BacSiArea\Controllers\ThuocController.cs" />
     <Compile Include="Areas\BacSiArea\Controllers\XetNghiemController.cs" />
     <Compile Include="Areas\LeTan\Controllers\BenhNhiController.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Areas\NvBt\Controllers\ThuocController.cs" />
     <Compile Include="Areas\NvBt\NvBtAreaRegistration.cs" />
     <Compile Include="Areas\NvXn\Controllers\NvXnHomeController.cs" />
+    <Compile Include="Areas\NvXn\Controllers\TaiKhoanController.cs" />
     <Compile Include="Areas\NvXn\Controllers\XetNghiemController.cs" />
     <Compile Include="Areas\NvXn\NvXnAreaRegistration.cs" />
     <Compile Include="Areas\ThuNgan\Controllers\DichVuController.cs" />
@@ -1009,6 +1011,12 @@
     <Content Include="Areas\LeTan\Views\TaiKhoan\Index.cshtml" />
     <Content Include="Areas\LeTan\Views\BenhNhi\EditPasswordBN.cshtml" />
     <Content Include="Areas\LeTan\Views\PhieuKham\Detail.cshtml" />
+    <Content Include="Areas\BacSiArea\Views\TaiKhoan\Index.cshtml" />
+    <Content Include="Areas\NvXn\Views\XetNghiem\Index.cshtml" />
+    <Content Include="Areas\NvXn\Views\TaiKhoan\Index.cshtml" />
+    <Content Include="Areas\NvXn\Views\XetNghiem\Create.cshtml" />
+    <Content Include="Areas\NvXn\Views\XetNghiem\Edit.cshtml" />
+    <Content Include="Areas\BacSiArea\Views\BacSiHome\CreateByMaPk.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -1064,7 +1072,6 @@
     <Folder Include="Areas\LeTan\Data\" />
     <Folder Include="Areas\NvBt\Data\" />
     <Folder Include="Areas\NvXn\Data\" />
-    <Folder Include="Areas\NvXn\Views\XetNghiem\" />
     <Folder Include="Areas\ThuNgan\Data\" />
   </ItemGroup>
   <ItemGroup>

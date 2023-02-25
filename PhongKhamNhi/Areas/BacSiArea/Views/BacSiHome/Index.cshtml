@@ -174,11 +174,16 @@
                             </a>
                             @{ if (item.TrangThai == 2)
                                 {
-                                    <a href="~/BacSiArea/BacSiHome/PrintPkb/@item.MaPhieuKB" target="_blank" title="In">
-                                        <i class="fas fa-print"></i>
-                                    </a>
-                                }   
-                            }
+                        <a href="~/BacSiArea/BacSiHome/PrintPkb/@item.MaPhieuKB" target="_blank" title="In">
+                            <i class="fas fa-print"></i>
+                        </a>
+
+
+                        if(item.Type) { 
+                        <a href="~/BacSiArea/BacSiHome/CreateByMaPk/@item.MaPhieuKB" title="Tạo hóa đơn thuốc">
+                            <i class="fas fa-file-invoice"></i>
+                        </a>}                        
+                        } }
                         </td>
                     </tr>
                     }

@@ -47,10 +47,12 @@ namespace PhongKhamNhi.Areas.BacSiArea.Controllers
             return View(p);
         }
         [HttpPost]
-        public ActionResult Edit(PhieuKhamBenh p)
+        public ActionResult Edit(PhieuKhamBenh p, string tt)
         {
             if (ModelState.IsValid)
             {
+                if (tt != null)
+                    p.TrangThai = 2;
                 new PhieuKhamBenhDAO().Update(p);
                 return RedirectToAction("Index", "BacSiHome");
             }
@@ -291,5 +293,147 @@ namespace PhongKhamNhi.Areas.BacSiArea.Controllers
             BacSi bs = (BacSi)Session["user"];
             return PartialView(new PhieuKhamBenhDAO().SlPhieuKbOfBs(bs.MaChiNhanh, bs.MaBS));
         }
+
+        public ActionResult CreateByMaPk(int id)
+        {
+            PhieuKhamBenh p = new PhieuKhamBenhDAO().FindByID(id);
+            HoaDonBanThuoc h = new HoaDonBanThuoc();
+            h.TenKH = p.BenhNhi.TenThanNhan;
+            h.Sdt = p.BenhNhi.SdtThanNhan;
+            h.DiaChi = p.BenhNhi.DiaChi;
+            List<CtHdThuocDTO> lst = new List<CtHdThuocDTO>();
+            List<ChiTietDonThuocDTO> lstD = new ThuocDAO().lstThuocByMaPk(id);
+            double t = 0;
+            foreach (ChiTietDonThuocDTO i in lstD)
+            {
+                Thuoc th = new ThuocDAO().FindByID(i.MaThuoc);
+                CtHdThuocDTO c = new CtHdThuocDTO();
+                c.MaThuoc = i.MaThuoc;
+                c.SoLuong = i.SoLuong;
+                c.TenThuoc = i.TenThuoc;
+                c.DonViTinh = i.DonViTinh;
+                c.DonGia = th.DonGia;
+                lst.Add(c);
+                t += i.SoLuong * th.DonGia;
+            }
+            ViewBag.tong = t;
+            ViewBag.ListThuoc = lst;
+            Session["cart"] = lst;
+            return View(h);
+        }
+        [HttpPost]
+        public ActionResult CreateByMaPk(HoaDonBanThuoc h)
+        {
+            h.ThoiGian = DateTime.Now;
+            h.TrangThai = true;
+            NhanVien nv = (NhanVien)Session["user"];
+            h.MaChiNhanh = nv.MaChiNhanh;
+            h.MaNvLap = nv.MaNV;
+            HoaDonThuocDAO dao = new HoaDonThuocDAO();
+            int id = dao.Insert(h);
+            List<CtHdThuocDTO> lst = (List<CtHdThuocDTO>)Session["cart"];
+            double t = 0;
+            foreach (CtHdThuocDTO i in lst)
+            {
+                dao.InsertCt(i.MaThuoc, id, i.SoLuong, i.DonGia);
+                t += i.DonGia * i.SoLuong;
+            }
+            dao.UpdatetongTien(id, t);
+            return RedirectToAction("Index", "NvBtHome");
+        }
+
+        
+        public JsonResult AddThuoc(int id)
+        {
+            List<CtHdThuocDTO> lst = (List<CtHdThuocDTO>)Session["cart"];
+            if (lst == null)
+                lst = new List<CtHdThuocDTO>();
+            Thuoc item = new ThuocDAO().FindByID(id);
+            CtHdThuocDTO c = new CtHdThuocDTO();
+            c.MaThuoc = item.MaThuoc;
+            c.TenThuoc = item.TenThuoc;
+            c.DonViTinh = item.DonViTinh;
+            c.DonGia = item.DonGia;
+            c.SoLuong = 1;
+            lst.Add(c);
+            double t = 0;
+            foreach (CtHdThuocDTO i in lst)
+            {
+                t += i.DonGia * i.SoLuong;
+            }
+            Session["cart"] = lst;
+            return Json(new
+            {
+                data = new ResultSum
+                {
+                    id = id,
+                    value = c.DonGia,
+                    totalMoney = t
+                },
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DeleteThuoc(int id)
+        {
+            List<CtHdThuocDTO> lst = (List<CtHdThuocDTO>)Session["cart"];
+            foreach (CtHdThuocDTO i in lst)
+            {
+                if (i.MaThuoc == id)
+                {
+                    lst.Remove(i);
+                    break;
+                }
+            }
+            double t = 0;
+            foreach (CtHdThuocDTO i in lst)
+            {
+                t += i.DonGia * i.SoLuong;
+            }
+            Session["cart"] = lst;
+            return Json(new
+            {
+                data = new ResultSum
+                {
+                    totalMoney = t
+                },
+                status = true
+            }, JsonRequestBehavior.AllowGet); ;
+        }
+        public JsonResult UpdateThuoc(int id, int quantity)
+        {
+            List<CtHdThuocDTO> lst = (List<CtHdThuocDTO>)Session["cart"];
+            double s = 0;
+            foreach (CtHdThuocDTO i in lst)
+            {
+                if (i.MaThuoc == id)
+                {
+                    i.SoLuong = quantity;
+                    s = i.SoLuong * i.DonGia;
+                    break;
+                }
+            }
+            double t = 0;
+            foreach (CtHdThuocDTO i in lst)
+            {
+                t += i.DonGia * i.SoLuong;
+            }
+            Session["cart"] = lst;
+            return Json(new
+            {
+                data = new ResultSum
+                {
+                    id = id,
+                    value = s,
+                    totalMoney = t
+                },
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+    }
+    public class ResultSum
+    {
+        public int id { get; set; }
+        public double value { get; set; }
+        public double totalMoney { get; set; }
     }
 }

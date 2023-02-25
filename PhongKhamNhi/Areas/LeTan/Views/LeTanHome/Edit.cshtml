@@ -87,16 +87,21 @@
                                                                         @Model.BenhNhi.SdtThanNhan
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <label>Loại:</label>
-                                                                    @if (Model.Type)
-                                                                    {
-<span>Khám tại nhà</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span>Khám tại phòng khám</span>
-                                                                    }
+                                                                <div class="form-group row">
+                                                                    <label class="col-md-2">Loại:</label>
+                                                                    <div class="col-md-4" style="margin-bottom: 0.5rem;">
+                                                                        @if (Model.Type)
+                                                                        {
+                                                                    <span>Khám tại nhà</span> }
+                                                                                    else
+                                                                                    {
+                                                                    <span>Khám tại phòng khám</span>}
+                                                                    </div>
+                                                                    <label class="col-md-3">Thời gian đăng ký:</label>
+                                                                    <div class="col-md-3" style="margin-bottom: 0.5rem;">
+                                                                        @Model.ThoiGianDKK
+                                                                    </div>
+                                                                    
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label>Lời nhắn:</label>

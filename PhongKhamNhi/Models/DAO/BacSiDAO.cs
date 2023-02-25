@@ -93,5 +93,23 @@ namespace PhongKhamNhi.Models.DAO
             }
             return lst;
         }
+
+        public int Update(BacSi nv)
+        {
+            BacSi tmp = db.BacSis.Find(nv.MaBS);
+            if (tmp != null)
+            {
+                tmp.GioiTinh = nv.GioiTinh;
+                tmp.HocVi = nv.HocVi;
+                tmp.HoTen = nv.HoTen;
+                tmp.Anh = nv.Anh;
+                tmp.GioiThieu = nv.GioiThieu;
+                tmp.NgaySinh = nv.NgaySinh;
+                tmp.NgayVaoLam = nv.NgayVaoLam;
+                tmp.Sdt = nv.Sdt;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.MaBS;
+        }
     }
 }

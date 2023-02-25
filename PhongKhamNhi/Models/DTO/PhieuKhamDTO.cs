@@ -22,6 +22,7 @@ namespace PhongKhamNhi.Models.DTO
         public string TenBs { get; set; }
 
         public byte TrangThai { get; set; }
+        public bool Type { get; set; }
 
     }
 }
