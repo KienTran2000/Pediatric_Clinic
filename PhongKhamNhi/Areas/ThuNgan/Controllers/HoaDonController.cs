@@ -13,11 +13,12 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
     public class HoaDonController : Controller
     {
         // GET: ThuNgan/HoaDon
-        public ActionResult Index(string maHd, string ten, string tu, string den, int pageNum = 1, int pageSize = 9)
+        public ActionResult Index(string maHd, string ten, string tu, string den, int type = 2, int pageNum = 1, int pageSize = 9)
         {
             ViewBag.ten = ten;
             ViewBag.tu = tu;
             ViewBag.den = den;
+            ViewBag.type = type;
             if (maHd == null)
                 maHd = "0";
             if (tu == null)
@@ -25,7 +26,7 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
             if (den == null)
                 den = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             NhanVien nv = (NhanVien)Session["user"];
-            return View(new HoaDonThuocDAO().ListHdThuoc(nv.MaChiNhanh, int.Parse(maHd), ten, tu, den, pageNum, pageSize));
+            return View(new HoaDonThuocDAO().ListHdThuoc(nv.MaChiNhanh, int.Parse(maHd), ten, tu, den, type, pageNum, pageSize));
         }
         public JsonResult ChangeStatus(int id)
         {
@@ -71,6 +72,22 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
             {
                 status = true
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            HoaDonThuocDAO dao = new HoaDonThuocDAO();
+            List<CtHdThuocDTO> lst = dao.lstThuocByMaHd(id);
+            HoaDonBanThuoc h = dao.FindByID(id);
+            ViewBag.ListThuoc = lst;
+            return View(h);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(HoaDonBanThuoc h)
+        {
+            new HoaDonThuocDAO().UpdateThuNgan(h);
+            return RedirectToAction("Index", "HoaDon");
         }
 
         public ActionResult Print(int id)

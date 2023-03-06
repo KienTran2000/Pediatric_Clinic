@@ -1,0 +1,122 @@
+﻿@model List<PhongKhamNhi.Models.DTO.CtHdThuocDTO>
+
+@{
+    ViewBag.Title = "Chi tiết hóa đơn";
+}
+
+<div class="user-profile__wrap sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="sidebar-profile">
+                    <div class="profiles">
+                        <h3 class="headline" style="font-size: 18px;">Tài khoản của</h3>
+                        <h3 class="username" style="font-size: 21px;">@ViewBag.HoTen</h3>
+                    </div>
+                    <div class="user-profile__menu">
+                        <ul class="user-profile__menu__wrap">
+                            <li class="user-profile__item">
+                                <a href="/Patient" class="user-profile__link">
+                                    <span class="-ap icon-user6 icon mai-information-circle-outline"></span> <span class="txt">Thông tin tài khoản</span>
+                                </a>
+                            </li>
+                            <li class="user-profile__item">
+                                <a href="/Patient/AppointmentHistory" class="user-profile__link">
+                                    <span class="-ap icon-file-text icon mai-time"></span> <span class="txt">Lịch sử hẹn khám</span>
+                                </a>
+                            </li>
+                            <li class="user-profile__item">
+                                <a href="/Patient/History" class="user-profile__link">
+                                    <span class="-ap icon-file-text icon mai-fitness"></span> <span class="txt">Lịch sử khám bệnh</span>
+                                </a>
+                            </li>
+                            <li class="user-profile__item active">
+                                <a href="/Patient/Invoice" class="user-profile__link">
+                                    <span class="-ap icon-file-text icon mai-newspaper"></span> <span class="txt">Hóa đơn mua thuốc</span>
+                                </a>
+                            </li>
+                            <li class="user-profile__item">
+                                <a href="/Patient/EditPassword" class="user-profile__link">
+                                    <i class="icon fa fa-key mai-key" aria-hidden="true"></i><span class="txt">Đổi mật khẩu</span>
+                                </a>
+                            </li>
+                            <li class="user-profile__item">
+                                <a href="/Patient/Logout" class="user-profile__link" onclick="return confirm('Bạn chắc chắn muốn đăng xuất?')">
+                                    <i class="icon fa fa-sign-out mai-log-out" aria-hidden="true"></i><span class="txt">Đăng xuất</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <div class="wrap__profile__info">
+                    <h3 class="title-profile">Mã phiếu hóa đơn: @ViewBag.ma - ngày @ViewBag.thoiGian</h3>
+                    <div class="profile-content">
+                        <table class="table table-thuoc">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        STT
+                                    </th>
+                                    <th class="text-center">
+                                        Tên thuốc
+                                    </th>
+                                    <th class="text-center">
+                                        Đơn vị tính
+                                    </th>
+
+                                    <th class="text-center">
+                                        Số lượng
+                                    </th>
+                                    <th class="text-center">
+                                        Đơn giá
+                                    </th>
+                                    <th class="text-center">
+                                        Thành tiền
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="text-center">@(i+1)</td>
+                                        <td>@Model[i].TenThuoc</td>
+                                        <td class="text-center">@Model[i].DonViTinh</td>
+                                        <td class="text-center">@Model[i].SoLuong</td>
+                                        <td class="text-right">@Model[i].DonGia.ToString("N0")</td>
+                                        <td class="text-right">@((Model[i].DonGia * Model[i].SoLuong).ToString("N0"))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                @if (ViewBag.type == true)
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-right">
+                                            <b>Phí vận chuyển: </b>
+                                        </td>
+                                        <td colspan="1" class="text-right">
+                                            <b id="total-money" name="totalMoney">50,000</b>
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="5" class="text-right">
+                                        <b>Tổng tiền: </b>
+                                    </td>
+                                    <td colspan="1" class="text-right">
+                                        <b id="total-money" name="totalMoney">@ViewBag.TongTien.ToString("N0")</b>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

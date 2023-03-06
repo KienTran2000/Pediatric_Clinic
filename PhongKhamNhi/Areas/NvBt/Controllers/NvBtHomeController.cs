@@ -13,11 +13,12 @@ namespace PhongKhamNhi.Areas.NvBt.Controllers
     public class NvBtHomeController : Controller
     {
         // GET: NvBt/NvBtHome
-        public ActionResult Index(string maHd, string ten, string tu, string den, int pageNum = 1, int pageSize = 9)
+        public ActionResult Index(string maHd, string ten, string tu, string den, int type = 2, int pageNum = 1, int pageSize = 9)
         {
             ViewBag.ten = ten;
             ViewBag.tu = tu;
             ViewBag.den = den;
+            ViewBag.type = type;
             if (maHd == null)
                 maHd = "0";
             if (tu == null)
@@ -25,7 +26,7 @@ namespace PhongKhamNhi.Areas.NvBt.Controllers
             if (den == null)
                 den = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd HH:mm:ss");
             NhanVien nv = (NhanVien)Session["user"];
-            return View(new HoaDonThuocDAO().ListHdThuoc(nv.MaChiNhanh, int.Parse(maHd), ten, tu, den, pageNum, pageSize));
+            return View(new HoaDonThuocDAO().ListHdThuoc(nv.MaChiNhanh, int.Parse(maHd), ten, tu, den, type, pageNum, pageSize));
         }
         [HttpPost]
         public ActionResult Index(FormCollection data, int pageNum = 1, int pageSize = 9)
@@ -42,7 +43,7 @@ namespace PhongKhamNhi.Areas.NvBt.Controllers
             string tu = "2020-11-19 12:00:00";
             string den = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             NhanVien nv = (NhanVien)Session["user"];
-            return View(new HoaDonThuocDAO().ListHdThuoc(nv.MaChiNhanh, 0, "", tu, den, pageNum, pageSize));
+            return View(new HoaDonThuocDAO().ListHdThuoc(nv.MaChiNhanh, 0, "", tu, den, 2, pageNum, pageSize));
         }
 
         public ActionResult Create()
@@ -218,6 +219,7 @@ namespace PhongKhamNhi.Areas.NvBt.Controllers
             ViewBag.tong = t;
             HoaDonBanThuoc p = new HoaDonThuocDAO().FindByID(id);
             ViewBag.hd = p;
+            ViewBag.type = p.Type;
             ViewBag.ngay = p.ThoiGian.ToString("dd/MM/yyyy");
             return View(lst);
         }

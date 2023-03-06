@@ -1,0 +1,180 @@
+﻿@model PhongKhamNhi.Models.Entities.HoaDonBanThuoc
+@{
+    ViewBag.Title = "Thông tin hóa đơn";
+    Layout = "~/Areas/ThuNgan/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin hóa đơn</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách hóa đơn thuốc", "Index", "HoaDon")
+                    </li>
+                    <li class="breadcrumb-item active">Thông tin hóa đơn</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Edit", "HoaDon", FormMethod.Post))
+    {
+@Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                                @Html.HiddenFor(model => model.MaHoaDon)
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="card card-outline card-info">
+                                                            <div class="card-header">
+                                                                <div class="row" style="align-items: center;">
+                                                                    <div class="col-8">
+                                                                        <label style="margin-bottom: 0;">TRẠNG THÁI:</label>
+                                                                        <div class="form-group clearfix" style="display: inline; margin-left: 24px;">
+                                                                            @{ var f = "";
+                                                                                var t = "";
+                                                                                if (Model.TrangThai == true)
+                                                                                {
+                                                                                    t = "checked";
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    f = "checked";
+                                                                                } }
+                                                                            <div class="icheck-danger d-inline">
+                                                                                <input type="radio" name="tt" value="0" @f id="radioDanger1">
+                                                                                <label for="radioDanger1">Chưa thanh toán</label>
+                                                                            </div>
+                                                                            <div class="icheck-danger d-inline" style="margin-left: 50px;">
+                                                                                <input type="radio" name="tt" value="1" @t id="radioDanger2">
+                                                                                <label class="a-done" for="radioDanger2">Đã thanh toán</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- /.card-header -->
+                                                            <div class="card-body">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-center">
+                                                                                STT
+                                                                            </th>
+                                                                            <th class="text-center">
+                                                                                Tên thuốc
+                                                                            </th>
+                                                                            <th class="text-center">
+                                                                                ĐVT
+                                                                            </th>
+
+                                                                            <th class="text-center">
+                                                                                SL
+                                                                            </th>
+                                                                            <th class="text-center">
+                                                                                Đơn giá
+                                                                            </th>
+                                                                            <th class="text-center">
+                                                                                Thành tiền
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @for (int i = 0; i < ViewBag.ListThuoc.Count; i++)
+                                                                        {
+                                                                            <tr>
+                                                                                <td class="text-center">@(i+1)</td>
+                                                                                <td>@ViewBag.ListThuoc[i].TenThuoc</td>
+                                                                                <td class="text-center">@ViewBag.ListThuoc[i].DonViTinh</td>
+                                                                                <td class="text-center">@ViewBag.ListThuoc[i].SoLuong</td>
+                                                                                <td class="text-right">@ViewBag.ListThuoc[i].DonGia.ToString("N0")</td>
+                                                                                <td class="text-right">@((ViewBag.ListThuoc[i].DonGia * ViewBag.ListThuoc[i].SoLuong).ToString("N0"))</td>
+                                                                            </tr>
+                                                                        }
+
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                        @if (Model.Type) { 
+                                                                        <tr>
+                                                                            <td colspan="5" class="text-right">
+                                                                                <b>Phí vận chuyển: </b>
+                                                                            </td>
+                                                                            <td colspan="1" class="text-right">
+                                                                                <b id="total-money" name="totalMoney">50,000</b>
+                                                                            </td>
+                                                                        </tr>
+                                                                        }
+                                                                        <tr>
+                                                                            <td colspan="5" class="text-right">
+                                                                                <b>Tổng tiền: </b>
+                                                                            </td>
+                                                                            <td colspan="1" class="text-right">
+                                                                                <b id="total-money" name="totalMoney">@Model.TongTien.ToString("N0")</b>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                </table>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.col-->
+                                                    <div class="col-md-4">
+                                                        <div class="card card-outline card-info">
+                                                            <div class="card-header">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                                                            <i class="ace-icon fa fa-check"></i>
+                                                                            Cập nhật
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            <div class="card-body">
+                                                                <div class="form-group">
+                                                                    <label style="min-width: 130px;">Tên khách hàng:</label>
+                                                                    <label>@Model.TenKH</label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label style="min-width: 130px;">Số điện thoại:</label>
+                                                                    @Model.Sdt
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label style="min-width: 130px;">Địa chỉ:</label>
+                                                                    @Model.DiaChi
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label style="min-width: 130px;">Loại:</label>
+                                                                    @if (Model.Type)
+                                                                    {
+                                                                        <span>Mua tại nhà</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>Mua tại phòng khám</span>
+                                                                    }
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label style="min-width: 122px;">Thông tin thanh toán:</label>
+                                                                    <img src="~/Content/assets/img/blog/@Model.AnhThanhToan" style="width: 100%;" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                                }
+</section>
