@@ -1,0 +1,5 @@
+Mở tab Git changes
+B1: Ghi nội dung commit và nhấn Commit All
+B2: Nhấn Fetch
+B3: Nhấn Pull
+B4: Nhấn 
