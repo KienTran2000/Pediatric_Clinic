@@ -102,5 +102,14 @@ namespace PhongKhamNhi.Models.DAO
                        select s);
             return res.ToList();
         }
+
+        public int CheckValidAppointment(PhieuDangKyKham p)
+        {
+            var res = (from s in db.PhieuDangKyKhams
+                       where s.MaBS == p.MaBS && s.MaBN == p.MaBN
+                        && s.ThoiGianHen == p.ThoiGianHen
+                       select s);
+            return res.ToList().Count;
+        }
     }
 }

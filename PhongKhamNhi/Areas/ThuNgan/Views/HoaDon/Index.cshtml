@@ -37,16 +37,39 @@
                                     <input type="text" class="form-control" name="ten" value="@ViewBag.ten">
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-2">
                                 <div class="">
                                     <b>Từ ngày</b>
                                     <input type="date" class="form-control" name="tu" value="@ViewBag.tu">
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-2">
                                 <div class="">
                                     <b>Đến ngày</b>
                                     <input type="date" class="form-control" name="den" value="@ViewBag.den">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Loại</b>
+                                    <select class="form-control" name="type">
+                                        <option value="2">Tất cả</option>
+                                        @if (ViewBag.type == 0)
+                                        {
+                                            <option value="0" selected>Mua tại phòng khám</option>
+                                            <option value="1">Mua tại nhà</option>
+                                        }
+                                        else if (ViewBag.type == 1)
+                                        {
+                                            <option value="0">Mua tại phòng khám</option>
+                                            <option value="1" selected>Mua tại nhà</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">Mua tại phòng khám</option>
+                                            <option value="1">Mua tại nhà</option>
+                                        }
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-1">
@@ -72,7 +95,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">
-                            Mã hóa đơn
+                            Mã HĐ
                         </th>
                         <th class="text-center">
                             Thời gian lập
@@ -85,6 +108,9 @@
                         </th>
                         <th class="text-center">
                             Địa chỉ
+                        </th>
+                        <th class="text-center">
+                            Loại
                         </th>
                         <th class="text-center">
                             Tổng tiền
@@ -100,57 +126,75 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td class="text-center">
-                                @Html.DisplayFor(modelItem => item.MaHoaDon)
-                            </td>
-                            <td class="text-right">
-                                @Html.DisplayFor(modelItem => item.ThoiGian)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TenKH)
-                            </td>
-                            <td class="text-center">
-                                @Html.DisplayFor(modelItem => item.Sdt)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DiaChi)
-                            </td>
-                            <td class="text-right">
-                                @item.TongTien.ToString("N0")
-                            </td>
-                            <td class="text-center">
-                                @{ if (item.TrangThai == false)
-                                    {
-                                        <p id="tt-@item.MaHoaDon" class="pro-status ">Chưa thanh toán</p>
-                                    }
-                                    else
-                                    {
-                                        <p id="tt-@item.MaHoaDon" class="pro-status pro-status-finish">Đã thanh toán</p>
-                                    }
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.MaHoaDon)
+                        </td>
+                        <td class="text-right">
+                            @Html.DisplayFor(modelItem => item.ThoiGian)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenKH)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Sdt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DiaChi)
+                        </td>
+                        <td class="text-center">
+                            @if (item.Type)
+                            {
+                                <span>Mua tại nhà</span>
+                            }
+                            else
+                            {
+                                <span>Mua tại phòng khám</span>
+                            }
+                        </td>
+                        <td class="text-right">
+                            @item.TongTien.ToString("N0")
+                        </td>
+                        <td class="text-center">
+                            @{ if (item.TrangThai == false)
+                                {
+                                    <p id="tt-@item.MaHoaDon" class="pro-status ">Chưa thanh toán</p>
                                 }
-                            </td>
-                            <td class="text-center">
-                                @{ if (item.TrangThai == false)
-                                    {
-                                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                            <input type="checkbox" class="custom-control-input" id="@item.MaHoaDon" onclick="return check(@item.MaHoaDon)">
-                                            <label class="custom-control-label" for="@item.MaHoaDon"></label>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                            <input type="checkbox" checked class="custom-control-input" id="@item.MaHoaDon" onclick="return check(@item.MaHoaDon)">
-                                            <label class="custom-control-label" for="@item.MaHoaDon"></label>
-                                        </div>
-                                    }
-                                    <a href="~/NvBt/NvBtHome/Print/@item.MaHoaDon" target="_blank" title="In hóa đơn">
-                                        <i class="fas fa-print"></i>
-                                    </a>
+                                else
+                                {
+                                    <p id="tt-@item.MaHoaDon" class="pro-status pro-status-finish">Đã thanh toán</p>
                                 }
-                            </td>
-                        </tr>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (item.TrangThai == false)
+                            {
+                                @*{
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" class="custom-control-input" id="@item.MaHoaDon" onclick="return check(@item.MaHoaDon)">
+                    <label class="custom-control-label" for="@item.MaHoaDon"></label>
+                </div>
+            }
+            else
+            {
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" checked class="custom-control-input" id="@item.MaHoaDon" onclick="return check(@item.MaHoaDon)">
+                    <label class="custom-control-label" for="@item.MaHoaDon"></label>
+                </div>
+            }*@
+                                <a href="~/ThuNgan/HoaDon/Edit/@item.MaHoaDon" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                            }
+                            else
+                            {
+                                <a href="~/NvBt/NvBtHome/Print/@item.MaHoaDon" target="_blank" title="In hóa đơn">
+                                    <i class="fas fa-print"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

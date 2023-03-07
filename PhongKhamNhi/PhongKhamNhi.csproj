@@ -172,6 +172,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\DAO\BacSiDAO.cs" />
     <Compile Include="Models\DAO\BenhNhiDAO.cs" />
     <Compile Include="Models\DAO\ChiNhanhDAO.cs" />
@@ -1017,6 +1018,7 @@
     <Content Include="Areas\NvXn\Views\XetNghiem\Create.cshtml" />
     <Content Include="Areas\NvXn\Views\XetNghiem\Edit.cshtml" />
     <Content Include="Areas\BacSiArea\Views\BacSiHome\CreateByMaPk.cshtml" />
+    <Content Include="Areas\ThuNgan\Views\HoaDon\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -1063,6 +1065,10 @@
     <Content Include="Views\DoctorTeam\Detail.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\Service\Detail.cshtml" />
+    <Content Include="Views\Patient\BuyMedicine.cshtml" />
+    <Content Include="Views\Patient\Success.cshtml" />
+    <Content Include="Views\Patient\Invoice.cshtml" />
+    <Content Include="Views\Patient\InvoiceDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

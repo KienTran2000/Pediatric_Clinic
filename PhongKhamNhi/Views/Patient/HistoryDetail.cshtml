@@ -31,6 +31,11 @@
                                 </a>
                             </li>
                             <li class="user-profile__item">
+                                <a href="/Patient/Invoice" class="user-profile__link">
+                                    <span class="-ap icon-file-text icon mai-newspaper"></span> <span class="txt">Hóa đơn mua thuốc</span>
+                                </a>
+                            </li>
+                            <li class="user-profile__item">
                                 <a href="/Patient/EditPassword" class="user-profile__link">
                                     <i class="icon fa fa-key mai-key" aria-hidden="true"></i><span class="txt">Đổi mật khẩu</span>
                                 </a>
@@ -130,9 +135,9 @@
                                 <div id="don-thuoc-cha" class="card card-outline card-info">
                                     @if (ViewBag.DonThuoc != null)
                                     {
-                        <div class="form-group">
-                            <h5 style="margin: 10px 0 0 10px; font-weight: bold;">Thuốc chỉ định</h5>
-                        </div>
+                                        <div class="form-group">
+                                            <h5 style="margin: 10px 0 0 10px; font-weight: bold;">Thuốc chỉ định</h5>
+                                        </div>
                                         <table class="table table-xn">
                                             <thead>
                                                 <tr>
@@ -145,15 +150,21 @@
                                             <tbody>
                                                 @foreach (var item in ViewBag.DonThuoc)
                                                 {
-                                <tr>
-                                    <td>@item.TenThuoc</td>
-                                    <td class="text-center">@item.SoLuong</td>
-                                    <td class="text-center">@item.DonViTinh</td>
-                                    <td>@item.CachDung</td>
-                                </tr>}
+                                                    <tr>
+                                                        <td>@item.TenThuoc</td>
+                                                        <td class="text-center">@item.SoLuong</td>
+                                                        <td class="text-center">@item.DonViTinh</td>
+                                                        <td>@item.CachDung</td>
+                                                    </tr>
+}
                                             </tbody>
-                                        </table>}
+                                        </table>
+                                    }
                                 </div>
+                                @if (ViewBag.DonThuoc != null @*&& Model.Type*@)
+                                {
+                                    <a href="/Patient/BuyMedicine/@Model.MaPhieuKB" class="btn btn-primary btn-mua-thuoc">Mua thuốc</a>
+                                }
                             </div>
                         </div>
                     </div>

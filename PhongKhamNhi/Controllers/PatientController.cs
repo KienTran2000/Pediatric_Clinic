@@ -3,6 +3,7 @@ using PhongKhamNhi.Models.DTO;
 using PhongKhamNhi.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -90,7 +91,9 @@ namespace PhongKhamNhi.Controllers
             string[] str = gioHen.Split('h');
             p.ThoiGianHen = new DateTime(ThoiGianHen.Year, ThoiGianHen.Month, ThoiGianHen.Day, int.Parse(str[0]), int.Parse(str[1]), 0);
             p.TrangThai = false;
-            new PhieuDangKyKhamDAO().Insert(p);
+            PhieuDangKyKhamDAO dao = new PhieuDangKyKhamDAO();
+            if(dao.CheckValidAppointment(p) == 0)
+                dao.Insert(p);
             return RedirectToAction("AppointmentHistory", "Patient");
         }
         public JsonResult GetBacSiByCN(int maCn, int type)
@@ -240,6 +243,93 @@ namespace PhongKhamNhi.Controllers
             ViewBag.passwordNew = passwordNew;
             return View(bn);
         }
+
+        public ActionResult BuyMedicine(int id)
+        {
+            PhieuKhamBenh p = new PhieuKhamBenhDAO().FindByID(id);
+            HoaDonBanThuoc h = new HoaDonBanThuoc();
+            h.TenKH = p.BenhNhi.TenThanNhan;
+            h.Sdt = p.BenhNhi.SdtThanNhan;
+            h.DiaChi = p.BenhNhi.DiaChi;
+            h.MaChiNhanh = p.MaChiNhanh;
+            List<CtHdThuocDTO> lst = new List<CtHdThuocDTO>();
+            List<ChiTietDonThuocDTO> lstD = new ThuocDAO().lstThuocByMaPk(id);
+            double t = 0;
+            foreach (ChiTietDonThuocDTO i in lstD)
+            {
+                Thuoc th = new ThuocDAO().FindByID(i.MaThuoc);
+                CtHdThuocDTO c = new CtHdThuocDTO();
+                c.MaThuoc = i.MaThuoc;
+                c.SoLuong = i.SoLuong;
+                c.TenThuoc = i.TenThuoc;
+                c.DonViTinh = i.DonViTinh;
+                c.DonGia = th.DonGia;
+                lst.Add(c);
+                t += i.SoLuong * th.DonGia;
+            }
+            h.TongTien = t + 50000;
+            h.MaPhieuKham = id;
+            ViewBag.tongChu = Helpers.Utils.NumberToText(h.TongTien);
+            ViewBag.ListThuoc = lst;
+            Session["CTHDT"] = lst;
+            return View(h);
+        }
+        [HttpPost]
+        public ActionResult BuyMedicine(HoaDonBanThuoc h, HttpPostedFileBase photo)
+        {
+            if (photo != null && photo.ContentLength > 0)
+            {
+                var path = Path.Combine(Server.MapPath("~/Content/assets/img/blog/"), System.IO.Path.GetFileName(photo.FileName));
+                photo.SaveAs(path);
+                h.AnhThanhToan = photo.FileName;
+            }
+            h.Type = true;
+            h.ThoiGian = DateTime.Now;
+            h.TrangThai = false;
+            HoaDonThuocDAO dao = new HoaDonThuocDAO();
+            int id = dao.Insert(h);
+            List<CtHdThuocDTO> lst = (List<CtHdThuocDTO>)Session["CTHDT"];
+            double t = 0;
+            foreach (CtHdThuocDTO i in lst)
+            {
+                dao.InsertCt(i.MaThuoc, id, i.SoLuong, i.DonGia);
+                t += i.DonGia * i.SoLuong;
+            }
+            dao.UpdatetongTien(id, t+50000);
+            return RedirectToAction("Success", "Patient");
+        }
+
+        public ActionResult Success()
+        {
+            
+            return View();
+        }
+
+        public ActionResult Invoice(string tu, string den, int pageNum = 1, int pageSize = 6)
+        {
+            ViewBag.tu = tu;
+            ViewBag.den = den;
+            if (tu == null || tu == "")
+                tu = "2020-11-19 12:00:00";
+            if (den == null || den == "")
+                den = "2030-11-19 12:00:00";
+            BenhNhi bn = (BenhNhi)Session["patient"];
+            ViewBag.HoTen = new BenhNhiDAO().FindByID(bn.MaBN).HoTen;
+            return View(new HoaDonThuocDAO().lstHoaDonThuocByBn(bn.MaBN, tu, den, pageNum, pageSize));
+        }
+        public ActionResult InvoiceDetail(int id)
+        {
+            BenhNhi bn = (BenhNhi)Session["patient"];
+            ViewBag.HoTen = new BenhNhiDAO().FindByID(bn.MaBN).HoTen;
+            HoaDonThuocDAO dao = new HoaDonThuocDAO();
+            HoaDonBanThuoc h = dao.FindByID(id);
+            ViewBag.type = h.Type;
+            ViewBag.ma = h.MaHoaDon;
+            ViewBag.thoiGian = h.ThoiGian.ToString("dd/MM/yyyy hh:mm");
+            ViewBag.TongTien = h.TongTien;
+            return View(dao.lstThuocByMaHd(id));
+        }
+
 
         public ActionResult Logout()
         {

@@ -1,0 +1,167 @@
+﻿@model PhongKhamNhi.Models.Entities.HoaDonBanThuoc
+@{
+    ViewBag.Title = "Mua thuốc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("BuyMedicine", "Patient", FormMethod.Post, new { @onsubmit = "return validateFormEdit()", @name = "myFormEdit", @enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="row" style="padding: 30px;">
+            <div class="col-12">
+                <h4>PHÒNG KHÁM NHI ABC</h4>
+                <span>Trụ sở: 236 Hoàng Quốc Việt, Bắc Từ Liêm, Hà Nội</span> <br />
+                <span>Điện thoại: 1900 1009</span>
+
+                <h2 class="text-center">HÓA ĐƠN MUA THUỐC</h2>
+                <p class="text-center">Ngày: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-mua-thuoc">
+                            Họ tên khách hàng
+                            (<span class="-ap icon-file-text icon mai-checkmark" style="color:red;"></span>):
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control input-mua-thuoc", required = true } })
+                        @Html.HiddenFor(model => model.TongTien)
+                        @Html.HiddenFor(model => model.MaChiNhanh)
+                        @Html.HiddenFor(model => model.MaPhieuKham)
+                    </div>
+                </div>
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-mua-thuoc">
+                            Số điện thoại
+                            (<span class="-ap icon-file-text icon mai-checkmark" style="color:red;"></span>):
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @Html.EditorFor(model => model.Sdt, new { htmlAttributes = new { @class = "form-control input-mua-thuoc", @type = "number", required = true } })
+                    </div>
+                </div>
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-mua-thuoc">
+                            Địa chỉ
+                            (<span class="-ap icon-file-text icon mai-checkmark" style="color:red;"></span>):
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control input-mua-thuoc", required = true } })
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-thuoc">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        STT
+                                    </th>
+                                    <th class="text-center">
+                                        Tên thuốc
+                                    </th>
+                                    <th class="text-center">
+                                        Đơn vị tính
+                                    </th>
+
+                                    <th class="text-center">
+                                        Số lượng
+                                    </th>
+                                    <th class="text-center">
+                                        Đơn giá
+                                    </th>
+                                    <th class="text-center">
+                                        Thành tiền
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < ViewBag.ListThuoc.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="text-center">@(i+1)</td>
+                                        <td>@ViewBag.ListThuoc[i].TenThuoc</td>
+                                        <td class="text-center">@ViewBag.ListThuoc[i].DonViTinh</td>
+                                        <td class="text-center">@ViewBag.ListThuoc[i].SoLuong</td>
+                                        <td class="text-right">@ViewBag.ListThuoc[i].DonGia.ToString("N0")</td>
+                                        <td class="text-right">@((ViewBag.ListThuoc[i].DonGia * ViewBag.ListThuoc[i].SoLuong).ToString("N0"))</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-right">
+                                        <b>Phí vận chuyển: </b>
+                                    </td>
+                                    <td colspan="1" class="text-right">
+                                        <b id="total-money" name="totalMoney">50,000</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-right">
+                                        <b>Tổng tiền: </b>
+                                    </td>
+                                    <td colspan="1" class="text-right">
+                                        <b id="total-money" name="totalMoney">@Model.TongTien.ToString("N0")</b>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <b>Tổng số tiền (viết bằng chữ): @ViewBag.tongChu.</b>
+                    </div>
+                </div>
+                <br/>
+                <div class="text-center">
+                    <h4>THÔNG TIN THANH TOÁN</h4>
+                    <img src="~/Content/assets/img/blog/NganHang.jpg"/>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <i class="far fa-image"></i>
+                        Hình ảnh xác nhận đã thanh toán
+                        (<span class="-ap icon-file-text icon mai-checkmark" style="color:red;"></span>):
+                    </label>
+                    <input type="file" id="photo" name="photo" onchange="previewFile(this);">
+                    <div class="text-center">
+                        <img id="previewImg" src="~/Content/assets/img/blog/noimage.jpg" style="display: none; margin-top: 10px;">
+                    </div>
+                </div>
+                <div class="form-group login__action" style="text-align: center;">
+                    <button type="submit" class="btn btn-submit btn-thanh-toan">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section scripts{
+    <script>
+        
+        function previewFile(input) {
+            var file = $("#photo").get(0).files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                    $("#previewImg").show();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function validateFormEdit() {
+            var file = $("#photo").get(0).files[0];
+            if (!file) {
+                alert("Bạn chưa tải ảnh xác nhận đã thanh toán!");
+                return false;
+            }
+        }
+
+    </script>
+}

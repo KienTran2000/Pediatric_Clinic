@@ -16,11 +16,20 @@ namespace PhongKhamNhi.Models.DAO
             db = new ModelPkNhi();
         }
 
-        public IEnumerable<HoaDonBanThuoc> ListHdThuoc(int cn, int maHd, string bn, string tu, string den, int pageNum, int pageSize)
+        public IEnumerable<HoaDonBanThuoc> ListHdThuoc(int cn, int maHd, string bn, string tu, string den, int type, int pageNum, int pageSize)
         {
-            var lst = db.Database.SqlQuery<HoaDonBanThuoc>(string.Format("lstHdThuoc {0}, {1}, N'{2}', '{3}', '{4}'",
+            if(type == 2)
+            {
+                var lst = db.Database.SqlQuery<HoaDonBanThuoc>(string.Format("lstHdThuoc {0}, {1}, N'{2}', '{3}', '{4}'",
                 cn, maHd, bn, tu, den)).ToPagedList<HoaDonBanThuoc>(pageNum, pageSize);
-            return lst;
+                return lst;
+            }
+            else
+            {
+                var lst = db.Database.SqlQuery<HoaDonBanThuoc>(string.Format("lstHdThuoc {0}, {1}, N'{2}', '{3}', '{4}', {5}",
+                cn, maHd, bn, tu, den, type)).ToPagedList<HoaDonBanThuoc>(pageNum, pageSize);
+                return lst;
+            }    
         }
         public List<CtHdThuocDTO> lstThuocByMaHd(int id)
         {
@@ -101,6 +110,13 @@ namespace PhongKhamNhi.Models.DAO
             var res = db.Database.ExecuteSqlCommand(string.Format(
                 "DELETE FROM [dbo].[Thuoc_HoaDon] WHERE MaHoaDon = {0}", id));
             return 1;
+        }
+
+        public IEnumerable<HoaDonBanThuoc> lstHoaDonThuocByBn(int bn, string tu, string den, int pageNum, int pageSize)
+        {
+            var lst = db.Database.SqlQuery<HoaDonBanThuoc>(string.Format("lstHoaDonThuocByBn {0}, '{1}', '{2}'", bn, tu, den)
+                ).ToPagedList<HoaDonBanThuoc>(pageNum, pageSize);
+            return lst;
         }
     }
 }

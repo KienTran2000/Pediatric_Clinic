@@ -1,12 +1,12 @@
 ﻿@using PagedList.Mvc
 
-@model PagedList.IPagedList<PhongKhamNhi.Models.DTO.PhieuKhamDTO>
+@model PagedList.IPagedList<PhongKhamNhi.Models.Entities.HoaDonBanThuoc>
 
 @{
-    ViewBag.Title = "Lịch sử khám bệnh";
+    ViewBag.Title = "Hóa đơn mua thuốc";
 }
 
-@using (Html.BeginForm("History", "Patient", FormMethod.Get))
+@using (Html.BeginForm("Invoice", "Patient", FormMethod.Get))
 {
     <div class="user-profile__wrap sec">
         <div class="container">
@@ -29,13 +29,13 @@
                                         <span class="-ap icon-file-text icon mai-time"></span> <span class="txt">Lịch sử hẹn khám</span>
                                     </a>
                                 </li>
-                                <li class="user-profile__item active">
-                                    <a href="#" class="user-profile__link">
+                                <li class="user-profile__item">
+                                    <a href="/Patient/History" class="user-profile__link">
                                         <span class="-ap icon-file-text icon mai-fitness"></span> <span class="txt">Lịch sử khám bệnh</span>
                                     </a>
                                 </li>
-                                <li class="user-profile__item">
-                                    <a href="/Patient/Invoice" class="user-profile__link">
+                                <li class="user-profile__item active">
+                                    <a href="#" class="user-profile__link">
                                         <span class="-ap icon-file-text icon mai-newspaper"></span> <span class="txt">Hóa đơn mua thuốc</span>
                                     </a>
                                 </li>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-12">
                     <div class="wrap__profile__info">
-                        <h2 class="title-profile">Lịch sử khám bệnh</h2>
+                        <h2 class="title-profile">Hóa đơn mua thuốc</h2>
                         <div class="profile-content">
                             <div class="form-search">
                                 <div class="row">
@@ -64,13 +64,13 @@
                                             <div class="col-5">
                                                 <div class="componet-input-search">
                                                     <b>Từ:</b>
-                                                    <input type="date" class="form-control" name="tu" value="@ViewBag.tu" title="Thời gian khám bệnh">
+                                                    <input type="date" class="form-control" name="tu" value="@ViewBag.tu" title="Thời gian hẹn khám">
                                                 </div>
                                             </div>
                                             <div class="col-5">
                                                 <div class="componet-input-search">
                                                     <b>Đến:</b>
-                                                    <input type="date" class="form-control" name="den" value="@ViewBag.den" title="Thời gian khám bệnh">
+                                                    <input type="date" class="form-control" name="den" value="@ViewBag.den" title="Thời gian hẹn khám">
                                                 </div>
                                             </div>
                                             <div class="col-2">
@@ -78,7 +78,7 @@
                                                     <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
                                                         <span class="-ap icon-file-text icon mai-search"></span>
                                                     </button>
-                                                    <a href="~/Patient/History" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                                                    <a href="~/Patient/Invoice" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
                                                         <span class="-ap icon-file-text icon mai-refresh"></span>
                                                     </a>
                                                 </div>
@@ -87,34 +87,45 @@
                                     </div>
                                 </div>
                             </div>
+
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Thời gian</th>
-                                        <th class="text-center">Dịch vụ</th>
-                                        <th class="text-center">Bác sĩ</th>
-                                        <th class="text-center">Đơn giá (VNĐ)</th>
-                                        <th class="text-center">Chi tiết</th>
+                                        <th class="text-center">Thời gian mua</th>
+                                        <th class="text-center">Mã phiếu khám</th>
+                                        <th class="text-center">Loại</th>
+                                        <th class="text-center">Tổng tiền</th>
+                                        <th class="text-center">Xem</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>@item.ThoiGianLap</td>
-                                            <td>@item.TenDV</td>
-                                            <td>@item.TenBs</td>
-                                            <td class="text-right">@item.DonGia.ToString("N0")</td>
-                                            <td class="text-center">
-                                                <a href="/Patient/HistoryDetail/@item.MaPhieuKB" title="Chi tiết">
-                                                    <span class="-ap icon-user6 icon mai-information-circle-outline"></span>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>@item.ThoiGian</td>
+                                        <td class="text-center">@item.MaPhieuKham</td>
+                                        <td class="text-center">
+                                            @if (item.Type)
+                                            {
+                                                <span>Mua tại nhà</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Mua tại trung tâm</span>
+                                            }
+                                        </td>
+                                        <td class="text-right">@item.TongTien.ToString("N0")</td>
+                                        
+                                        <td class="text-center">
+                                            <a href="~/Patient/InvoiceDetail/@item.MaHoaDon" title="Xem">
+                                                <span class="-ap icon-file-text icon mai-information-circle-outline"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
-                            @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum }))
+                            @Html.PagedListPager(Model, PageNum => Url.Action("Invoice", new { PageNum }))
                         </div>
                     </div>
                 </div>
@@ -122,4 +133,25 @@
         </div>
     </div>
 
+}
+
+@section scripts{
+    <script>
+        document.getElementById("hen-kham2").onclick = function () {
+            if ('@Session["patient"]') {
+                $.ajax({
+                    url: "/Patient/CheckAppointment",
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.data)
+                            MessageBox("Bạn đang có lịch hẹn chờ xác nhận. Trong thời gian này, bạn không thể thực hiện đặt thêm lịch hẹn. Chúng tôi sẽ liên hệ với bạn sớm nhất có thể!", "warning");
+                        else
+                            window.location = "/Patient/Appointment";
+                    }
+                });
+            }
+            else
+                MessageBox("Bạn cần đăng nhập để thực hiện đặt lịch hẹn!", "error");
+        };
+    </script>
 }
