@@ -1,0 +1,98 @@
+﻿@model PhongKhamNhi.Models.Entities.ChiNhanh
+
+@{
+    ViewBag.Title = "Thông tin chi nhánh";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin chi nhánh</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách chi nhánh", "Index", "AdminBranch")
+                    </li>
+                    <li class="breadcrumb-item active">Thông tin chi nhánh</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Create", "AdminBranch", FormMethod.Post, new { }))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2">
+                                Tên chi nhánh:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-5">
+                                @Html.EditorFor(model => model.TenChiNhanh, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.TenChiNhanh, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="col-md-2 text-right">
+                                Trạng thái:
+                            </label>
+                            <div class="col-md-3">
+                                <select class="form-control" name="tt">
+                                    <option value="1">Đang hoạt động</option>
+                                    <option value="0">Tạn dừng hoạt động</option>
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">
+                                Địa chỉ:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                                <i class="ace-icon fa fa-check"></i>
+                                                Thêm mới
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="reset" class="btn btn-block btn-info btn-lg">
+                                                <i class="fas fa-sync"></i>
+                                                Nhập lại
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div> <!-- ./row -->
+    }
+</section>

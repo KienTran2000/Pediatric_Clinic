@@ -1,0 +1,85 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.Entities.ChiNhanh>
+
+@{ ViewBag.Title = "Danh sách chi nhánh";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách chi nhánh</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+
+<div>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="~/Admin/AdminBranch/Create" class="create-new">
+                <i class="fas fa-plus"></i>
+                Thêm mới
+            </a>
+ 
+        </div>
+        <div class="col-md-6">
+            @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum }))
+        </div>
+    </div>
+</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Mã</th>
+                            <th class="text-center">Tên chi nhánh</th>
+                            <th class="text-center">Địa chỉ</th>
+                            <th class="text-center">Trạng thái</th>
+                            <th class="text-center"><i class="fas fa-cogs"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+        <tr>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.MaChiNhanh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenChiNhanh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td class="text-center">
+                @if (item.DangHoatDong)
+                {
+                    <span>Đang Hoạt động</span>
+                }
+                else
+                {
+                    <span>Tạm dừng hoạt động</span>
+                }
+            </td>
+            
+            <td class="text-center">
+                <a href="~/Admin/AdminBranch/Edit/@item.MaChiNhanh" title="Sửa">
+                    <i class="fas fa-edit" aria-hidden="true"></i>
+                </a>
+                
+            </td>
+        </tr>
+}
+                    </tbody>
+                </table>
+        <p class="text-center" style="margin: 0; padding-bottom: 4px;">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+    </div>
+</section>
+
+<div class="modal fade" id="modalEditPassword" role="dialog" aria-hidden="true">
+
+</div>

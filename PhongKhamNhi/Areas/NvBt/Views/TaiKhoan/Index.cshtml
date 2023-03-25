@@ -1,0 +1,163 @@
+﻿@model PhongKhamNhi.Models.Entities.NhanVien
+
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Areas/NvBt/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin nhân viên</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Index", "TaiKhoan", FormMethod.Post, new { @onsubmit = "return validateForm()", @name = "myForm" }))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        <div class="form-group row">
+                            <label class="col-md-2">
+                                Họ và tên:
+                            </label>
+                            <div class="col-md-5">
+                                @*@Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })*@
+                                <span>@Model.HoTen</span>
+                            </div>
+                            <label class="col-md-2 text-right">
+                                Ngày sinh:
+                            </label>
+                            <div class="col-md-3">
+                                @*<input class="form-control" name="ns" value="@Model.NgaySinh.Value.ToString("yyyy-MM-dd")" type="date" required />*@
+                                <span>@Model.NgaySinh.Value.ToString("dd-MM-yyyy")</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Giới tính:</label>
+                            <div class="col-md-4">
+                                @*<select class="form-control" name="gt">
+                                        @if (Model.GioiTinh == "Nam")
+                                        {
+                                            <option selected value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="Nam">Nam</option>
+                                            <option selected value="Nữ">Nữ</option>
+                                        }
+                                    </select>*@
+                                @if (Model.GioiTinh == "Nam")
+                                {
+                                    <span>Nam</span>
+                                }
+                                else
+                                {
+                                    <span>Nữ</span>
+                                }
+                            </div>
+                            <label class="col-md-2 text-right">
+                                Số điện thoại:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.Sdt, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sdt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Chức vụ:</label>
+                            <label class="col-md-4" style="font-weight: 400;">@Model.ChucVu</label>
+                            <label class="col-md-2 text-right">Ngày vào làm:</label>
+                            <label class="col-md-4" style="font-weight: 400;">@Model.NgayVaoLam.Value.ToString("dd-MM-yyyy")</label>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md-2">
+                                Tên đăng nhập:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-4">
+                                <input class="form-control" name="tenDn" value="@ViewBag.tenDn" required />
+                            </div>
+                            <label class="col-md-2">
+                                Mật khẩu mới:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="password" class="form-control" name="newpassword">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">
+                                Mật khẩu hiện tại:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="password" class="form-control" name="password" required>
+                            </div>
+                            <label class="col-md-2">
+                                Nhập lại mật khẩu mới:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="password" class="form-control" name="repassword">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                                <i class="ace-icon fa fa-check"></i>
+                                                Cập nhật
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="reset" class="btn btn-block btn-info btn-lg">
+                                                <i class="fas fa-sync"></i>
+                                                Nhập lại
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div> <!-- ./row -->
+    }
+</section>
+
+@section script{
+    <script>
+        function validateForm() {
+            var x = document.forms["myForm"]["newpassword"].value;
+            var y = document.forms["myForm"]["repassword"].value;
+            if ((x != "" && y != "" && x != y) || x != y) {
+                alert("Xác nhận mật khẩu mới chưa chính xác!");
+                return false;
+            }
+        }
+    </script>
+}

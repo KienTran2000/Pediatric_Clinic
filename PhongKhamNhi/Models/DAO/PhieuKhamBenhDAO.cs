@@ -125,5 +125,13 @@ namespace PhongKhamNhi.Models.DAO
                 ).ToPagedList<PhieuKhamDTO>(pageNum, pageSize);
             return lst;
         }
+
+        public IEnumerable<LichSuKhamDTO> lichSuKhamByMaBs(int bs, int dv, string tu, string den, int pageNum, int pageSize)
+        {
+            var res = db.Database.SqlQuery<LichSuKhamDTO>(string.Format("lichSuKhamByMaBs {0}, {1}, '{2}', '{3}'",
+                        bs, dv, tu, den)
+                        ).ToPagedList<LichSuKhamDTO>(pageNum, pageSize);
+            return res;
+        }
     }
 }

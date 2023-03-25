@@ -3,7 +3,7 @@
 @model PagedList.IPagedList<PhongKhamNhi.Models.Entities.HoaDonBanThuoc>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh sách hóa đơn thuốc";
     Layout = "~/Areas/NvBt/Views/Shared/_Layout.cshtml";
 }
 
@@ -25,13 +25,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-1">
                                 <div class="">
-                                    <b>Mã hóa đơn</b>
-                                    <input type="text" class="form-control" name="maPk" value="@ViewBag.maHd">
+                                    <b>Mã HĐ</b>
+                                    <input type="text" class="form-control" name="maHd" value="@ViewBag.maHd">
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-2">
                                 <div class="">
                                     <b>Tên khách hàng</b>
                                     <input type="text" class="form-control" name="ten" value="@ViewBag.ten">
@@ -49,6 +49,30 @@
                                     <input type="date" class="form-control" name="den" value="@ViewBag.den">
                                 </div>
                             </div>
+                            <div class="col-2">
+                                <div class="">
+                                    <b>Loại</b>
+                                    <select class="form-control" name="type">
+                                        <option value="2">Tất cả</option>
+                                        @{ if (ViewBag.type == "0")
+                                            {
+                            <option selected value="0">Mua tại phòng khám</option>
+                                                <option value="1">Mua tại nhà</option>
+ }
+                                            else if (ViewBag.type == "1")
+                                            {
+                            <option value="0">Mua tại phòng khám</option>
+                                                <option value="1" selected>Mua tại nhà</option>
+ }
+                                            else
+                                            {
+                            <option value="0">Khám tại phòng khám</option>
+                                                <option value="1">Mua tại nhà</option>
+ } }
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="col-1">
                                 <div class="btn-search">
                                     <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
@@ -103,7 +127,7 @@
                             Số điện thoại
                         </th>
                         <th class="text-center">
-                            Địa chỉ
+                            Loại
                         </th>
                         <th class="text-center">
                             Tổng tiền
@@ -140,7 +164,14 @@
                                 @Html.DisplayFor(modelItem => item.Sdt)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DiaChi)
+                                @if(!item.Type)
+                    {
+                        <span>Mua tại phòng khám</span>
+                    }
+                    else
+                    {
+                        <span>Mua tại nhà</span>
+                    }
                             </td>
                             <td class="text-right">
                                 @item.TongTien.ToString("N0")

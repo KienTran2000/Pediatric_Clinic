@@ -2,21 +2,24 @@
 using PhongKhamNhi.Models.Entities;
 using System.Web.Mvc;
 
-namespace PhongKhamNhi.Areas.BacSiArea.Controllers
+namespace PhongKhamNhi.Areas.NvBt.Controllers
 {
     public class TaiKhoanController : Controller
     {
-        // GET: BacSiArea/TaiKhoan
+        // GET: NvBt/TaiKhoan
         public ActionResult Index()
         {
-            BacSi nv = (BacSi)Session["user"];
+            NhanVien nv = (NhanVien)Session["user"];
             ViewBag.tenDn = new TaiKhoanDAO().FindByID(nv.IdTaiKhoan.Value).TenDangNhap;
             return View(nv);
         }
         [HttpPost]
         public ActionResult Index(NhanVien tmp, string tenDn, string password, string newpassword)
         {
-            BacSi nv = (BacSi)Session["user"];
+            NhanVien nv = (NhanVien)Session["user"];
+            //nv.GioiTinh = gt;
+            //nv.HoTen = tmp.HoTen;
+            //nv.NgaySinh = ns;
             nv.Sdt = tmp.Sdt;
             TaiKhoanDAO dao = new TaiKhoanDAO();
             TaiKhoan tk = dao.FindByID(nv.IdTaiKhoan.Value);
@@ -26,7 +29,7 @@ namespace PhongKhamNhi.Areas.BacSiArea.Controllers
                 ViewBag.tenDn = tenDn;
                 return View(nv);
             }
-            new BacSiDAO().Update(nv);
+            new NhanVienDAO().Update(nv);
             tk.TenDangNhap = tenDn;
             if (newpassword != "")
                 tk.MatKhau = newpassword;

@@ -1,0 +1,195 @@
+﻿@model PhongKhamNhi.Models.Entities.BacSi
+
+@{
+    ViewBag.Title = "Thêm mới bác sĩ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm mới bác sĩ</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách bác sĩ", "Index", "AdminDoctor")
+                    </li>
+                    <li class="breadcrumb-item active">Thêm mới bác sĩ</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Create", "AdminDoctor", FormMethod.Post, new { @onsubmit = "return validateForm()", @name = "myForm", @enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        <div class="form-group row">
+                            <label class="col-md-2">
+                                Họ và tên:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-5">
+                                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="col-md-2 text-right">
+                                Ngày sinh:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-3">
+                                @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control", @type = "date", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Giới tính:</label>
+                            <div class="col-md-2">
+                                <select class="form-control" name="gt">
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 text-right">Số điện thoại:</label>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.Sdt, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                                @Html.ValidationMessageFor(model => model.Sdt, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="col-md-2 text-right">Học vị:</label>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.HocVi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.HocVi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Chi nhánh:</label>
+                            <div class="col-md-5">
+                                <select class="form-control" name="cn">
+                                    @foreach (var item in ViewBag.chiNhanh)
+                                    {
+                                        <option value="@item.MaChiNhanh">@item.TenChiNhanh</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-md-2 text-right">
+                                Ngày vào làm:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-3">
+                                @Html.EditorFor(model => model.NgayVaoLam, new { htmlAttributes = new { @class = "form-control", @type = "date", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.NgayVaoLam, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>
+                                    Giới thiệu
+                                </label>
+                                @Html.TextAreaFor(model => model.GioiThieu)
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label style="display: block;">
+                                    <i class="far fa-image"></i>
+                                    Ảnh đại diện:
+                                </label>
+                                <input type="file" id="photo" name="photo" accept="image/*" onchange="previewFile(this);">
+                                <img id="previewImg" src="~/Content/assets/img/noimage.jpg" style="width: 80px; display: block; margin-top: 10px;">
+                            </div>
+                            <div class="col-md-6">
+                                <label>
+                                    Tên đăng nhập
+                                    <i class="fas fa-asterisk"></i>
+                                </label>
+                                <input type="text" class="form-control" name="username" value="@ViewBag.username" required>
+                                <label>
+                                    Mật khẩu
+                                    <i class="fas fa-asterisk"></i>
+                                </label>
+                                <input type="password" class="form-control" name="password" required>
+                                <label>
+                                    Nhập lại mật khẩu
+                                    <i class="fas fa-asterisk"></i>
+                                </label>
+                                <input type="password" class="form-control" name="repassword" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                                <i class="ace-icon fa fa-check"></i>
+                                                Thêm mới
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="reset" class="btn btn-block btn-info btn-lg">
+                                                <i class="fas fa-sync"></i>
+                                                Nhập lại
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div> <!-- ./row -->
+    }
+</section>
+@section linkCss{
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/Areas/Content/plugins/summernote/summernote-bs4.min.css">
+}
+
+@section script{
+    <!-- Summernote -->
+    <script src="~/Areas/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        $(function () {
+            // Summernote
+            $('#GioiThieu').summernote()
+        });
+
+        function previewFile(input) {
+            var file = $("#photo").get(0).files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        function validateForm() {
+            var x = document.forms["myForm"]["password"].value;
+            var y = document.forms["myForm"]["repassword"].value;
+            if (x == "" || x != y) {
+                alert("Xác nhận mật khẩu chưa chính xác!");
+                return false;
+            }
+        }
+    </script>
+}

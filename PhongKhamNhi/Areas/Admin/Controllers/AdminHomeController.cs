@@ -2,8 +2,6 @@
 using PhongKhamNhi.Models.DTO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Areas.Admin.Controllers
@@ -35,7 +33,7 @@ namespace PhongKhamNhi.Areas.Admin.Controllers
             ViewBag.yearSelected = year;
             ViewBag.month = month;
             ViewBag.total = dao.GetTotal(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
-            return View(new ChiNhanhDAO().ListChiNhanh());
+            return View(new ChiNhanhDAO().ListAllChiNhanh());
         }
 
         public ActionResult ThuocBan(int? cn, int? year, int? month)
@@ -51,7 +49,7 @@ namespace PhongKhamNhi.Areas.Admin.Controllers
             ViewBag.year = dao.GetYearOrder();
             ViewBag.yearSelected = year;
             ViewBag.month = month;
-            ViewBag.lstCn = new ChiNhanhDAO().ListChiNhanh();
+            ViewBag.lstCn = new ChiNhanhDAO().ListAllChiNhanh();
             ViewBag.total = dao.DoanhThuThuocBan(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
             return View(new ThuocDAO().ThongKeThuocBan(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn)));
         }

@@ -1,0 +1,190 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.Entities.NhanVien>
+
+@{ ViewBag.Title = "Danh sách nhân viên";
+                Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách nhân viên</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid card card-outline card-info">
+        <div class="form-search">
+            @using (Html.BeginForm("Index", "AdminStaff", FormMethod.Get, new { }))
+            {
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-2">
+                <div class="">
+                    <input type="text" class="form-control" name="ma" placeholder="Mã nhân viên" value="@ViewBag.ma">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="">
+                    <input type="text" class="form-control" name="ten" placeholder="Họ tên" value="@ViewBag.ten">
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="">
+                    <select class="form-control" name="gt">
+                        <option value="">-- Giới tính --</option>
+                        @if (ViewBag.gt == "Nam")
+                        {
+        <option selected value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+ }
+                        else if (ViewBag.gt == "Nữ")
+                        {
+        <option value="Nam">Nam</option>
+                            <option selected value="Nữ">Nữ</option>
+ }
+                        else
+                        {
+        <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+}
+                    </select>
+                </div>
+            </div>
+            <div class="col-2">
+                <select class="form-control" name="cn">
+                    <option value="">-- Chi nhánh --</option>
+                    @foreach (var item in ViewBag.chiNhanh)
+                    {
+                        if (item.MaChiNhanh == int.Parse(ViewBag.cn))
+                        {
+        <option selected value="@item.MaChiNhanh">@item.TenChiNhanh</option> }
+                            else
+                            {
+        <option value="@item.MaChiNhanh">@item.TenChiNhanh</option>
+}
+}
+                </select>
+            </div>
+            <div class="col-3">
+                <div class="btn-search" style="margin-top: 0;">
+                    <button type="submit" class="btn btn-default btn-pro" title="Tìm kiếm" style="background-color: #2ea1f8; flex: auto; ">
+                        <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                    <a href="~/Admin/AdminStaff/Index" class="btn btn-default btn-pro" title="Tải lại" style="background-color: #34a544">
+                        <i class="fas fa-sync-alt"></i> Tải lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>            }
+        </div>
+
+        @using (Html.BeginForm("Index", "AdminStaff", FormMethod.Post, new { }))
+        {
+<div>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="~/Admin/AdminStaff/Create" class="create-new">
+                <i class="fas fa-plus"></i>
+                Thêm mới
+            </a>
+            <button type="submit" class="btn-delete" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                <i class="fa fa-trash-alt"></i>
+                Xóa
+            </button>
+        </div>
+        <div class="col-md-6">
+            @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum, @ma = @ViewBag.ma, @ten = @ViewBag.ten, @gt = @ViewBag.gt }))
+        </div>
+    </div>
+</div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><input type="checkbox" id="checkBoxAll" /></th>
+                            <th class="text-center">Mã</th>
+                            <th class="text-center">Họ và tên</th>
+                            <th class="text-center">Ngày sinh</th>
+                            <th class="text-center">Giới tính</th>
+                            <th class="text-center">Số điện thoại</th>
+                            <th class="text-center">Chức vụ</th>
+                            <th class="text-center">Ngày vào làm</th>
+                            <th class="text-center"><i class="fas fa-cogs"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+        <tr>
+            <td class="text-center">
+                <input type="checkbox" class="checkBoxId" value="@item.MaNV" name="checkBoxId" />
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.MaNV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.NgaySinh.ToString().Split(' ')[0])
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.GioiTinh)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Sdt)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.ChucVu)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.NgayVaoLam.ToString().Split(' ')[0])
+            </td>
+            <td class="text-center">
+                <a href="#" onclick="funcEditPassword(@item.MaNV)" title="Đặt lại mật khẩu" style="color: darkorange;">
+                    <i class="fas fa-key"></i>
+                </a>
+                <a href="~/Admin/AdminStaff/Edit/@item.MaNV" title="Sửa">
+                    <i class="fas fa-edit" aria-hidden="true"></i>
+                </a>
+                <a href="~/Admin/AdminStaff/Delete/@item.MaNV" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
+                    <i class="fas fa-trash-alt" style="color:red;"></i>
+                </a>
+            </td>
+        </tr>}
+                    </tbody>
+                </table>}
+        <p class="text-center" style="margin: 0; padding-bottom: 4px;">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</p>
+    </div>
+</section>
+
+<div class="modal fade" id="modalEditPassword" role="dialog" aria-hidden="true">
+
+</div>
+
+@section script{
+    <script>
+        $(document).ready(function () {
+            $('#checkBoxAll').click(function () {
+                if ($(this).is(":checked"))
+                    $('.checkBoxId').prop('checked', true);
+                else
+                    $('.checkBoxId').prop('checked', false);
+            });
+        });
+        function funcEditPassword(id) {
+            var url = "/Admin/AdminStaff/EditPasswordStaff?id=" + id;
+            $("#modalEditPassword").load(url, function (data) {
+                $("#modalEditPassword").html(data);
+                $("#modalEditPassword").modal("show");
+            });
+        }
+    </script>
+}

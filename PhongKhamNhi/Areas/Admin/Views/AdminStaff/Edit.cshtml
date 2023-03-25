@@ -1,0 +1,134 @@
+﻿@model PhongKhamNhi.Models.Entities.NhanVien
+
+@{
+    ViewBag.Title = "Thông tin nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin nhân viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách nhân viên", "Index", "AdminStaff")
+                    </li>
+                    <li class="breadcrumb-item active">Thông tin nhân viên</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Edit", "AdminStaff", FormMethod.Post, new { }))
+    {
+        @Html.HiddenFor(model => model.MaNV)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2">
+                                Họ và tên:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-5">
+                                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="col-md-2 text-right">
+                                Ngày sinh:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-3">
+                                <input class="form-control" name="ns" value="@Model.NgaySinh.Value.ToString("yyyy-MM-dd")" type="date" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Giới tính:</label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="gt">
+                                    @if (Model.GioiTinh == "Nam")
+                                    {
+                                        <option selected value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Nam">Nam</option>
+                                        <option selected value="Nữ">Nữ</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-md-2 text-right">
+                                Số điện thoại:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.Sdt, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sdt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Chi nhánh:</label>
+                            <div class="col-md-5">
+                                <select class="form-control" name="cn">
+                                    @foreach (var item in ViewBag.chiNhanh)
+                                    {
+                                        <option value="@item.MaChiNhanh">@item.TenChiNhanh</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-md-2 text-right">
+                                Ngày vào làm:
+                                <i class="fas fa-asterisk"></i>
+                            </label>
+                            <div class="col-md-3">
+                                <input class="form-control" name="nvl" value="@Model.NgayVaoLam.Value.ToString("yyyy-MM-dd")" type="date" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Chức vụ:</label>
+                            <label class="col-md-5" style="font-weight: 400;">@Model.ChucVu</label>
+                            <label class="col-md-2 text-right">Tên đăng nhập:</label>
+                            <label class="col-md-3" style="font-weight: 400;">@ViewBag.tenDn</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                                <i class="ace-icon fa fa-check"></i>
+                                                Cập nhật
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="reset" class="btn btn-block btn-info btn-lg">
+                                                <i class="fas fa-sync"></i>
+                                                Nhập lại
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div> <!-- ./row -->
+    }
+</section>

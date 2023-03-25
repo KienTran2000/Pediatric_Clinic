@@ -138,7 +138,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminAccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminBranchController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminDoctorController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminStaffController.cs" />
     <Compile Include="Areas\BacSiArea\BacSiAreaRegistration.cs" />
     <Compile Include="Areas\BacSiArea\Controllers\BacSiHomeController.cs" />
     <Compile Include="Areas\BacSiArea\Controllers\BenhNhiController.cs" />
@@ -153,6 +157,7 @@
     <Compile Include="Areas\LeTan\LeTanAreaRegistration.cs" />
     <Compile Include="Areas\NvBt\Controllers\DonThuocController.cs" />
     <Compile Include="Areas\NvBt\Controllers\NvBtHomeController.cs" />
+    <Compile Include="Areas\NvBt\Controllers\TaiKhoanController.cs" />
     <Compile Include="Areas\NvBt\Controllers\ThuocController.cs" />
     <Compile Include="Areas\NvBt\NvBtAreaRegistration.cs" />
     <Compile Include="Areas\NvXn\Controllers\NvXnHomeController.cs" />
@@ -162,6 +167,7 @@
     <Compile Include="Areas\ThuNgan\Controllers\DichVuController.cs" />
     <Compile Include="Areas\ThuNgan\Controllers\DkXnController.cs" />
     <Compile Include="Areas\ThuNgan\Controllers\HoaDonController.cs" />
+    <Compile Include="Areas\ThuNgan\Controllers\TaiKhoanController.cs" />
     <Compile Include="Areas\ThuNgan\Controllers\ThuNganHomeController.cs" />
     <Compile Include="Areas\ThuNgan\ThuNganAreaRegistration.cs" />
     <Compile Include="Controllers\DoctorTeamController.cs" />
@@ -193,6 +199,7 @@
     <Compile Include="Models\DTO\CtHdThuocDTO.cs" />
     <Compile Include="Models\DTO\DonThuocDTO.cs" />
     <Compile Include="Models\DTO\KqXnDTO.cs" />
+    <Compile Include="Models\DTO\LichSuKhamDTO.cs" />
     <Compile Include="Models\DTO\PhieuDangKyKhamDTO.cs" />
     <Compile Include="Models\DTO\PhieuDkXnDTO.cs" />
     <Compile Include="Models\DTO\PhieuKhamDTO.cs" />
@@ -1019,6 +1026,21 @@
     <Content Include="Areas\NvXn\Views\XetNghiem\Edit.cshtml" />
     <Content Include="Areas\BacSiArea\Views\BacSiHome\CreateByMaPk.cshtml" />
     <Content Include="Areas\ThuNgan\Views\HoaDon\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDoctor\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDoctor\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDoctor\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDoctor\EditPasswordDoctor.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminDoctor\History.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminStaff\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminStaff\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminStaff\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminStaff\EditPasswordStaff.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminBranch\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminBranch\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminBranch\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccount\Index.cshtml" />
+    <Content Include="Areas\NvBt\Views\TaiKhoan\Index.cshtml" />
+    <Content Include="Areas\ThuNgan\Views\TaiKhoan\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />

@@ -33,6 +33,13 @@ namespace PhongKhamNhi.Models.DAO
             return db.TaiKhoans.Find(id);
         }
 
+        public int Insert(TaiKhoan tk)
+        {
+            db.TaiKhoans.Add(tk);//luu tren RAM
+            db.SaveChanges();//luu vao o dia
+            return tk.IdTaiKhoan;
+        }
+
         public int Update(TaiKhoan tk)
         {
             TaiKhoan tmp = db.TaiKhoans.Find(tk.IdTaiKhoan);

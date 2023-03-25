@@ -21,6 +21,14 @@ namespace PhongKhamNhi.Models.DAO
             var lst = db.Database.SqlQuery<BacSi>("SELECT * FROM BacSi").ToPagedList<BacSi>(pageNum, pageSize);
             return lst;
         }
+
+        public IEnumerable<BacSi> GetListBs(int ma, string ten, string gt, int cn, int pageNum, int pageSize)
+        {
+            var lst = db.Database.SqlQuery<BacSi>(string.Format("GetListBs {0}, N'{1}', N'{2}', {3}",
+                ma, ten, gt, cn)).ToPagedList<BacSi>(pageNum, pageSize);
+            return lst;
+        }
+
         public BacSi GetBacSi(int idTk)
         {
             var res = (from s in db.BacSis where s.IdTaiKhoan == idTk select s);
@@ -110,6 +118,44 @@ namespace PhongKhamNhi.Models.DAO
                 db.SaveChanges();//luu vao o dia
             }
             return tmp.MaBS;
+        }
+
+        public int UpdateByAdmin(BacSi bs)
+        {
+            BacSi tmp = db.BacSis.Find(bs.MaBS);
+            if (tmp != null)
+            {
+                tmp.Anh = bs.Anh;
+                tmp.GioiTinh = bs.GioiTinh;
+                tmp.HocVi = bs.HocVi;
+                tmp.HoTen = bs.HoTen;
+                tmp.NgaySinh = bs.NgaySinh;
+                tmp.NgayVaoLam = bs.NgayVaoLam;
+                tmp.Sdt = bs.Sdt;
+                tmp.MaChiNhanh = bs.MaChiNhanh;
+                tmp.GioiThieu = bs.GioiThieu;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.MaBS;
+        }
+
+        public int Insert(BacSi bs)
+        {
+            db.BacSis.Add(bs);//luu tren RAM
+            db.SaveChanges();//luu vao o dia
+            return bs.MaBS;
+        }
+
+        public int Delete(int id)
+        {
+            BacSi bs = db.BacSis.Find(id);
+            if (bs != null)
+            {
+                db.BacSis.Remove(bs);
+                return db.SaveChanges();
+            }
+            else
+                return -1;
         }
     }
 }

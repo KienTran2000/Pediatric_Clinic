@@ -1,0 +1,175 @@
+﻿@model PhongKhamNhi.Models.Entities.BacSi
+
+@{
+    ViewBag.Title = "Thông tin bác sĩ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin bác sĩ</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách bác sĩ", "Index", "AdminDoctor")
+                    </li>
+                    <li class="breadcrumb-item active">Thông tin bác sĩ</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Edit", "AdminDoctor", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.MaBS)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h4 class="">
+                            Thông tin chính
+                        </h4>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2">Họ và tên:</label>
+                            <div class="col-md-5">
+                                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="col-md-2 text-right">Ngày sinh:</label>
+                            <div class="col-md-3">
+                                <input class="form-control" name="ns" value="@Model.NgaySinh.Value.ToString("yyyy-MM-dd")" type="date" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Giới tính:</label>
+                            <div class="col-md-2">
+                                <select class="form-control" name="gt">
+                                    @if (Model.GioiTinh == "Nam")
+                                    {
+                                        <option selected value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Nam">Nam</option>
+                                        <option selected value="Nữ">Nữ</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-md-2 text-right">Số điện thoại:</label>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.Sdt, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sdt, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="col-md-2">Học vị:</label>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.HocVi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.HocVi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Chi nhánh:</label>
+                            <div class="col-md-5">
+                                <select class="form-control" name="cn">
+                                    @foreach (var item in ViewBag.chiNhanh)
+                                    {
+                                        if (item.MaChiNhanh == Model.MaChiNhanh)
+                                        {
+                                            <option selected value="@item.MaChiNhanh">@item.TenChiNhanh</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.MaChiNhanh">@item.TenChiNhanh</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-md-2 text-right">Ngày vào làm:</label>
+                            <div class="col-md-3">
+                                <input class="form-control" name="nvl" value="@Model.NgayVaoLam.Value.ToString("yyyy-MM-dd")" type="date" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>
+                                    Giới thiệu
+                                </label>
+                                @Html.TextAreaFor(model => model.GioiThieu)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-7">
+                                <label style="display: block;">
+                                    <i class="far fa-image"></i>
+                                    Ảnh đại diện:
+                                </label>
+                                @Html.HiddenFor(model => model.Anh)
+                                <input type="file" id="photo" name="photo" accept="image/*" onchange="previewFile(this);">
+                                <img id="previewImg" src="~/Content/assets/img/doctors/@Model.Anh" style="width: 80px; margin-top: 10px;">
+                            </div>
+                            <div class="col-md-5">
+                                <label>Tên đăng nhập:</label> @ViewBag.tenDn
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                                <i class="ace-icon fa fa-check"></i>
+                                                Cập nhật
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="reset" class="btn btn-block btn-info btn-lg">
+                                                <i class="fas fa-sync"></i>
+                                                Nhập lại
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div> <!-- ./row -->
+    }
+</section>
+@section linkCss{
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/Areas/Content/plugins/summernote/summernote-bs4.min.css">
+}
+@section script{
+    <!-- Summernote -->
+    <script src="~/Areas/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        $(function () {
+            // Summernote
+            $('#GioiThieu').summernote()
+        });
+        function previewFile(input) {
+            var file = $("#photo").get(0).files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+    </script>
+}

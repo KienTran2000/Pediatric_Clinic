@@ -168,10 +168,14 @@
                                                                         <span>Mua tại phòng khám</span>
                                                                     }
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <label style="min-width: 122px;">Thông tin thanh toán:</label>
-                                                                    <img src="~/Content/assets/img/blog/@Model.AnhThanhToan" style="width: 100%;" />
-                                                                </div>
+                                                                @if (Model.Type)
+                                                                {
+                                                            <div class="form-group">
+                                                                <label style="min-width: 122px;">Thông tin thanh toán:</label>
+                                                                <img src="~/Content/assets/img/blog/@Model.AnhThanhToan" style="width: 100%;" />
+                                                            </div>
+                                                                }
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
