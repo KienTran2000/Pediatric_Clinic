@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace PhongKhamNhi.Models.DTO
+﻿namespace PhongKhamNhi.Models.DTO
 {
     public class ThuocBanDTO
     {
@@ -14,5 +9,8 @@ namespace PhongKhamNhi.Models.DTO
         public string DonViTinh { get; set; }
 
         public int Sl { get; set; }
+
+        public double DonGia { get; set; }
+        public double ThanhTien { get; set; }
     }
 }

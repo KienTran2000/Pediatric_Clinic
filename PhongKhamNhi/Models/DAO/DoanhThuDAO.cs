@@ -3,7 +3,6 @@ using PhongKhamNhi.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace PhongKhamNhi.Models.DAO
 {
@@ -65,6 +64,13 @@ namespace PhongKhamNhi.Models.DAO
                 ).ToList();
             return lst;
         }
+
+        public List<ThongKeDichVuDTO> ThongKeDichVu(int year, int month, int maCn)
+        {
+            var res = db.Database.SqlQuery<ThongKeDichVuDTO>(string.Format("ThongKeDichVu {0}, {1}, {2}", year, month, maCn));
+            return res.ToList();
+        }
+
         public List<int> GetYearOrder()
         {
             var lst = db.Database.SqlQuery<int>("SELECT DISTINCT YEAR(NgayThangNam) FROM DoanhThu ORDER BY YEAR(NgayThangNam) DESC"

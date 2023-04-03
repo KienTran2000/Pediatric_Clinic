@@ -1,5 +1,6 @@
 ﻿using PhongKhamNhi.Models.DAO;
 using PhongKhamNhi.Models.DTO;
+using Rotativa;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -52,6 +53,52 @@ namespace PhongKhamNhi.Areas.Admin.Controllers
             ViewBag.lstCn = new ChiNhanhDAO().ListAllChiNhanh();
             ViewBag.total = dao.DoanhThuThuocBan(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
             return View(new ThuocDAO().ThongKeThuocBan(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn)));
+        }
+
+        public ActionResult PrintMedicine(int? cn, int? year, int? month)
+        {
+            return new ActionAsPdf("InMedicine", new { cn = cn, year = year, month = month });
+        }
+        public ActionResult InMedicine(int? cn, int? year, int? month)
+        {
+            List<ThuocBanDTO> lst = new ThuocDAO().ThongKeThuocBan2(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
+            double tong = 0;
+            foreach (ThuocBanDTO item in lst)
+            {
+                tong += item.ThanhTien;
+            }
+            ViewBag.ngay = DateTime.Now.ToString("dd/MM/yyyy");
+            ViewBag.Nam = year;
+            ViewBag.Thang = month;
+            if (cn == 0)
+                ViewBag.Cn = "Toàn bộ";
+            else
+                ViewBag.Cn = new ChiNhanhDAO().FindByID(cn.Value).TenChiNhanh;
+            ViewBag.Tong = tong;
+            return View(lst);
+        }
+
+        public ActionResult PrintDv(int? cn, int? year, int? month)
+        {
+            return new ActionAsPdf("InDv", new { cn = cn, year = year, month = month });
+        }
+        public ActionResult InDv(int? cn, int? year, int? month)
+        {
+            List<ThongKeDichVuDTO> lst = new DoanhThuDAO().ThongKeDichVu(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
+            double tong = 0;
+            foreach (ThongKeDichVuDTO item in lst)
+            {
+                tong += item.ThanhTien;
+            }
+            ViewBag.ngay = DateTime.Now.ToString("dd/MM/yyyy");
+            ViewBag.Nam = year;
+            ViewBag.Thang = month;
+            if (cn == 0)
+                ViewBag.Cn = "Toàn bộ";
+            else
+                ViewBag.Cn = new ChiNhanhDAO().FindByID(cn.Value).TenChiNhanh;
+            ViewBag.Tong = tong;
+            return View(lst);
         }
     }
 }

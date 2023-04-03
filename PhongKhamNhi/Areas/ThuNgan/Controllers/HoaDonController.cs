@@ -4,8 +4,6 @@ using PhongKhamNhi.Models.Entities;
 using Rotativa;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Areas.ThuNgan.Controllers
@@ -86,7 +84,44 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
         [HttpPost]
         public ActionResult Edit(HoaDonBanThuoc h)
         {
-            new HoaDonThuocDAO().UpdateThuNgan(h);
+            HoaDonThuocDAO dao = new HoaDonThuocDAO();
+            HoaDonBanThuoc p = dao.FindByID(h.MaHoaDon);
+            NhanVien nv = (NhanVien)Session["user"];
+            p.MaNvLap = nv.MaNV;
+            DoanhThuDAO daodt = new DoanhThuDAO();
+            DoanhThu d = daodt.Find(p.ThoiGian, p.MaChiNhanh);
+            if (p.TrangThai == false)
+            {
+                p.TrangThai = true;
+                if (d != null)
+                {
+                    d.ThuBanThuoc += p.TongTien;
+                    d.TongTien += p.TongTien;
+                    daodt.Update(d);
+                }
+                else
+                {
+                    d = new DoanhThu();
+                    d.NgayThangNam = p.ThoiGian;
+                    d.MaChiNhanh = p.MaChiNhanh;
+                    d.ThuDichVuKham = 0;
+                    d.ThuXetNghiem = 0;
+                    d.ThuBanThuoc = p.TongTien;
+                    d.TongTien = p.TongTien;
+                    daodt.Insert(d);
+                }
+            }
+            else if (p.TrangThai == true)
+            {
+                p.TrangThai = false;
+                if (d != null)
+                {
+                    d.ThuBanThuoc -= p.TongTien;
+                    d.TongTien -= p.TongTien;
+                    daodt.Update(d);
+                }
+            }
+            dao.UpdateThuNgan(p);
             return RedirectToAction("Index", "HoaDon");
         }
 

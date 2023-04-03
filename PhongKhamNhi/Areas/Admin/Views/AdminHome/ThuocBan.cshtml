@@ -26,12 +26,12 @@
 <section class="content">
     <div class="container-fluid card card-outline card-info">
         <div class="form-input-infor">
-            @using (Html.BeginForm("ThuocBan", "AdminHome", FormMethod.Get, new { @style= "margin: 8px 5px 20px;" }))
+            @using (Html.BeginForm("ThuocBan", "AdminHome", FormMethod.Get, new { @style = "margin: 8px 5px 20px;" }))
             {
                 <div class="row" style="align-items: center;">
                     <div class="col-2">
                         <label>Năm</label>
-                        <select class="form-control" name="year">
+                        <select class="form-control" name="year" id="year">
                             @foreach (var item in ViewBag.year)
                             {
                                 var select = "";
@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-2">
                         <label>Tháng</label>
-                        <select class="form-control" name="month">
+                        <select class="form-control" name="month" id="month">
                             @for (var i = 1; i < 13; i++)
                             {
                                 var select = "";
@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-3">
                         <label>Chi nhánh</label>
-                        <select class="form-control" name="cn">
+                        <select class="form-control" name="cn" id="cn">
                             <option value="0">Toàn bộ</option>
                             @foreach (var item in ViewBag.lstCn)
                             {
@@ -79,7 +79,14 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-4 text-right">
+                    <div class="col-1">
+                        <div class="btn-search" style="margin: 0;">
+                            <button id="Print" type="button" onclick="myFunction()" class="btn btn-block btn-success btn-lg" style="padding: 0.35rem 0rem;">
+                                In
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
                         <b>Tổng doanh thu: @ViewBag.total.ToString("N0") VND</b>
                     </div>
                 </div>
@@ -104,8 +111,8 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.TenThuoc)
                             @*<a href="~/Product/Details/@item.MaThuoc" target="_blank" title="Xem trước">
-                                <i class="fas fa-link" style="font-size: 11px;"></i>
-                            </a>*@
+                                    <i class="fas fa-link" style="font-size: 11px;"></i>
+                                </a>*@
                         </td>
                         <td class="text-center">
                             @Html.DisplayFor(modelItem => item.DonViTinh)
@@ -119,3 +126,16 @@
         </table>
     </div>
 </section>
+
+@section script{
+    <script>
+        function myFunction() {
+            
+            let m = document.getElementById("month").value;
+            let y = document.getElementById("year").value;
+            let cn = document.getElementById("cn").value;
+            window.open("https://localhost:44323/Admin/AdminHome/PrintMedicine?year=" + y + "&month=" + m + "&cn=" + cn);
+            
+        }
+    </script>
+}

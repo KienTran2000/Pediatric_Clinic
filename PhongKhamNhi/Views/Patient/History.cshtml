@@ -106,6 +106,12 @@
                                             <td>@item.TenBs</td>
                                             <td class="text-right">@item.DonGia.ToString("N0")</td>
                                             <td class="text-center">
+                                                @*@if (item.Type && item.TrangThai == 0)
+        {*@
+                                                <a href="/Patient/Pay/@item.MaPhieuKB" title="Thanh toán">
+                                                    <span class="-ap icon-user6 icon mai-cash"></span>
+                                                </a>
+                                                @* } *@
                                                 <a href="/Patient/HistoryDetail/@item.MaPhieuKB" title="Chi tiết">
                                                     <span class="-ap icon-user6 icon mai-information-circle-outline"></span>
                                                 </a>

@@ -1,0 +1,136 @@
+﻿@model PhongKhamNhi.Models.Entities.PhieuKhamBenh
+@{
+    ViewBag.Title = "Thông tin phiếu khám";
+    Layout = "~/Areas/ThuNgan/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thông tin phiếu khám</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        @Html.ActionLink("Danh sách phiếu khám", "Index", "ThuNganHome")
+                    </li>
+                    <li class="breadcrumb-item active">Thông tin hóa đơn</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    @using (Html.BeginForm("Edit", "ThuNganHome", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+        @Html.HiddenFor(model => model.MaPhieuKB)
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <div class="row" style="align-items: center;">
+                            <div class="col-8">
+                                <label style="margin-bottom: 0;">TRẠNG THÁI:</label>
+                                <div class="form-group clearfix" style="display: inline; margin-left: 24px;">
+                                    @{ var f = "";
+                                        var t = "";
+                                        if (Model.TrangThai == 0)
+                                        {
+                                            t = "checked";
+                                        }
+                                        else
+                                        {
+                                            f = "checked";
+                                        } }
+                                    <div class="icheck-danger d-inline">
+                                        <input type="radio" name="tt" value="0" @t id="radioDanger1">
+                                        <label for="radioDanger1">Chưa thanh toán</label>
+                                    </div>
+                                    <div class="icheck-danger d-inline" style="margin-left: 50px;">
+                                        <input type="radio" name="tt" value="1" @f id="radioDanger2">
+                                        <label class="a-done" for="radioDanger2">Đã thanh toán</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label style="min-width: 130px;">Thời gian tạo:</label>
+                            <label>@Model.ThoiGianLap.ToString()</label>
+                        </div>
+                        <div class="form-group">
+                            <label style="min-width: 130px;">Dịch vụ khám:</label>
+                            <label>@Model.DichVuKham.TenDV</label>
+                        </div>
+                        <div class="form-group">
+                            <label style="min-width: 130px;">Đơn giá:</label>
+                            <label>@Model.DonGia.ToString("N0") VNĐ</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+            <div class="col-md-4">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" id="Submit" name="Submit" class="btn btn-block btn-success btn-lg">
+                                    <i class="ace-icon fa fa-check"></i>
+                                    Cập nhật
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label style="min-width: 130px;">Tên bệnh nhi:</label>
+                            <label>@ViewBag.BenhNhi.HoTen</label>
+                        </div>
+                        @*<div class="form-group">
+                            <label style="min-width: 130px;">Số điện thoại:</label>
+                            @Model.Sdt
+                        </div>*@
+                        <div class="form-group">
+                            <label style="min-width: 130px;">Địa chỉ:</label>
+                            @ViewBag.BenhNhi.DiaChi
+                        </div>
+                        <div class="form-group">
+                            <label style="min-width: 130px;">Loại:</label>
+                            @if (Model.Type)
+                            {
+                                <span>Khám tại nhà</span>
+                            }
+                            else
+                            {
+                                <span>Khám tại phòng khám</span>
+                            }
+                        </div>
+                        @if (Model.Type)
+                        {
+                            <div class="form-group">
+                                <label style="min-width: 122px;">Thông tin thanh toán:</label>
+                                <img src="~/Content/assets/img/blog/@Model.AnhThanhToan" style="width: 100%;" />
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>

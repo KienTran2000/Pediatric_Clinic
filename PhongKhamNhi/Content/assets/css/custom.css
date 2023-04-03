@@ -769,3 +769,8 @@ textarea {
     padding: 10px 40px;
     color: #fff;
 }
+
+.label-thanh-toan-pk {
+    min-width: 240px;
+    font-weight: bold;
+}

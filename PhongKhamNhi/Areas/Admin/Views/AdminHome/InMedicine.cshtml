@@ -1,0 +1,143 @@
+﻿@model List<PhongKhamNhi.Models.DTO.ThuocBanDTO>
+
+@{ Layout = null; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Thống kê sản lượng thuốc</title>
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Areas/Content/dist/css/adminlte.min.css">
+    <!-- css_custom -->
+    <link href="~/Areas/Content/css_custom_admin.css" rel="stylesheet" />
+    <style>
+        .table-sign, .table-sign tr, .table-sign td {
+            border: none;
+        }
+
+            .table-sign th {
+                border: none;
+                background-color: #e9ecef00;
+            }
+
+            .table-sign.table-infor td {
+                vertical-align: top !important;
+            }
+    </style>
+</head>
+<body style="padding: 50px 100px;">
+    <section class="content" style="width: 1200px; margin: auto;">
+        <div class="row">
+            <div class="col-12">
+                <h2><b>PHÒNG KHÁM NHI MTA</b></h2>
+                <p>Địa chỉ: 236 Hoàng Quốc Việt, Bắc Từ Liêm, Hà Nội</p>
+                <p>Điện thoại: 1900 1009</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <h1>BÁO CÁO SẢN LƯỢNG THUỐC</h1>
+                    <p>Ngày in: @ViewBag.ngay</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sign table-infor">
+                    <tbody>
+                        <tr>
+                            <td style="width: 180px;">
+                                <p>Chi nhánh:</p>
+                                <p>Doanh thu:</p>
+                                <p>Năm:</p>
+                            </td>
+
+                            <td>
+                                <p>@ViewBag.Cn</p>
+                                <p>Tháng @ViewBag.Thang</p>
+                                <p>@ViewBag.Nam</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+            <div class="col-12">
+                <table class="table table-order">
+                    <thead>
+                        <tr>
+                            <th class="text-center">STT</th>
+                            <th class="text-center">Mã thuốc</th>
+                            <th class="text-center">Tên thuốc</th>
+                            <th class="text-center">Đơn vị tính</th>
+                            <th class="text-center">Giá tiền (VNĐ)</th>
+                            <th class="text-center">Số lượng bán</th>
+                            <th class="text-center">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                        <tr>
+                            <td class="text-center">
+                                @(i + 1)
+                            </td>
+
+                            <td class="text-center">@Model[i].MaThuoc</td>
+                            <td>@Model[i].TenThuoc</td>
+                            <td class="text-center">@Model[i].DonViTinh</td>
+                            <td class="text-right">
+                                @(Model[i].DonGia.ToString("N0"))
+                            </td>
+                            <td class="text-center">@Model[i].Sl</td>
+                            <td class="text-right">@Model[i].ThanhTien.ToString("N0")</td>
+                        </tr>
+}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6" class="text-right">
+                                <b>Tổng tiền: </b>
+                            </td>
+                            <td colspan="1" class="text-right">
+                                <b>@ViewBag.Tong.ToString("N0")</b>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <hr />        
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sign">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <b>Người lập</b>
+                                <p>(Ký, ghi rõ họ tên)</p>
+                            </td>
+                            <td class="text-center">
+                                <b>Trưởng bộ phận thuốc</b>
+                                <p>(Ký, ghi rõ họ tên)</p>
+                            </td>
+                            <td class="text-center">
+                                <b>Ban quản lý</b>
+                                <p>(Ký, ghi rõ họ tên)</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+
+

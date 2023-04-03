@@ -186,20 +186,26 @@
                         }
                     </td>
                     <td class="text-center">
-                        @{ if (item.TrangThai == 0)
-                            {
-                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                    <input type="checkbox" class="custom-control-input" id="@item.MaPhieuKB" onclick="return check(@item.MaPhieuKB)">
-                                    <label class="custom-control-label" for="@item.MaPhieuKB"></label>
-                                </div>
-                            }
-                            else if (item.TrangThai == 1)
-                            {
-                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                    <input type="checkbox" checked class="custom-control-input" id="@item.MaPhieuKB" onclick="return check(@item.MaPhieuKB)">
-                                    <label class="custom-control-label" for="@item.MaPhieuKB"></label>
-                                </div>
-                            }
+                        @*@{ if (item.TrangThai == 0)
+            {
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" class="custom-control-input" id="@item.MaPhieuKB" onclick="return check(@item.MaPhieuKB)">
+                    <label class="custom-control-label" for="@item.MaPhieuKB"></label>
+                </div>
+            }
+            else if (item.TrangThai == 1)
+            {
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" checked class="custom-control-input" id="@item.MaPhieuKB" onclick="return check(@item.MaPhieuKB)">
+                    <label class="custom-control-label" for="@item.MaPhieuKB"></label>
+                </div>
+            }
+        }*@
+                        @if(item.TrangThai == 0)
+                        {
+                            <a href="~/ThuNgan/ThuNganHome/Edit/@item.MaPhieuKB" title="Sửa">
+                                <i class="fas fa-edit"></i>
+                            </a>
                         }
                         <a href="~/ThuNgan/ThuNganHome/Print/@item.MaPhieuKB" target="_blank" title="In phiếu">
                             <i class="fas fa-print"></i>
@@ -221,7 +227,7 @@
 @section script{
     <script>
         function check(id) {
-            console.log(id);
+            
             if (confirm("Bạn chắc chắn muốn chuyển trạng thái phiếu khám?")) {
                 var tt = "#tt-" + id;
                 $.ajax({

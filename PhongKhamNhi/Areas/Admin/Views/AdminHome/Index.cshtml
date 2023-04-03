@@ -28,61 +28,65 @@
         <div class="form-input-infor">
             @using (Html.BeginForm("Index", "AdminHome", FormMethod.Get, new { }))
             {
-                <div class="row" style="align-items: center;">
-                    <div class="col-2">
-                        <label>Năm</label>
-                        <select class="form-control" name="year">
-                            @foreach (var item in ViewBag.year)
+            <div class="row" style="align-items: center;">
+                <div class="col-2">
+                    <label>Năm</label>
+                    <select class="form-control" name="year" id="year">
+                        @foreach (var item in ViewBag.year)
+                        {
+                            var select = "";
+                            if (item == ViewBag.yearSelected)
                             {
-                                var select = "";
-                                if (item == ViewBag.yearSelected)
-                                {
-                                    select = "selected";
-                                }
-                                <option @select value="@item">@item</option>
+                                select = "selected";
                             }
-                        </select>
-                    </div>
-                    <div class="col-2">
-                        <label>Tháng</label>
-                        <select class="form-control" name="month">
-                            @for (var i = 1; i < 13; i++)
+            <option @select value="@item">@item</option>}
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label>Tháng</label>
+                    <select class="form-control" name="month" id="month">
+                        @for (var i = 1; i < 13; i++)
+                        {
+                            var select = "";
+                            if (i == ViewBag.month)
                             {
-                                var select = "";
-                                if (i == ViewBag.month)
-                                {
-                                    select = "selected";
-                                }
-                                <option @select value="@i">@i</option>
+                                select = "selected";
                             }
-                        </select>
-                    </div>
-                    <div class="col-3">
-                        <label>Chi nhánh</label>
-                        <select class="form-control" name="cn">
-                            <option value="0">Toàn bộ</option>
-                            @foreach (var item in Model)
+            <option @select value="@i">@i</option>}
+                    </select>
+                </div>
+                <div class="col-3">
+                    <label>Chi nhánh</label>
+                    <select class="form-control" name="cn" id="cn">
+                        <option value="0">Toàn bộ</option>
+                        @foreach (var item in Model)
+                        {
+                            var select = "";
+                            if (item.MaChiNhanh == ViewBag.cnSelected)
                             {
-                                var select = "";
-                                if (item.MaChiNhanh == ViewBag.cnSelected)
-                                {
-                                    select = "selected";
-                                }
-                                <option @select value="@item.MaChiNhanh">@item.TenChiNhanh</option>
-                             }
-                        </select>
-                    </div>
-                    <div class="col-1">
-                        <div class="btn-search" style="margin: 0;">
-                            <button type="submit" id="Submit" class="btn btn-block btn-success btn-lg" style="padding: 0.35rem 0rem;">
-                                Xem
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-4 text-right">
-                        <b>Tổng doanh thu: @ViewBag.total.ToString("N0") VND</b>
+                                select = "selected";
+                            }
+            <option @select value="@item.MaChiNhanh">@item.TenChiNhanh</option>}
+                    </select>
+                </div>
+                <div class="col-1">
+                    <div class="btn-search" style="margin: 0;">
+                        <button type="submit" id="Submit" class="btn btn-block btn-success btn-lg" style="padding: 0.35rem 0rem;">
+                            Xem
+                        </button>
                     </div>
                 </div>
+                <div class="col-1">
+                    <div class="btn-search" style="margin: 0;">
+                        <button id="Print" type="button" onclick="myFunction()" class="btn btn-block btn-success btn-lg" style="padding: 0.35rem 0rem;">
+                            In
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3 text-right">
+                    <b>Tổng doanh thu: @ViewBag.total.ToString("N0") VND</b>
+                </div>
+            </div>
             }
         </div>
         <div id="chart_container">
@@ -110,6 +114,13 @@
 
             },
         })
+
+        function myFunction() {
+            let m = document.getElementById("month").value;
+            let y = document.getElementById("year").value;
+            let cn = document.getElementById("cn").value;
+            window.open("https://localhost:44323/Admin/AdminHome/PrintDv?year=" + y + "&month=" + m + "&cn=" + cn);
+        }
     </script>
 }
 

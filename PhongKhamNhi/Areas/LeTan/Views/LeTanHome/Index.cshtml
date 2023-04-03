@@ -187,13 +187,16 @@
                         <td class="text-center">
                             @{ if (item.TrangThai == true)
                                 {
-                        <a href="~/LeTan/PhieuKham/CreateByPdk/@item.MaBN" title="Tạo phiếu khám bệnh">
-                            <i class="fas fa-notes-medical"></i>
-                        </a> } }
+                        <a href="~/LeTan/LeTanHome/Print/@item.MaPhieuDKK" title="In" target="_blank">
+                            <i class="fas fa-print" aria-hidden="true"></i>
+                        </a>
+                                                <a href="~/LeTan/PhieuKham/CreateByPdk/@item.MaPhieuDKK" title="Tạo phiếu khám bệnh">
+                                                    <i class="fas fa-notes-medical"></i>
+                                                </a> } }
                             <a href="~/LeTan/LeTanHome/Edit/@item.MaPhieuDKK" title="Sửa">
                                 <i class="fas fa-edit" aria-hidden="true"></i>
                             </a>
-                            
+
                             <a href="~/LeTan/LeTanHome/Delete/@item.MaPhieuDKK" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
                                 <i class="fas fa-trash-alt" style="color:red;"></i>
                             </a>

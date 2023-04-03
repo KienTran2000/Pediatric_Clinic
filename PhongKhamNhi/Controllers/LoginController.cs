@@ -1,9 +1,5 @@
 ﻿using PhongKhamNhi.Models.DAO;
 using PhongKhamNhi.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Controllers
@@ -90,7 +86,7 @@ namespace PhongKhamNhi.Controllers
         {
             Session["user"] = null;
             Session["hoTen"] = null;
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Login", "Patient");
         }
     }
 }

@@ -1041,6 +1041,10 @@
     <Content Include="Areas\Admin\Views\AdminAccount\Index.cshtml" />
     <Content Include="Areas\NvBt\Views\TaiKhoan\Index.cshtml" />
     <Content Include="Areas\ThuNgan\Views\TaiKhoan\Index.cshtml" />
+    <Content Include="Areas\ThuNgan\Views\ThuNganHome\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminHome\InMedicine.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminHome\InDv.cshtml" />
+    <Content Include="Areas\LeTan\Views\LeTanHome\In.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -1091,6 +1095,7 @@
     <Content Include="Views\Patient\Success.cshtml" />
     <Content Include="Views\Patient\Invoice.cshtml" />
     <Content Include="Views\Patient\InvoiceDetail.cshtml" />
+    <Content Include="Views\Patient\Pay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

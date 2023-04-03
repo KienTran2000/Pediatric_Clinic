@@ -50,6 +50,12 @@ namespace PhongKhamNhi.Models.DAO
             return res.ToList();
         }
 
+        public List<ThuocBanDTO> ThongKeThuocBan2(int year, int month, int maCn)
+        {
+            var res = db.Database.SqlQuery<ThuocBanDTO>(string.Format("ThongKeThuocBan2 {0}, {1}, {2}", year, month, maCn));
+            return res.ToList();
+        }
+
         public int InsertCtDonThuoc(PhieuKham_Thuoc t)
         {
             db.PhieuKham_Thuoc.Add(t);//luu tren RAM

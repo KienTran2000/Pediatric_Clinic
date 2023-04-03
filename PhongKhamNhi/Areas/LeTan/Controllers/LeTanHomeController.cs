@@ -1,11 +1,9 @@
 ﻿using PhongKhamNhi.Models.DAO;
 using PhongKhamNhi.Models.DTO;
 using PhongKhamNhi.Models.Entities;
-using PhongKhamNhi.Security;
+using Rotativa;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Areas.LeTan.Controllers
@@ -205,6 +203,16 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
                 return RedirectToAction("Index", "LeTanHome");
             }
             return PartialView();
+        }
+
+        public ActionResult Print(int id)
+        {
+            return new ActionAsPdf("In", new { id = id });
+        }
+        public ActionResult In(int id)
+        {
+            ViewBag.ngay = DateTime.Now.ToString("dd/MM/yyyy");
+            return View(new PhieuDangKyKhamDAO().FindByID(id));
         }
     }
     public class ResultLichHen

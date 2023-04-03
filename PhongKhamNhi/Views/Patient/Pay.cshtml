@@ -1,0 +1,132 @@
+﻿@model PhongKhamNhi.Models.Entities.PhieuKhamBenh
+
+@{
+    ViewBag.Title = "Thanh toán";
+}
+@using (Html.BeginForm("Pay", "Patient", FormMethod.Post, new { @onsubmit = "return validateFormEdit()", @name = "myFormEdit", @enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="row" style="padding: 30px;">
+            <div class="col-12">
+                <h4>PHÒNG KHÁM NHI ABC</h4>
+                <span>Trụ sở: 236 Hoàng Quốc Việt, Bắc Từ Liêm, Hà Nội</span> <br />
+                <span>Điện thoại: 1900 1009</span>
+
+                <h2 class="text-center">PHIẾU KHÁM BỆNH</h2>
+                <p class="text-center">Ngày: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-thanh-toan-pk">
+                            Họ tên bệnh nhi:
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @ViewBag.HoTen
+                        @Html.HiddenFor(model => model.MaPhieuKB)
+                    </div>
+                </div>
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-thanh-toan-pk">
+                            Ngày sinh:
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @ViewBag.NgaySinh
+                    </div>
+                </div>
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-thanh-toan-pk">
+                            Địa chỉ:
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @ViewBag.DiaChi
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-thanh-toan-pk">
+                            Dịch vụ khám:
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @ViewBag.DichVu
+                    </div>
+                </div>
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-thanh-toan-pk">
+                            Tổng tiền:
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @Model.DonGia.ToString("N0")
+                    </div>
+                </div>
+                <div class="form-group d-flex" style="align-items: center;">
+                    <div class="input__label">
+                        <div class="label label-thanh-toan-pk">
+                            Tổng số tiền (viết bằng chữ): 
+                        </div>
+                    </div>
+                    <div class="input__wrap">
+                        @ViewBag.tongChu.
+                    </div>
+                </div>
+                
+                <br />
+                <div class="text-center">
+                    <h4>THÔNG TIN THANH TOÁN</h4>
+                    <img src="~/Content/assets/img/blog/NganHang.jpg" />
+                </div>
+                <div class="form-group">
+                    <label>
+                        <i class="far fa-image"></i>
+                        Hình ảnh xác nhận đã thanh toán
+                        (<span class="-ap icon-file-text icon mai-checkmark" style="color:red;"></span>):
+                    </label>
+                    <input type="file" id="photo" name="photo" onchange="previewFile(this);">
+                    <div class="text-center">
+                        <img id="previewImg" src="~/Content/assets/img/blog/noimage.jpg" style="display: none; margin-top: 10px;">
+                    </div>
+                </div>
+                <div class="form-group login__action" style="text-align: center;">
+                    <button type="submit" class="btn btn-submit btn-thanh-toan">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section scripts{
+    <script>
+
+        function previewFile(input) {
+            var file = $("#photo").get(0).files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                    $("#previewImg").show();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function validateFormEdit() {
+            var file = $("#photo").get(0).files[0];
+            if (!file) {
+                alert("Bạn chưa tải ảnh xác nhận đã thanh toán!");
+                return false;
+            }
+        }
+
+    </script>
+}

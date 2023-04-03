@@ -1,10 +1,6 @@
 ﻿using PhongKhamNhi.Models.DAO;
 using PhongKhamNhi.Models.Entities;
 using Rotativa;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Areas.ThuNgan.Controllers
@@ -75,6 +71,59 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
             {
                 status = true
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            PhieuKhamBenhDAO dao = new PhieuKhamBenhDAO();
+            PhieuKhamBenh p = dao.FindByID(id);
+            ViewBag.BenhNhi = new BenhNhiDAO().FindByID(p.MaBN);
+            return View(p);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(PhieuKhamBenh pk)
+        {
+            PhieuKhamBenhDAO dao = new PhieuKhamBenhDAO();
+            PhieuKhamBenh p = dao.FindByID(pk.MaPhieuKB);
+            NhanVien nv = (NhanVien)Session["user"];
+            p.MaNvLap = nv.MaNV;
+            DoanhThuDAO daodt = new DoanhThuDAO();
+            DoanhThu d = daodt.Find(p.ThoiGianLap, p.MaChiNhanh);
+            if (p.TrangThai == 0)
+            {
+                p.TrangThai = 1;
+                if (d != null)
+                {
+                    d.ThuDichVuKham += p.DonGia;
+                    d.TongTien += p.DonGia;
+                    daodt.Update(d);
+                }
+                else
+                {
+                    d = new DoanhThu();
+                    d.NgayThangNam = p.ThoiGianLap;
+                    d.MaChiNhanh = p.MaChiNhanh;
+                    d.ThuDichVuKham = p.DonGia;
+                    d.ThuXetNghiem = 0;
+                    d.ThuBanThuoc = 0;
+                    d.TongTien = p.DonGia;
+                    daodt.Insert(d);
+                }
+            }
+            else if (p.TrangThai == 1)
+            {
+                p.TrangThai = 0;
+                if (d != null)
+                {
+                    d.ThuDichVuKham -= p.DonGia;
+                    d.TongTien -= p.DonGia;
+                    daodt.Update(d);
+                }
+            }
+
+            dao.UpdateThuNgan(p);
+            return RedirectToAction("Index", "ThuNganHome");
         }
 
         public ActionResult Print(int id)

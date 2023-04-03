@@ -106,6 +106,18 @@ namespace PhongKhamNhi.Models.DAO
             }
             return tmp.MaPhieuKB;
         }
+
+        public int UpdatePay(PhieuKhamBenh p)
+        {
+            PhieuKhamBenh tmp = db.PhieuKhamBenhs.Find(p.MaPhieuKB);
+            if (tmp != null)
+            {
+                tmp.AnhThanhToan = p.AnhThanhToan;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.MaPhieuKB;
+        }
+
         public int Delete(int id)
         {
             PhieuKhamBenh p = db.PhieuKhamBenhs.Find(id);

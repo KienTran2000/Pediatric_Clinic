@@ -45,6 +45,7 @@ namespace PhongKhamNhi.Models.Entities
 
         public int? MaNvThu { get; set; }
         public bool Type { get; set; }
+        public string AnhThanhToan { get; set; }
 
         public virtual BacSi BacSi { get; set; }
 

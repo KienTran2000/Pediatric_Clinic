@@ -3,8 +3,6 @@ using PhongKhamNhi.Models.DTO;
 using PhongKhamNhi.Models.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Areas.LeTan.Controllers
@@ -48,9 +46,9 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
         public ActionResult CreateByPdk(int id)
         {
             PhieuDangKyKham p = new PhieuDangKyKhamDAO().FindByID(id);
-            BenhNhi bn = new BenhNhiDAO().FindBnByTen(p.HoTen, p.Sdt);
-            if (bn == null)
-                return RedirectToAction("Notification", "PhieuKham");
+            BenhNhi bn = new BenhNhiDAO().FindByID(p.MaBN.Value);
+            //if (bn == null)
+            //    return RedirectToAction("Notification", "PhieuKham");
             PhieuKhamBenh pk = new PhieuKhamBenh();
             pk.MaBS = p.MaBS;
             pk.MaBN = bn.MaBN;
