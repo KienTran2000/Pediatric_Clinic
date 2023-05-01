@@ -38,7 +38,9 @@ namespace PhongKhamNhi.Models.Entities
         public int? MaNvThu { get; set; }
 
         public double TongTien { get; set; }
+
         public bool Type { get; set; }
+
         [StringLength(500)]
         public string AnhThanhToan { get; set; }
 

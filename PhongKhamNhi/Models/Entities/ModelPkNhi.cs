@@ -13,7 +13,10 @@ namespace PhongKhamNhi.Models.Entities
         }
 
         public virtual DbSet<BacSi> BacSis { get; set; }
+        public virtual DbSet<BaiViet> BaiViets { get; set; }
         public virtual DbSet<BenhNhi> BenhNhis { get; set; }
+        public virtual DbSet<BinhLuan> BinhLuans { get; set; }
+        public virtual DbSet<BinhLuanPhanHoi> BinhLuanPhanHois { get; set; }
         public virtual DbSet<ChiNhanh> ChiNhanhs { get; set; }
         public virtual DbSet<DichVuKham> DichVuKhams { get; set; }
         public virtual DbSet<DoanhThu> DoanhThus { get; set; }
@@ -27,6 +30,7 @@ namespace PhongKhamNhi.Models.Entities
         public virtual DbSet<PhieuKhamBenh> PhieuKhamBenhs { get; set; }
         public virtual DbSet<Quyen> Quyens { get; set; }
         public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
+        public virtual DbSet<ThongBao> ThongBaos { get; set; }
         public virtual DbSet<Thuoc> Thuocs { get; set; }
         public virtual DbSet<Thuoc_HoaDon> Thuoc_HoaDon { get; set; }
         public virtual DbSet<ThuocBan> ThuocBans { get; set; }
@@ -84,11 +88,6 @@ namespace PhongKhamNhi.Models.Entities
                 .HasMany(e => e.HoaDonBanThuocs1)
                 .WithOptional(e => e.NhanVien1)
                 .HasForeignKey(e => e.MaNvThu);
-
-            modelBuilder.Entity<NhanVien>()
-                .HasMany(e => e.KetQuaXNs)
-                .WithRequired(e => e.NhanVien)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<NhanVien>()
                 .HasMany(e => e.PhieuKhamBenhs)

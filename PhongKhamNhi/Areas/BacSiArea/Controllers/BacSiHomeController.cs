@@ -31,6 +31,7 @@ namespace PhongKhamNhi.Areas.BacSiArea.Controllers
             PhieuKhamBenhDAO dao = new PhieuKhamBenhDAO();
             BacSi bs = (BacSi)Session["user"];
             ViewBag.ListDichVu = new DichVuDAO().GetListDv();
+            ViewBag.ThongKe = dao.lstPhieuKbThongKe(bs.MaChiNhanh, ten, int.Parse(dv), bs.MaBS, int.Parse(trangThai), tu, den);
             return View(dao.lstPhieuKb2(bs.MaChiNhanh, ten, int.Parse(dv), bs.MaBS, int.Parse(trangThai), tu, den, pageNum, pageSize));
         }
         public ActionResult Edit(int id)

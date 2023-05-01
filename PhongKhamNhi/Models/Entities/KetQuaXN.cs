@@ -19,9 +19,6 @@ namespace PhongKhamNhi.Models.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MaXN { get; set; }
 
-        //[Key]
-        //[Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int? MaNV { get; set; }
 
         [StringLength(50)]
