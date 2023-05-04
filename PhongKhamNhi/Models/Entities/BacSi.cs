@@ -45,11 +45,11 @@ namespace PhongKhamNhi.Models.Entities
         [StringLength(200)]
         public string Anh { get; set; }
 
-        public bool Type { get; set; }
-
         [AllowHtml]
         [Column(TypeName = "ntext")]
         public string GioiThieu { get; set; }
+
+        public bool Type { get; set; }
 
         public virtual ChiNhanh ChiNhanh { get; set; }
 

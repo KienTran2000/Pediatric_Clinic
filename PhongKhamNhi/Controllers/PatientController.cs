@@ -57,6 +57,7 @@ namespace PhongKhamNhi.Controllers
             if (bn != null)
             {
                 Session["patient"] = bn;
+                Session["patientId"] = bn.MaBN;
                 Session["fullname"] = bn.HoTen;
                 return RedirectToAction("Index", "Patient");
             }

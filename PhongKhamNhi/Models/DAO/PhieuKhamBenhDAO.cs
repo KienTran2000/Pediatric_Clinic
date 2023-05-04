@@ -30,6 +30,18 @@ namespace PhongKhamNhi.Models.DAO
                 ).ToPagedList<PhieuKhamDTO>(pageNum, pageSize);
             return lst;
         }
+
+        public PhieuKhamThongKe lstPhieuKbThongKe(int cn, string ten, int dv, int bs, int trangThai, string tu, string den)
+        {
+            List<PhieuKhamDTO> lst = db.Database.SqlQuery<PhieuKhamDTO>(string.Format("lstPhieuKb2 {0}, N'{1}', {2}, {3}, {4}, '{5}', '{6}'",
+                cn, ten, dv, bs, trangThai, tu, den)
+                ).ToList<PhieuKhamDTO>();
+            PhieuKhamThongKe p = new PhieuKhamThongKe();
+            p.ChoKham = lst.FindAll(pk => pk.TrangThai == 1).Count;
+            p.DaKham = lst.FindAll(pk => pk.TrangThai == 2).Count;
+            return p;
+        }
+
         public IEnumerable<PhieuKhamBenh> lichSuKham(int id, int pageNum, int pageSize)
         {
             var lst = db.Database.SqlQuery<PhieuKhamBenh>(string.Format("SELECT * FROM PhieuKhamBenh WHERE MaBN = {0} ORDER BY MaPhieuKB DESC",

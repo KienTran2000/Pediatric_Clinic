@@ -21,9 +21,11 @@ namespace PhongKhamNhi.Models.Entities
 
         public int? MaQuyen { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string TenDangNhap { get; set; }
 
+        [Required]
         [StringLength(200)]
         public string MatKhau { get; set; }
 

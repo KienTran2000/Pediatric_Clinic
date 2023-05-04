@@ -5,35 +5,37 @@ namespace PhongKhamNhi.Models.Entities
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Mvc;
 
-    [Table("XetNghiem")]
-    public partial class XetNghiem
+    [Table("BaiViet")]
+    public partial class BaiViet
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public XetNghiem()
+        public BaiViet()
         {
-            KetQuaXNs = new HashSet<KetQuaXN>();
-            DichVuKhams = new HashSet<DichVuKham>();
+            BinhLuans = new HashSet<BinhLuan>();
+            ThongBaos = new HashSet<ThongBao>();
         }
 
         [Key]
-        public int MaXN { get; set; }
+        public int MaBaiViet { get; set; }
 
         [StringLength(100)]
-        public string TenXN { get; set; }
+        public string TieuDe { get; set; }
 
-        [StringLength(50)]
-        public string TriSoBinhThuong { get; set; }
+        [AllowHtml]
+        [Column(TypeName = "ntext")]
+        public string NoiDung { get; set; }
 
-        [StringLength(20)]
-        public string DonViTinh { get; set; }
+        [StringLength(200)]
+        public string AnhDaiDien { get; set; }
 
-        public double DonGia { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KetQuaXN> KetQuaXNs { get; set; }
+        public DateTime? ThoiGianTao { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DichVuKham> DichVuKhams { get; set; }
+        public virtual ICollection<BinhLuan> BinhLuans { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ThongBao> ThongBaos { get; set; }
     }
 }

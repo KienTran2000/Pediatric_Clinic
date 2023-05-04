@@ -36,14 +36,14 @@ namespace PhongKhamNhi.Models.Entities
 
         public bool? TrangThai { get; set; }
 
+        public int? MaBN { get; set; }
+
+        public bool Type { get; set; }
+
         public virtual BacSi BacSi { get; set; }
 
         public virtual ChiNhanh ChiNhanh { get; set; }
 
         public virtual NhanVien NhanVien { get; set; }
-
-        public int? MaBN { get; set; }
-        public virtual BenhNhi BenhNhi { get; set; }
-        public bool Type { get; set; }
     }
 }

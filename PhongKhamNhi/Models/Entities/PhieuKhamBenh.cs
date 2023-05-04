@@ -37,14 +37,17 @@ namespace PhongKhamNhi.Models.Entities
 
         public byte? TrangThai { get; set; }
 
+        public int? MaNvLap { get; set; }
+
+        public int? MaNvThu { get; set; }
+
         public double DonGia { get; set; }
 
         public DateTime? ThoiGianKham { get; set; }
 
-        public int? MaNvLap { get; set; }
-
-        public int? MaNvThu { get; set; }
         public bool Type { get; set; }
+
+        [StringLength(500)]
         public string AnhThanhToan { get; set; }
 
         public virtual BacSi BacSi { get; set; }

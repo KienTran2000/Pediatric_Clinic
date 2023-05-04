@@ -22,4 +22,10 @@ namespace PhongKhamNhi.Models.DTO
         public bool Type { get; set; }
 
     }
+
+    public class PhieuKhamThongKe
+    {
+        public int ChoKham { get; set; }
+        public int DaKham { get; set; }
+    }
 }

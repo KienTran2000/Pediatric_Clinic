@@ -29,6 +29,7 @@ namespace PhongKhamNhi.Models.Entities
 
         [StringLength(200)]
         public string DiaChi { get; set; }
+
         public bool DangHoatDong { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

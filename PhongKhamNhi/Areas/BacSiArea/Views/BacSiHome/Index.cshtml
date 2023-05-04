@@ -99,7 +99,10 @@
                 </div>
             }
         </div>
-
+        <div class="d-flex" style="font-weight: bold;">
+            <div style="color: #ffeb3b; margin-right: 20px;">Chờ khám: @ViewBag.ThongKe.ChoKham</div>
+            <div style="color: #39b54a;">Đã khám: @ViewBag.ThongKe.DaKham</div>
+        </div>
         @using (Html.BeginForm("Index", "PhieuKham", FormMethod.Post, new { }))
         {
             <table class="table">

@@ -12,7 +12,10 @@ namespace PhongKhamNhi.Models.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BenhNhi()
         {
+            BinhLuans = new HashSet<BinhLuan>();
+            BinhLuanPhanHois = new HashSet<BinhLuanPhanHoi>();
             PhieuKhamBenhs = new HashSet<PhieuKhamBenh>();
+            ThongBaos = new HashSet<ThongBao>();
         }
 
         [Key]
@@ -38,6 +41,7 @@ namespace PhongKhamNhi.Models.Entities
 
         [StringLength(200)]
         public string GhiChu { get; set; }
+
         [Required]
         [StringLength(50)]
         public string TenDangNhap { get; set; }
@@ -47,6 +51,15 @@ namespace PhongKhamNhi.Models.Entities
         public string MatKhau { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BinhLuan> BinhLuans { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BinhLuanPhanHoi> BinhLuanPhanHois { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhieuKhamBenh> PhieuKhamBenhs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ThongBao> ThongBaos { get; set; }
     }
 }

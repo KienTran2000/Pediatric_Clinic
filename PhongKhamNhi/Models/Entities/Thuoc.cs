@@ -22,7 +22,7 @@ namespace PhongKhamNhi.Models.Entities
 
         public int MaLoaiThuoc { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string TenThuoc { get; set; }
 
         [StringLength(10)]

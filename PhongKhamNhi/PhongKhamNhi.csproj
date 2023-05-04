@@ -149,6 +149,7 @@
     <Compile Include="Areas\BacSiArea\Controllers\TaiKhoanController.cs" />
     <Compile Include="Areas\BacSiArea\Controllers\ThuocController.cs" />
     <Compile Include="Areas\BacSiArea\Controllers\XetNghiemController.cs" />
+    <Compile Include="Areas\LeTan\Controllers\BaiVietController.cs" />
     <Compile Include="Areas\LeTan\Controllers\BenhNhiController.cs" />
     <Compile Include="Areas\LeTan\Controllers\DichVuController.cs" />
     <Compile Include="Areas\LeTan\Controllers\LeTanHomeController.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Areas\ThuNgan\Controllers\ThuNganHomeController.cs" />
     <Compile Include="Areas\ThuNgan\ThuNganAreaRegistration.cs" />
     <Compile Include="Controllers\DoctorTeamController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -180,7 +182,10 @@
     </Compile>
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Models\DAO\BacSiDAO.cs" />
+    <Compile Include="Models\DAO\BaiVietDAO.cs" />
     <Compile Include="Models\DAO\BenhNhiDAO.cs" />
+    <Compile Include="Models\DAO\BinhLuanDAO.cs" />
+    <Compile Include="Models\DAO\BinhLuanPhanHoiDAO.cs" />
     <Compile Include="Models\DAO\ChiNhanhDAO.cs" />
     <Compile Include="Models\DAO\DichVuDAO.cs" />
     <Compile Include="Models\DAO\DoanhThuDAO.cs" />
@@ -206,7 +211,10 @@
     <Compile Include="Models\DTO\StatisticsDTO.cs" />
     <Compile Include="Models\DTO\ThuocBanDTO.cs" />
     <Compile Include="Models\Entities\BacSi.cs" />
+    <Compile Include="Models\Entities\BaiViet.cs" />
     <Compile Include="Models\Entities\BenhNhi.cs" />
+    <Compile Include="Models\Entities\BinhLuan.cs" />
+    <Compile Include="Models\Entities\BinhLuanPhanHoi.cs" />
     <Compile Include="Models\Entities\ChiNhanh.cs" />
     <Compile Include="Models\Entities\DichVuKham.cs" />
     <Compile Include="Models\Entities\DoanhThu.cs" />
@@ -221,6 +229,7 @@
     <Compile Include="Models\Entities\PhieuKham_Thuoc.cs" />
     <Compile Include="Models\Entities\Quyen.cs" />
     <Compile Include="Models\Entities\TaiKhoan.cs" />
+    <Compile Include="Models\Entities\ThongBao.cs" />
     <Compile Include="Models\Entities\Thuoc.cs" />
     <Compile Include="Models\Entities\ThuocBan.cs" />
     <Compile Include="Models\Entities\Thuoc_HoaDon.cs" />
@@ -1045,6 +1054,9 @@
     <Content Include="Areas\Admin\Views\AdminHome\InMedicine.cshtml" />
     <Content Include="Areas\Admin\Views\AdminHome\InDv.cshtml" />
     <Content Include="Areas\LeTan\Views\LeTanHome\In.cshtml" />
+    <Content Include="Areas\LeTan\Views\BaiViet\Index.cshtml" />
+    <Content Include="Areas\LeTan\Views\BaiViet\Create.cshtml" />
+    <Content Include="Areas\LeTan\Views\BaiViet\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
@@ -1096,6 +1108,8 @@
     <Content Include="Views\Patient\Invoice.cshtml" />
     <Content Include="Views\Patient\InvoiceDetail.cshtml" />
     <Content Include="Views\Patient\Pay.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
