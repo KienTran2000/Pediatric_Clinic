@@ -19,6 +19,8 @@ namespace PhongKhamNhi.Models.Entities
 
         public int? MaBN { get; set; }
 
+        public bool TrangThai { get; set; }
+
         public int? MaBaiViet { get; set; }
 
         public virtual BaiViet BaiViet { get; set; }

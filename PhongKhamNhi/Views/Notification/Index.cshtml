@@ -1,0 +1,52 @@
+﻿@using PagedList.Mvc
+
+@model PagedList.IPagedList<PhongKhamNhi.Models.Entities.ThongBao>
+
+@{ ViewBag.Title = "Thông báo"; }
+
+<div class="page-banner overlay-dark bg-image" style="background-image: url(/Content/assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+
+    </div> <!-- .banner-section -->
+</div> <!-- .page-banner -->
+
+<div class="page-section" style="padding-top: 20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nội dung</th>
+                            <th class="text-center">Thời gian</th>
+                            <th class="text-center">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Notification/Detail/@item.MaThongBao">@item.NoiDung</a>
+                                </td>
+                                <td>@item.ThoiGianTao</td>
+                                <td class="text-center">
+                                    @if (item.TrangThai)
+                                    {
+                                        <span>Đã đọc</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Mới</span>
+                                    }
+                                </td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @Html.PagedListPager(Model, PageNum => Url.Action("Index", new { PageNum }))
+            </div>
+        </div> <!-- .row -->
+    </div> <!-- .container -->
+</div> <!-- .page-section -->

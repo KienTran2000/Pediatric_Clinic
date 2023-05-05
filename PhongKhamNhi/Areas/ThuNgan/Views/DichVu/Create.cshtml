@@ -95,7 +95,7 @@
                                 <i class="far fa-image"></i>
                                 Ảnh đại diện:
                             </label>
-                            <input type="file" id="photo" name="photo" onchange="previewFile(this);">
+                            <input type="file" id="photo" name="photo" onchange="previewFile(this);" accept="image/png, image/jpeg">
                             <img id="previewImg" src="~/Content/assets/img/blog/noimage.jpg" style="width: 90px; display: block; margin-top: 10px;">
                             @Html.HiddenFor(model => model.Anh)
                         </div>

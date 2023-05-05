@@ -42,11 +42,46 @@ namespace PhongKhamNhi.Models.DAO
             BenhNhi tmp = db.BenhNhis.Find(b.MaBN);
             if (tmp != null)
             {
-                tmp = b;
+                tmp.AnhDaiDien = b.AnhDaiDien;
+                tmp.DiaChi = b.DiaChi;
+                tmp.GioiTinh = b.GioiTinh;
+                tmp.HoTen = b.HoTen;
+                tmp.NgaySinh = b.NgaySinh;
+                tmp.SdtThanNhan = b.SdtThanNhan;
+                tmp.TenThanNhan = b.TenThanNhan;
                 db.SaveChanges();//luu vao o dia
             }
             return tmp.MaBN;
         }
+
+        public int UpdateForLeTan(BenhNhi b)
+        {
+            BenhNhi tmp = db.BenhNhis.Find(b.MaBN);
+            if (tmp != null)
+            {
+                tmp.DiaChi = b.DiaChi;
+                tmp.GioiTinh = b.GioiTinh;
+                tmp.HoTen = b.HoTen;
+                tmp.NgaySinh = b.NgaySinh;
+                tmp.SdtThanNhan = b.SdtThanNhan;
+                tmp.GhiChu = b.GhiChu;
+                tmp.TenThanNhan = b.TenThanNhan;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.MaBN;
+        }
+
+        public int UpdatePassword(BenhNhi b)
+        {
+            BenhNhi tmp = db.BenhNhis.Find(b.MaBN);
+            if (tmp != null)
+            {
+                tmp.MatKhau = b.MatKhau;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.MaBN;
+        }
+
         public int Delete(int id)
         {
             BenhNhi bn = db.BenhNhis.Find(id);

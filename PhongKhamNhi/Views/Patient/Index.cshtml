@@ -4,7 +4,7 @@
     ViewBag.Title = "Thông tin bệnh nhi";
 }
 
-@using (Html.BeginForm("Index", "Patient", FormMethod.Post))
+@using (Html.BeginForm("Index", "Patient", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {
     <div class="user-profile__wrap sec">
         <div class="container">
@@ -152,7 +152,20 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="input__label">
+                                        <div class="label">
+                                            Ảnh đại diện
+                                        </div>
+                                    </div>
+                                    <div class="input__wrap">
+                                        <input type="file" id="photo" name="photo" onchange="previewFile(this);" accept="image/png, image/jpeg">
+                                        <img id="previewImg" src="~/Content/assets/img/person/@Model.AnhDaiDien" style="width: 90px; display: block; margin-top: 10px;">
+                                        @Html.HiddenFor(model => model.AnhDaiDien)
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group login__action" style="text-align: center;">
                                 <button type="submit" class="btn btn-submit">Cập nhật</button>
                             </div>
@@ -163,4 +176,19 @@
         </div>
     </div>
 
+}
+@section scripts{
+    <script>
+        function previewFile(input) {
+            var file = $("#photo").get(0).files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+    </script>
 }

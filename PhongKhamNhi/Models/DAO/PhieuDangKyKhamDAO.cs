@@ -27,9 +27,9 @@ namespace PhongKhamNhi.Models.DAO
             var res = (from s in db.PhieuDangKyKhams where s.MaChiNhanh == cn && s.MaBS == bs && s.TrangThai == true orderby s.ThoiGianHen select s);
             return res.ToList();
         }
-        public int SlPhieuDk(int maBn)
+        public int SlPhieuDk(int maCn)
         {
-            var res = (from s in db.PhieuDangKyKhams where s.MaBN == maBn && s.TrangThai == false select s);
+            var res = (from s in db.PhieuDangKyKhams where s.MaChiNhanh == maCn && s.TrangThai == false select s);
             return res.Count();
         }
 

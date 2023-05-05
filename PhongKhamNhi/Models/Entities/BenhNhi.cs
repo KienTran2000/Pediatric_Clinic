@@ -50,6 +50,8 @@ namespace PhongKhamNhi.Models.Entities
         [StringLength(200)]
         public string MatKhau { get; set; }
 
+        public string AnhDaiDien { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BinhLuan> BinhLuans { get; set; }
 

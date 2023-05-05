@@ -832,3 +832,19 @@ textarea {
             color: green;
             cursor: pointer;
         }
+
+.sl-thongbao {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    border: 1px solid red;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background-color: red;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    line-height: 18px;
+    font-size: 12px;
+}
