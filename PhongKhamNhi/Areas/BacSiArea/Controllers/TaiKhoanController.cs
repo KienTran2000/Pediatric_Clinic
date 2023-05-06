@@ -33,7 +33,7 @@ namespace PhongKhamNhi.Areas.BacSiArea.Controllers
             dao.Update(tk);
             Session["user"] = nv;
             Session["hoTen"] = nv.HoTen;
-            return RedirectToAction("Index", "StaffHome");
+            return RedirectToAction("Index", "TaiKhoan");
         }
     }
 }

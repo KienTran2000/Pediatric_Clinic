@@ -1,10 +1,5 @@
 ﻿using PhongKhamNhi.Models.DAO;
-using PhongKhamNhi.Models.DTO;
 using PhongKhamNhi.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Areas.LeTan.Controllers
@@ -44,6 +39,7 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
         {
             if (ModelState.IsValid)
             {
+                b.AnhDaiDien = "user.png";
                 b.GioiTinh = gt;
                 new BenhNhiDAO().Insert(b);
                 return RedirectToAction("Index", "BenhNhi");
@@ -62,7 +58,7 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
             if (ModelState.IsValid)
             {
                 b.GioiTinh = gt;
-                new BenhNhiDAO().Update(b);
+                new BenhNhiDAO().UpdateForLeTan(b);
                 return RedirectToAction("Index", "BenhNhi");
             }
             return View(b);
@@ -80,6 +76,22 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
             return RedirectToAction("Index", "BenhNhi");
         }
 
-        
+        public ActionResult EditPasswordBN(int id)
+        {
+            return View(id);
+        }
+        [HttpPost]
+        public ActionResult EditPasswordBN(int id, string password)
+        {
+            if (ModelState.IsValid)
+            {
+                BenhNhiDAO dao = new BenhNhiDAO();
+                BenhNhi bn = dao.FindByID(id);
+                bn.MatKhau = password;
+                dao.UpdatePassword(bn);
+                return RedirectToAction("Index", "AdminDoctor");
+            }
+            return PartialView();
+        }
     }
 }

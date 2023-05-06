@@ -173,6 +173,7 @@
     <Compile Include="Areas\ThuNgan\ThuNganAreaRegistration.cs" />
     <Compile Include="Controllers\DoctorTeamController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Models\DAO\PhieuDkXnDAO.cs" />
     <Compile Include="Models\DAO\PhieuKhamBenhDAO.cs" />
     <Compile Include="Models\DAO\TaiKhoanDAO.cs" />
+    <Compile Include="Models\DAO\ThongBaoDAO.cs" />
     <Compile Include="Models\DAO\ThuocDAO.cs" />
     <Compile Include="Models\DAO\XetNghiemDAO.cs" />
     <Compile Include="Models\DTO\AppointmentTime.cs" />
@@ -1110,6 +1112,8 @@
     <Content Include="Views\Patient\Pay.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Detail.cshtml" />
+    <Content Include="Views\News\SlThongBao.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

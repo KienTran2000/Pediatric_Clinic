@@ -42,6 +42,7 @@ namespace PhongKhamNhi.Controllers
                 cr.ThoiGianTao = bl.ThoiGianTao.Value;
                 cr.TenThanNhan = bn.TenThanNhan;
                 cr.MaBN = bn.MaBN;
+                cr.Anh = bn.AnhDaiDien;
                 return Json(new
                 {
                     data = cr,
@@ -57,6 +58,7 @@ namespace PhongKhamNhi.Controllers
 
         public JsonResult ReplyComment(Reply c)
         {
+            BinhLuan comment = new BinhLuanDAO().FindByID(c.MaBinhLuan);
             BenhNhi bn = (BenhNhi)Session["patient"];
             BinhLuanPhanHoi bl = new BinhLuanPhanHoi();
             bl.MaBinhLuan = c.MaBinhLuan;
@@ -66,12 +68,24 @@ namespace PhongKhamNhi.Controllers
             bl.MaPhanHoi = new BinhLuanPhanHoiDAO().Insert(bl);
             if (bl.MaPhanHoi > 0)
             {
+                if(bn.MaBN != comment.MaBN)
+                {
+                    ThongBao tb = new ThongBao();
+                    tb.MaBaiViet = comment.MaBaiViet;
+                    tb.MaBN = comment.MaBN;
+                    tb.ThoiGianTao = DateTime.Now;
+                    tb.TrangThai = false;
+                    tb.NoiDung = bn.TenThanNhan + " đã phản hồi bình luận của bạn trong bài viết '" + comment.BaiViet.TieuDe + "'";
+                    new ThongBaoDAO().Insert(tb);
+                }    
+                
                 ReplyRespone cr = new ReplyRespone();
                 cr.MaPhanHoi = bl.MaPhanHoi;
                 cr.NoiDung = bl.NoiDung;
                 cr.ThoiGianTao = bl.ThoiGianTao.Value;
                 cr.TenThanNhan = bn.TenThanNhan;
                 cr.MaBN = bn.MaBN;
+                cr.Anh = bn.AnhDaiDien;
                 return Json(new
                 {
                     data = cr,
@@ -121,6 +135,12 @@ namespace PhongKhamNhi.Controllers
                 status = false
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult SlThongBao()
+        {
+            BenhNhi bn = (BenhNhi)Session["patient"];
+            return PartialView(new ThongBaoDAO().SlThongBao(bn.MaBN));
+        }
     }
 
     public class Comment
@@ -136,6 +156,7 @@ namespace PhongKhamNhi.Controllers
         public string TenThanNhan { get; set; }
         public string NoiDung { get; set; }
         public DateTime ThoiGianTao { get; set; }
+        public string Anh { get; set; }
     }
 
     public class Reply
@@ -151,5 +172,6 @@ namespace PhongKhamNhi.Controllers
         public string TenThanNhan { get; set; }
         public string NoiDung { get; set; }
         public DateTime ThoiGianTao { get; set; }
+        public string Anh { get; set; }
     }
 }

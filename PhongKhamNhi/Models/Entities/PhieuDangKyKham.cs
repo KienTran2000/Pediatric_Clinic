@@ -45,5 +45,7 @@ namespace PhongKhamNhi.Models.Entities
         public virtual ChiNhanh ChiNhanh { get; set; }
 
         public virtual NhanVien NhanVien { get; set; }
+
+        public virtual BenhNhi BenhNhi { get; set; }
     }
 }

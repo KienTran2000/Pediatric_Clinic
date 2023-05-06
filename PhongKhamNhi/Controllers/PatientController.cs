@@ -17,8 +17,14 @@ namespace PhongKhamNhi.Controllers
             return View((BenhNhi)Session["patient"]);
         }
         [HttpPost]
-        public ActionResult Index(BenhNhi model, string gt, DateTime ns)
+        public ActionResult Index(BenhNhi model, string gt, DateTime ns, HttpPostedFileBase photo)
         {
+            if (photo != null && photo.ContentLength > 0)
+            {
+                var path = Path.Combine(Server.MapPath("~/Content/assets/img/person/"), System.IO.Path.GetFileName(photo.FileName));
+                photo.SaveAs(path);
+                model.AnhDaiDien = photo.FileName;
+            }
             model.GioiTinh = gt;
             model.NgaySinh = ns;
             BenhNhi bn = (BenhNhi)Session["patient"];
@@ -38,6 +44,7 @@ namespace PhongKhamNhi.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.AnhDaiDien = "user.png";
                 model.GioiTinh = GioiTinh;
                 new BenhNhiDAO().Insert(model);
                 return RedirectToAction("Login", "Patient");
