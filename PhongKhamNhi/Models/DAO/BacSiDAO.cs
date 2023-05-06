@@ -46,6 +46,18 @@ namespace PhongKhamNhi.Models.DAO
             }
             return res.ToList();
         }
+
+        public List<BacSi> GetListBacSiByMaCnAndType(int maCn, bool type)
+        {
+            var res = (from s in db.BacSis where s.MaChiNhanh == maCn && s.Type == type select s);
+            foreach (BacSi item in res)
+            {
+                item.PhieuDangKyKhams.Clear();
+                item.PhieuDangKyKhams = (from s in db.PhieuDangKyKhams where s.TrangThai == true && s.MaBS == item.MaBS && s.ThoiGianHen >= DateTime.Now orderby s.ThoiGianHen select s).ToList();
+            }
+            return res.ToList();
+        }
+
         public List<BacSiDTO> GetListTgKhamBs(int maCn)
         {
             List<BacSiDTO> lst = new List<BacSiDTO>();

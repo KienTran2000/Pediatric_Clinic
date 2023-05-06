@@ -53,6 +53,8 @@ namespace PhongKhamNhi.Models.DAO
             BaiViet bn = db.BaiViets.Find(id);
             if (bn != null)
             {
+                new BinhLuanDAO().DeleteByMaBV(id);
+                new ThongBaoDAO().DeleteByMaBV(id);
                 db.BaiViets.Remove(bn);
                 return db.SaveChanges();
             }

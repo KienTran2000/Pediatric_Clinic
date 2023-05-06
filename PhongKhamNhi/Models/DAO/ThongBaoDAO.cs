@@ -59,5 +59,19 @@ namespace PhongKhamNhi.Models.DAO
             else
                 return -1;
         }
+
+        public int DeleteByMaBN(int maBN)
+        {
+            List<ThongBao> lst = (from s in db.ThongBaos where s.MaBN == maBN select s).ToList();
+            db.ThongBaos.RemoveRange(lst);
+            return db.SaveChanges();
+        }
+
+        public int DeleteByMaBV(int maBV)
+        {
+            List<ThongBao> lst = (from s in db.ThongBaos where s.MaBaiViet == maBV select s).ToList();
+            db.ThongBaos.RemoveRange(lst);
+            return db.SaveChanges();
+        }
     }
 }

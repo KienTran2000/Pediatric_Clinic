@@ -90,5 +90,16 @@ namespace PhongKhamNhi.Models.DAO
             }
             return tmp.MaPhieuDKXN;
         }
+
+        public int DeleteByMaPK(int maPK)
+        {
+            List<PhieuDKXN> lst = (from s in db.PhieuDKXNs where s.MaPhieuKB == maPK select s).ToList();
+            foreach(PhieuDKXN item in lst)
+            {
+                new XetNghiemDAO().DeleteByMaPhieuDKXN(item.MaPhieuDKXN);
+            }
+            db.PhieuDKXNs.RemoveRange(lst);
+            return db.SaveChanges();
+        }
     }
 }

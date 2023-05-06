@@ -66,6 +66,8 @@ namespace PhongKhamNhi.Models.DAO
                 tmp.SdtThanNhan = b.SdtThanNhan;
                 tmp.GhiChu = b.GhiChu;
                 tmp.TenThanNhan = b.TenThanNhan;
+                tmp.TenDangNhap = b.TenDangNhap;
+                tmp.MatKhau = b.MatKhau;
                 db.SaveChanges();//luu vao o dia
             }
             return tmp.MaBN;
@@ -87,6 +89,11 @@ namespace PhongKhamNhi.Models.DAO
             BenhNhi bn = db.BenhNhis.Find(id);
             if (bn != null)
             {
+                new PhieuDangKyKhamDAO().DeleteByMaBN(id);
+                new PhieuKhamBenhDAO().DeleteByMaBN(id);
+                new BinhLuanDAO().DeleteByMaBN(id);
+                new BinhLuanPhanHoiDAO().DeleteByMaBN(id);
+                new ThongBaoDAO().DeleteByMaBN(id);
                 db.BenhNhis.Remove(bn);
                 return db.SaveChanges();
             }

@@ -75,6 +75,13 @@ namespace PhongKhamNhi.Models.DAO
                 return -1;
         }
 
+        public int DeleteByMaBN(int maBN)
+        {
+            List<PhieuDangKyKham> lst = (from s in db.PhieuDangKyKhams where s.MaBN == maBN select s).ToList();
+            db.PhieuDangKyKhams.RemoveRange(lst);
+            return db.SaveChanges();
+        }
+
         public int UpdateBySERIALIZABLE(PhieuDangKyKham p)
         {
             db.Database.ExecuteSqlCommand(string.Format("CapNhatPhieuDKK {0}, {1}, {2}, {3}, '{4}', N'{5}', " +

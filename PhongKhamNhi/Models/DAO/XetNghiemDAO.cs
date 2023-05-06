@@ -71,5 +71,12 @@ namespace PhongKhamNhi.Models.DAO
             }
             return tmp.MaXN;
         }
+
+        public int DeleteByMaPhieuDKXN(int maPhieuDKXN)
+        {
+            List<KetQuaXN> lst = (from s in db.KetQuaXNs where s.MaPhieuDKXN == maPhieuDKXN select s).ToList();
+            db.KetQuaXNs.RemoveRange(lst);
+            return db.SaveChanges();
+        }
     }
 }
