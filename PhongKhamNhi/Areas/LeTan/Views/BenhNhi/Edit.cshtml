@@ -1,7 +1,7 @@
 ﻿@model PhongKhamNhi.Models.Entities.BenhNhi
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Thông tin bệnh nhi";
     Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml";
 }
 
@@ -47,7 +47,7 @@
                             </div>
                             <label class="col-md-2 text-right">Ngày sinh:</label>
                             <div class="col-md-3">
-                                <input class = "form-control" name="NgaySinh" value="@Model.NgaySinh.ToString("yyyy-MM-dd")" type="date" />
+                                <input class="form-control" name="NgaySinh" value="@Model.NgaySinh.ToString("yyyy-MM-dd")" type="date" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -56,20 +56,30 @@
                                 <select class="form-control" name="gt">
                                     @if (Model.GioiTinh == "Nam")
                                     {
-                                        <option selected value="Nam">Nam</option>
-                                        <option value="Nữ">Nữ</option>
-                                    }
-                                    else
-                                    {
+                    <option selected value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option> }
+                                                        else
+                                                        {
                                         <option value="Nam">Nam</option>
-                                        <option selected value="Nữ">Nữ</option>
-                                    }
+                                                            <option selected value="Nữ">Nữ</option>}
                                 </select>
                             </div>
                             <label class="col-md-1 text-right">Địa chỉ:</label>
                             <div class="col-md-7">
                                 @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2">Tên thân nhân:</label>
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.TenThanNhan, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required", @min = @ViewBag.tgHenMin } })
+                                @Html.ValidationMessageFor(model => model.TenThanNhan, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="col-md-2 text-right">Số điện thoại thân nhân</label>
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.SdtThanNhan, new { htmlAttributes = new { @class = "form-control", @type = "tel", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.SdtThanNhan, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group row">
@@ -108,14 +118,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label>Tên thân nhân</label>
-                            @Html.EditorFor(model => model.TenThanNhan, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required", @min = @ViewBag.tgHenMin } })
-                            @Html.ValidationMessageFor(model => model.TenThanNhan, "", new { @class = "text-danger" })
+                            <label>Tên đăng nhập</label>
+                            @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "required", @min = @ViewBag.tgHenMin } })
+                            @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group row">
-                            <label>Số điện thoại thân nhân</label>
-                            @Html.EditorFor(model => model.SdtThanNhan, new { htmlAttributes = new { @class = "form-control", @type = "tel", @required = "required" } })
-                            @Html.ValidationMessageFor(model => model.SdtThanNhan, "", new { @class = "text-danger" })
+                            <label>Mật khẩu</label>
+                            @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control", @type = "password", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

@@ -97,5 +97,12 @@ namespace PhongKhamNhi.Models.DAO
         {
             return db.Thuocs.Find(id);
         }
+
+        public int DeleteByMaPK(int maPK)
+        {
+            List<PhieuKham_Thuoc> lst = (from s in db.PhieuKham_Thuoc where s.MaPhieuKB == maPK select s).ToList();
+            db.PhieuKham_Thuoc.RemoveRange(lst);
+            return db.SaveChanges();
+        }
     }
 }

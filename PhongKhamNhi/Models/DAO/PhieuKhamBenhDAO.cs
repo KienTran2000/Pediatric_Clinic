@@ -142,6 +142,18 @@ namespace PhongKhamNhi.Models.DAO
                 return -1;
         }
 
+        public int DeleteByMaBN(int maBN)
+        {
+            List<PhieuKhamBenh> lst = (from s in db.PhieuKhamBenhs where s.MaBN == maBN select s).ToList();
+            foreach(PhieuKhamBenh item in lst)
+            {
+                new PhieuDkXnDAO().DeleteByMaPK(item.MaPhieuKB);
+                new ThuocDAO().DeleteByMaPK(item.MaPhieuKB);
+            }
+            db.PhieuKhamBenhs.RemoveRange(lst);
+            return db.SaveChanges();
+        }
+
         public IEnumerable<PhieuKhamDTO> lstPhieuKbByBn(int bn, string tu, string den, int pageNum, int pageSize)
         {
             var lst = db.Database.SqlQuery<PhieuKhamDTO>(string.Format("lstPhieuKbByBn {0}, '{1}', '{2}'",

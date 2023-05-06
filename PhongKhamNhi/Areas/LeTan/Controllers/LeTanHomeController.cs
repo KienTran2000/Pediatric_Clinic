@@ -125,7 +125,7 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
                 ViewBag.tgmin = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
             //List<ChiNhanh> lst = new ChiNhanhDAO().ListChiNhanh();
             //ViewBag.ListChiNhanh = lst;
-            ViewBag.ListBacSi = new BacSiDAO().GetListBacSiByMaCn(p.MaChiNhanh);
+            ViewBag.ListBacSi = new BacSiDAO().GetListBacSiByMaCnAndType(p.MaChiNhanh, p.Type);
             int t = 0;
             if (p.Type)
                 t = 1;

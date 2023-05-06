@@ -51,5 +51,27 @@ namespace PhongKhamNhi.Models.DAO
             else
                 return -1;
         }
+
+        public int DeleteByMaBN(int maBN)
+        {
+            List<BinhLuan> lst = (from s in db.BinhLuans where s.MaBN == maBN select s).ToList();
+            foreach(BinhLuan item in lst)
+            {
+                new BinhLuanPhanHoiDAO().DeleteByMaBinhLuan(item.MaBinhLuan);
+            }
+            db.BinhLuans.RemoveRange(lst);
+            return db.SaveChanges();
+        }
+
+        public int DeleteByMaBV(int maBV)
+        {
+            List<BinhLuan> lst = (from s in db.BinhLuans where s.MaBaiViet == maBV select s).ToList();
+            foreach (BinhLuan item in lst)
+            {
+                new BinhLuanPhanHoiDAO().DeleteByMaBinhLuan(item.MaBinhLuan);
+            }
+            db.BinhLuans.RemoveRange(lst);
+            return db.SaveChanges();
+        }
     }
 }

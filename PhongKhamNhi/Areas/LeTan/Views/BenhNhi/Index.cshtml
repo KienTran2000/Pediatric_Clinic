@@ -2,7 +2,7 @@
 
 @model PagedList.IPagedList<PhongKhamNhi.Models.Entities.BenhNhi>
 
-@{ ViewBag.Title = "Index";
+@{ ViewBag.Title = "Bệnh nhi";
                 Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml"; }
 
 <section class="content-header">
@@ -135,9 +135,9 @@
                 <a href="~/LeTan/BenhNhi/Edit/@item.MaBN" title="Sửa">
                     <i class="fas fa-edit" aria-hidden="true"></i>
                 </a>
-                <a href="#" onclick="funcEditPassword(@item.MaBN)" title="Đặt lại mật khẩu" style="color: darkorange;">
+                @*<a href="#" onclick="funcEditPassword(@item.MaBN)" title="Đặt lại mật khẩu" style="color: darkorange;">
                     <i class="fas fa-key"></i>
-                </a>
+                </a>*@
                 <a href="~/LeTan/BenhNhi/Delete/@item.MaBN" title="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa?')">
                     <i class="fas fa-trash-alt" style="color:red;"></i>
                 </a>

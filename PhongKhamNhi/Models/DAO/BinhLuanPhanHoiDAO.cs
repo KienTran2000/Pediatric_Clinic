@@ -60,5 +60,12 @@ namespace PhongKhamNhi.Models.DAO
             db.BinhLuanPhanHois.RemoveRange(lst);
             return db.SaveChanges();
         }
+
+        public int DeleteByMaBN(int maBN)
+        {
+            List<BinhLuanPhanHoi> lst = (from s in db.BinhLuanPhanHois where s.MaBN == maBN select s).ToList();
+            db.BinhLuanPhanHois.RemoveRange(lst);
+            return db.SaveChanges();
+        }
     }
 }
