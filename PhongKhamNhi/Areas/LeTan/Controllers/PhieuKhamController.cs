@@ -53,6 +53,7 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
             pk.MaBS = p.MaBS;
             pk.MaBN = bn.MaBN;
             pk.ThoiGianKham = p.ThoiGianHen;
+            pk.Type = p.Type;
             ViewBag.bacSi = new BacSiDAO().FindByID(pk.MaBS).HoTen;
             ViewBag.benhNhi = bn;
             ViewBag.ListDv = new DichVuDAO().GetListDv();

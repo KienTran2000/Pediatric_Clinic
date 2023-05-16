@@ -26,7 +26,8 @@ namespace PhongKhamNhi.Controllers
                 tb.TrangThai = true;
                 dao.Update(tb);
             }
-            
+            if(tb.Loai == 2)
+                return Redirect("/Patient/AppointmentHistory");
             return Redirect("/News/Detail/" + tb.MaBaiViet);
         }
     }

@@ -1,7 +1,7 @@
 ﻿@model PhongKhamNhi.Models.Entities.PhieuKhamBenh
 
 @{
-    ViewBag.Title = "CreateByPdk";
+    ViewBag.Title = "Thêm mới phiếu khám bệnh";
     Layout = "~/Areas/LeTan/Views/Shared/_Layout.cshtml";
 }
 
@@ -128,6 +128,18 @@
                                 <b>@Model.ThoiGianKham</b>
                                 @Html.EditorFor(model => model.ThoiGianKham, new { htmlAttributes = new { @type = "hidden" } })
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <b>Loại: </b>
+                            @if (Model.Type)
+                            {
+                        <span>Khám tại nhà</span> }
+                                        else
+                                        {
+                                            <span>Khám tại phòng khám</span>
+                                        }
+
+                            @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @type = "hidden" } })
                         </div>
                     </div>
                 </div>

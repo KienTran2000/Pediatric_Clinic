@@ -76,6 +76,7 @@ namespace PhongKhamNhi.Controllers
                     tb.ThoiGianTao = DateTime.Now;
                     tb.TrangThai = false;
                     tb.NoiDung = bn.TenThanNhan + " đã phản hồi bình luận của bạn trong bài viết '" + comment.BaiViet.TieuDe + "'";
+                    tb.Loai = 1;
                     new ThongBaoDAO().Insert(tb);
                 }    
                 
