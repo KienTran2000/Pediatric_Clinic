@@ -159,8 +159,18 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
             NhanVien nv = (NhanVien)Session["user"];
             tmp.MaNV = nv.MaNV;
             tmp.LoiNhan = p.LoiNhan;
-            new PhieuDangKyKhamDAO().Update(tmp);
-
+            tmp.MaPhieuDKK = new PhieuDangKyKhamDAO().Update(tmp);
+            if (tmp.Type)
+            {
+                ThongBao tb = new ThongBao();
+                //tb.MaBaiViet = tmp.MaPhieuDKK;
+                tb.MaBN = tmp.MaBN;
+                tb.ThoiGianTao = DateTime.Now;
+                tb.TrangThai = false;
+                tb.NoiDung = "Lịch hẹn khám của bạn vào " + tmp.ThoiGianHen.ToString("HH:mm yyyy-MM-dd") + " đã được phê duyệt";
+                tb.Loai = 2;
+                new ThongBaoDAO().Insert(tb);
+            }
             //p.NgaySinh = NgaySinh;
             //p.ThoiGianHen = ThoiGianHen;
             //if (tt == "0")
