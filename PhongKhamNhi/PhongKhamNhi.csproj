@@ -711,7 +711,9 @@
     <Content Include="Content\assets\img\doctors\doctor_2.jpg" />
     <Content Include="Content\assets\img\doctors\doctor_3.jpg" />
     <Content Include="Content\assets\img\google_play.svg" />
+    <Content Include="Content\assets\img\hien.jpg" />
     <Content Include="Content\assets\img\mobile_app.png" />
+    <Content Include="Content\assets\img\Nhi.jpg" />
     <Content Include="Content\assets\img\person\person_1.jpg" />
     <Content Include="Content\assets\img\person\person_2.jpg" />
     <Content Include="Content\assets\img\person\person_3.jpg" />
