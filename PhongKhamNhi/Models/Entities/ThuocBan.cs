@@ -25,6 +25,11 @@ namespace PhongKhamNhi.Models.Entities
 
         public int? SoLuongBan { get; set; }
 
+        [Key]
+        [Column(Order = 3)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Loai { get; set; }
+
         public virtual ChiNhanh ChiNhanh { get; set; }
 
         public virtual Thuoc Thuoc { get; set; }

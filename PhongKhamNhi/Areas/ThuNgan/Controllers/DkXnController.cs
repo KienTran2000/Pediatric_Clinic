@@ -28,10 +28,14 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
         {
             PhieuDkXnDAO dao = new PhieuDkXnDAO();
             PhieuDKXN p = dao.FindByID(id);
+            PhieuKhamBenh pk = new PhieuKhamBenhDAO().FindByID(p.MaPhieuKB);
+            int loai = 1;
+            if (pk.Type)
+                loai = 2;
             NhanVien nv = (NhanVien)Session["user"];
             p.MaNV = nv.MaNV;
             DoanhThuDAO daodt = new DoanhThuDAO();
-            DoanhThu d = daodt.Find(p.ThoiGianLap, nv.MaChiNhanh);
+            DoanhThu d = daodt.Find(p.ThoiGianLap, nv.MaChiNhanh, loai);
             if (p.TrangThai == 0)
             {
                 p.TrangThai = 1;
@@ -50,6 +54,7 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
                     d.ThuXetNghiem = p.TongTien;
                     d.ThuBanThuoc = 0;
                     d.TongTien = p.TongTien;
+                    d.Loai = loai;
                     daodt.Insert(d);
                 }
             }     

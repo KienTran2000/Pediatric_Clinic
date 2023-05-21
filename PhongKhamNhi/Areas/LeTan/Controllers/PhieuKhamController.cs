@@ -153,9 +153,13 @@ namespace PhongKhamNhi.Areas.LeTan.Controllers
         {
             PhieuKhamBenh p = new PhieuKhamBenhDAO().FindByID(id);
             PhieuDkXnDAO dao = new PhieuDkXnDAO();
-            PhieuDKXN x = dao.FindByMaPk(id);
-            if (x != null)
-                ViewBag.PhieuDkXn = dao.ListKqXn(x.MaPhieuDKXN);
+            List<PhieuDKXN> lstPhieuXn = dao.FindByMaPk(id);
+            List<List<KqXnDTO>> lstKqXn = new List<List<KqXnDTO>>();
+            foreach (PhieuDKXN item in lstPhieuXn)
+            {
+                lstKqXn.Add(dao.ListKqXn(item.MaPhieuDKXN));
+            }
+            ViewBag.PhieuDkXn = lstKqXn;
             List<ChiTietDonThuocDTO> lst = new ThuocDAO().lstThuocByMaPk(id);
             if (lst.Count > 0)
                 ViewBag.DonThuoc = lst;

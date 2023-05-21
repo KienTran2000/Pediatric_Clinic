@@ -1,9 +1,5 @@
 ﻿using PhongKhamNhi.Models.DAO;
 using PhongKhamNhi.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Controllers
@@ -28,6 +24,8 @@ namespace PhongKhamNhi.Controllers
             }
             if(tb.Loai == 2)
                 return Redirect("/Patient/AppointmentHistory");
+            if (tb.Loai == 3)
+                return Redirect("/Patient/History");
             return Redirect("/News/Detail/" + tb.MaBaiViet);
         }
     }

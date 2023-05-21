@@ -1,6 +1,7 @@
 ﻿using PhongKhamNhi.Models.DAO;
 using PhongKhamNhi.Models.Entities;
 using Rotativa;
+using System;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Areas.ThuNgan.Controllers
@@ -33,7 +34,7 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
             NhanVien nv = (NhanVien)Session["user"];
             p.MaNvLap = nv.MaNV;
             DoanhThuDAO daodt = new DoanhThuDAO();
-            DoanhThu d = daodt.Find(p.ThoiGianLap, p.MaChiNhanh);
+            DoanhThu d = daodt.Find(p.ThoiGianLap, p.MaChiNhanh, p.Type ? 2 : 1);
             if (p.TrangThai == 0)
             {
                 p.TrangThai = 1;
@@ -52,8 +53,16 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
                     d.ThuXetNghiem = 0;
                     d.ThuBanThuoc = 0;
                     d.TongTien = p.DonGia;
+                    d.Loai = p.Type ? 2 : 1;
                     daodt.Insert(d);
                 }
+                ThongBao tb = new ThongBao();
+                tb.MaBN = p.MaBN;
+                tb.ThoiGianTao = DateTime.Now;
+                tb.TrangThai = false;
+                tb.NoiDung = "Bạn đã thanh toán " + p.DonGia.ToString("N0") + " VNĐ cho phiếu khám bệnh với dịch vụ: " + p.DichVuKham.TenDV;
+                tb.Loai = 3;
+                new ThongBaoDAO().Insert(tb);
             }    
             else if (p.TrangThai == 1)
             {
@@ -89,7 +98,7 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
             NhanVien nv = (NhanVien)Session["user"];
             p.MaNvLap = nv.MaNV;
             DoanhThuDAO daodt = new DoanhThuDAO();
-            DoanhThu d = daodt.Find(p.ThoiGianLap, p.MaChiNhanh);
+            DoanhThu d = daodt.Find(DateTime.Now, p.MaChiNhanh, p.Type ? 2 : 1);
             if (p.TrangThai == 0)
             {
                 p.TrangThai = 1;
@@ -102,14 +111,25 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
                 else
                 {
                     d = new DoanhThu();
-                    d.NgayThangNam = p.ThoiGianLap;
+                    d.NgayThangNam = DateTime.Now;
                     d.MaChiNhanh = p.MaChiNhanh;
                     d.ThuDichVuKham = p.DonGia;
                     d.ThuXetNghiem = 0;
                     d.ThuBanThuoc = 0;
                     d.TongTien = p.DonGia;
+                    if (pk.Type)
+                        d.Loai = 2;
+                    else
+                        d.Loai = 1;
                     daodt.Insert(d);
                 }
+                ThongBao tb = new ThongBao();
+                tb.MaBN = p.MaBN;
+                tb.ThoiGianTao = DateTime.Now;
+                tb.TrangThai = false;
+                tb.NoiDung = "Bạn đã thanh toán " + p.DonGia.ToString("N0") + " cho phiếu khám bệnh với dịch vụ: " + p.DichVuKham.TenDV;
+                tb.Loai = 3;
+                new ThongBaoDAO().Insert(tb);
             }
             else if (p.TrangThai == 1)
             {

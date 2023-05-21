@@ -1,45 +1,70 @@
-﻿@model ICollection<PhongKhamNhi.Models.Entities.XetNghiem>
+﻿@*@model ICollection<PhongKhamNhi.Models.Entities.XetNghiem>*@
+@model List<List<PhongKhamNhi.Models.DTO.KqXnDTO>>
 
 <div class="form-group">
-    <h5 style="margin: 10px 0 0 5px;">Danh sách xét nghiệm chỉ định</h5>
+    <h5 style="margin: 10px 0 0 5px;">Danh sách xét nghiệm</h5>
 </div>
+@*<table class="table table-xn">
+        <thead>
+            <tr>
+                <th>
+                    Tên xét nghiệm
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TenXN</td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+ @foreach (var item in Model)
+                            {
 <table class="table table-xn">
     <thead>
         <tr>
-            <th>
-                Tên xét nghiệm
-            </th>
+            <th class="text-center">Tên xét nghiệm</th>
+            <th class="text-center">Trị số bình thường</th>
+            <th class="text-center">Đơn vị tính</th>
+            <th class="text-center">Kết quả</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var kq in item)
         {
-            <tr>
-                <td>@item.TenXN</td>
-            </tr>
-        }
+<tr>
+    <td>@kq.TenXN</td>
+    <td class="text-center">@kq.TriSoBinhThuong</td>
+    <td class="text-center">@kq.DonViTinh</td>
+    <td class="text-center">@kq.KetQua</td>
+</tr>}
     </tbody>
-</table>
-<div class="row" style="margin-top:10px;">
-    <div class="col-md-8">
+</table>}
 
-    </div>
-    <div id="s-xn" class="col-md-4" style="">
-        <div id="s-xn" class="col-md-4" style="padding: 0 20px 10px 0; max-width: 100%; ">
-            <button class="btn btn-block btn-info btn-lg" onclick="ViewResult()">
-                <i class="ace-icon fa fa-check"></i>
-                Xem kết quả
-            </button>
+@*<div class="row" style="margin-top:10px;">
+        <div class="col-md-8">
+
         </div>
-    </div>
+        <div id="s-xn" class="col-md-4" style="">
+            <div id="s-xn" class="col-md-4" style="padding: 0 20px 10px 0; max-width: 100%; ">
+                <button class="btn btn-block btn-info btn-lg" onclick="ViewResult()">
+                    <i class="ace-icon fa fa-check"></i>
+                    Xem kết quả
+                </button>
+            </div>
+        </div>
+    </div>*@
+<script>
+    function ViewResult() {
+        $("#xn-cha").load("/BacSiArea/BacSiHome/ViewResult",
+            {}, function (data) {
 
-    <script>
-        function ViewResult() {
-            $("#xn-cha").load("/BacSiArea/BacSiHome/ViewResult",
-                {}, function (data) {
+            });
+    }
 
-                });
-        }
-
-    </script>
+</script>
 

@@ -50,12 +50,12 @@ namespace PhongKhamNhi.Models.DAO
         {
             return db.PhieuDKXNs.Find(id);
         }
-        public PhieuDKXN FindByMaPk(int id)
+        public List<PhieuDKXN> FindByMaPk(int id)
         {
-            var res = (from s in db.PhieuDKXNs where s.MaPhieuKB == id select s);
-            if (res.Count() > 0)
-                return res.FirstOrDefault();
-            return null;
+            var res = (from s in db.PhieuDKXNs where s.MaPhieuKB == id select s).ToList();
+            //if (res.Count() > 0)
+            //    return res.FirstOrDefault();
+            return res;
         }
         public int Insert(PhieuDKXN p)
         {

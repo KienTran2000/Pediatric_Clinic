@@ -122,12 +122,17 @@
                                             <tbody>
                                                 @foreach (var item in ViewBag.PhieuDkXn)
                                                 {
-                                <tr>
-                                    <td>@item.TenXN</td>
-                                    <td class="text-center">@item.TriSoBinhThuong</td>
-                                    <td class="text-center">@item.DonViTinh</td>
-                                    <td class="text-center">@item.KetQua</td>
-                                </tr>}
+                                                    foreach (var kq in item)
+                                                    {
+                                                        <tr>
+                                                            <td>@kq.TenXN</td>
+                                                            <td class="text-center">@kq.TriSoBinhThuong</td>
+                                                            <td class="text-center">@kq.DonViTinh</td>
+                                                            <td class="text-center">@kq.KetQua</td>
+                                                        </tr>
+                                                    }
+
+                                                }
                                             </tbody>
                                         </table>}
                                 </div>
@@ -165,7 +170,7 @@
                                         </table>
                                     }
                                 </div>
-                                @if (ViewBag.DonThuoc != null @*&& Model.Type*@)
+                                @if (ViewBag.DonThuoc.Count > 0 @*&& Model.Type*@)
                                 {
                                     <a href="/Patient/BuyMedicine/@Model.MaPhieuKB" class="btn btn-primary btn-mua-thuoc">Mua thuốc</a>
                                 }

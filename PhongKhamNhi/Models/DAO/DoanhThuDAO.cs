@@ -14,10 +14,10 @@ namespace PhongKhamNhi.Models.DAO
             db = new ModelPkNhi();
         }
 
-        public DoanhThu Find(DateTime d, int cn)
+        public DoanhThu Find(DateTime d, int cn, int loai)
         {
-            var res = db.Database.SqlQuery<DoanhThu>(string.Format("SELECT * FROM DoanhThu WHERE MaChiNhanh = {0} AND NgayThangNam = '{1}'",
-                cn, d.ToString("yyyy-MM-dd")));
+            var res = db.Database.SqlQuery<DoanhThu>(string.Format("SELECT * FROM DoanhThu WHERE MaChiNhanh = {0} AND NgayThangNam = '{1}' AND Loai = {2}",
+                cn, d.ToString("yyyy-MM-dd"), loai));
             if (res != null)
                 return res.FirstOrDefault();
             return null;
@@ -44,23 +44,23 @@ namespace PhongKhamNhi.Models.DAO
 
         public int Insert(DoanhThu d)
         {
-            db.Database.ExecuteSqlCommand(string.Format("InsertDoanhThu '{0}', {1}, {2}, {3}, {4}, {5}",
-                d.NgayThangNam.ToString("yyyy-MM-dd"), d.MaChiNhanh, d.ThuDichVuKham, d.ThuXetNghiem, d.ThuBanThuoc, d.TongTien
+            db.Database.ExecuteSqlCommand(string.Format("InsertDoanhThu '{0}', {1}, {2}, {3}, {4}, {5}, {6}",
+                d.NgayThangNam.ToString("yyyy-MM-dd"), d.MaChiNhanh, d.ThuDichVuKham, d.ThuXetNghiem, d.ThuBanThuoc, d.TongTien, d.Loai
                 ));
             return 1;
         }
         public int Update(DoanhThu d)
         {
-            db.Database.ExecuteSqlCommand(string.Format("CapNhatDoanhThu '{0}', {1}, {2}, {3}, {4}, {5}",
-                d.NgayThangNam.ToString("yyyy-MM-dd"), d.MaChiNhanh, d.ThuDichVuKham, d.ThuXetNghiem, d.ThuBanThuoc, d.TongTien
+            db.Database.ExecuteSqlCommand(string.Format("CapNhatDoanhThu '{0}', {1}, {2}, {3}, {4}, {5}, {6}",
+                d.NgayThangNam.ToString("yyyy-MM-dd"), d.MaChiNhanh, d.ThuDichVuKham, d.ThuXetNghiem, d.ThuBanThuoc, d.TongTien, d.Loai
                 ));
             return 1;
         }
         
 
-        public List<StatisticsDTO> StatisticsByMonth(int year, int month, int maCn)
+        public List<StatisticsDTO> StatisticsByMonth(int year, int month, int maCn, int loai)
         {
-            var lst = db.Database.SqlQuery<StatisticsDTO>(String.Format("SELECT * FROM Func_ThongKeDoanhThu({0}, {1}, {2})", year, month, maCn)
+            var lst = db.Database.SqlQuery<StatisticsDTO>(String.Format("SELECT * FROM Func_ThongKeDoanhThu({0}, {1}, {2}, {3})", year, month, maCn, loai)
                 ).ToList();
             return lst;
         }
@@ -77,11 +77,11 @@ namespace PhongKhamNhi.Models.DAO
                 ).ToList();
             return lst;
         }
-        public double GetTotal(int year, int month, int maCn)
+        public double GetTotal(int year, int month, int maCn, int loai)
         {
             try
             {
-                var t = db.Database.SqlQuery<double>(String.Format("SELECT SUM(DoanhThu) FROM Func_ThongKeDoanhThu({0}, {1}, {2})", year, month, maCn)
+                var t = db.Database.SqlQuery<double>(String.Format("SELECT SUM(DoanhThu) FROM Func_ThongKeDoanhThu({0}, {1}, {2}, {3})", year, month, maCn, loai)
                 ).ToList();
                 return t[0];
             }
@@ -89,11 +89,11 @@ namespace PhongKhamNhi.Models.DAO
             return 0;
         }
 
-        public double DoanhThuThuocBan(int year, int month, int maCn)
+        public double DoanhThuThuocBan(int year, int month, int maCn, int loai)
         {
             try
             {
-                var t = db.Database.SqlQuery<double>(String.Format("DoanhThuThuocBan {0}, {1}, {2}", year, month, maCn)
+                var t = db.Database.SqlQuery<double>(String.Format("DoanhThuThuocBan {0}, {1}, {2}, {3}", year, month, maCn, loai)
                 ).ToList();
                 return t[0];
             }

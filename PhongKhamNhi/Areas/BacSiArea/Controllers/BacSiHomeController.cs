@@ -4,8 +4,6 @@ using PhongKhamNhi.Models.Entities;
 using Rotativa;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhongKhamNhi.Areas.BacSiArea.Controllers
@@ -39,9 +37,15 @@ namespace PhongKhamNhi.Areas.BacSiArea.Controllers
             PhieuKhamBenh p = new PhieuKhamBenhDAO().FindByID(id);
             Session["maPk"] = id;
             PhieuDkXnDAO dao = new PhieuDkXnDAO();
-            PhieuDKXN x = dao.FindByMaPk(id);
-            if(x != null)
-                ViewBag.PhieuDkXn = dao.ListKqXn(x.MaPhieuDKXN);
+            List<PhieuDKXN> lstPhieuXn = dao.FindByMaPk(id);
+            List<List<KqXnDTO>> lstKqXn = new List<List<KqXnDTO>>();
+            foreach(PhieuDKXN item in lstPhieuXn)
+            {
+                lstKqXn.Add(dao.ListKqXn(item.MaPhieuDKXN));
+            }
+            //if (x != null)
+            //    ViewBag.PhieuDkXn = dao.ListKqXn(x.MaPhieuDKXN);
+            ViewBag.PhieuDkXn = lstKqXn;
             List<ChiTietDonThuocDTO> lst = new ThuocDAO().lstThuocByMaPk(id);
             if (lst.Count > 0)
                 ViewBag.DonThuoc = lst;
@@ -145,7 +149,15 @@ namespace PhongKhamNhi.Areas.BacSiArea.Controllers
             }
             Session["dkxn"] = null;
             Session["iddkxn"] = maPxn;
-            return PartialView(new PhieuDkXnDAO().ListXnByMaPdk(maPxn));
+
+            List<PhieuDKXN> lstPhieuXn = daoPxn.FindByMaPk((int)Session["maPk"]);
+            List<List<KqXnDTO>> lstKqXn = new List<List<KqXnDTO>>();
+            foreach (PhieuDKXN item in lstPhieuXn)
+            {
+                lstKqXn.Add(daoPxn.ListKqXn(item.MaPhieuDKXN));
+            }
+            return PartialView(lstKqXn);
+            //return PartialView(new PhieuDkXnDAO().ListXnByMaPdk(maPxn));
         }
         public ActionResult ViewResult()
         {

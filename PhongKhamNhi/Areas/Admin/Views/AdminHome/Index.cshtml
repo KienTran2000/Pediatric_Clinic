@@ -29,7 +29,7 @@
             @using (Html.BeginForm("Index", "AdminHome", FormMethod.Get, new { }))
             {
             <div class="row" style="align-items: center;">
-                <div class="col-2">
+                <div class="col-2 d-flex">
                     <label>Năm</label>
                     <select class="form-control" name="year" id="year">
                         @foreach (var item in ViewBag.year)
@@ -39,10 +39,11 @@
                             {
                                 select = "selected";
                             }
-            <option @select value="@item">@item</option>}
+            <option @select value="@item">@item</option>
+}
                     </select>
                 </div>
-                <div class="col-2">
+                <div class="col-2 d-flex">
                     <label>Tháng</label>
                     <select class="form-control" name="month" id="month">
                         @for (var i = 1; i < 13; i++)
@@ -52,10 +53,11 @@
                             {
                                 select = "selected";
                             }
-            <option @select value="@i">@i</option>}
+            <option @select value="@i">@i</option>
+}
                     </select>
                 </div>
-                <div class="col-3">
+                <div class="col-2 d-flex">
                     <label>Chi nhánh</label>
                     <select class="form-control" name="cn" id="cn">
                         <option value="0">Toàn bộ</option>
@@ -66,7 +68,30 @@
                             {
                                 select = "selected";
                             }
-            <option @select value="@item.MaChiNhanh">@item.TenChiNhanh</option>}
+            <option @select value="@item.MaChiNhanh">@item.TenChiNhanh</option>
+}
+                    </select>
+                </div>
+                <div class="col-2 d-flex">
+                    <label>Hình thức khám</label>
+                    <select class="form-control" name="loai" id="loai">
+                        <option value="0">Toàn bộ</option>
+                        @if (ViewBag.loai == 1)
+                        {
+                    <option selected value="1">Tại phòng khám</option>
+                                        <option value="2">Tại nhà</option> }
+                                                        else if (ViewBag.loai == 2)
+                                                        {
+
+
+                                                            <option value="1">Tại phòng khám</option>
+                                                            <option selected value="2">Tại nhà</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="1">Tại phòng khám</option>
+                                                                                <option value="2">Tại nhà</option>
+                                                                            }
                     </select>
                 </div>
                 <div class="col-1">
@@ -83,7 +108,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-3 text-right">
+                <div class="col-2 text-right">
                     <b>Tổng doanh thu: @ViewBag.total.ToString("N0") VND</b>
                 </div>
             </div>
@@ -119,7 +144,8 @@
             let m = document.getElementById("month").value;
             let y = document.getElementById("year").value;
             let cn = document.getElementById("cn").value;
-            window.open("https://localhost:44323/Admin/AdminHome/PrintDv?year=" + y + "&month=" + m + "&cn=" + cn);
+            let loai = document.getElementById("loai").value;
+            window.open("https://localhost:44323/Admin/AdminHome/PrintDv?year=" + y + "&month=" + m + "&cn=" + cn + "&loai=" + loai);
         }
     </script>
 }

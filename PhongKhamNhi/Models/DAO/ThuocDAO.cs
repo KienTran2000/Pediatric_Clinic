@@ -44,15 +44,15 @@ namespace PhongKhamNhi.Models.DAO
             return lst;
         }
 
-        public List<ThuocBanDTO> ThongKeThuocBan(int year, int month, int maCn)
+        public List<ThuocBanDTO> ThongKeThuocBan(int year, int month, int maCn, int loai)
         {
-            var res = db.Database.SqlQuery<ThuocBanDTO>(string.Format("ThongKeThuocBan {0}, {1}, {2}", year, month, maCn));
+            var res = db.Database.SqlQuery<ThuocBanDTO>(string.Format("ThongKeThuocBan {0}, {1}, {2}, {3}", year, month, maCn, loai));
             return res.ToList();
         }
 
-        public List<ThuocBanDTO> ThongKeThuocBan2(int year, int month, int maCn)
+        public List<ThuocBanDTO> ThongKeThuocBan2(int year, int month, int maCn, int loai)
         {
-            var res = db.Database.SqlQuery<ThuocBanDTO>(string.Format("ThongKeThuocBan2 {0}, {1}, {2}", year, month, maCn));
+            var res = db.Database.SqlQuery<ThuocBanDTO>(string.Format("ThongKeThuocBan2 {0}, {1}, {2}, {3}", year, month, maCn, loai));
             return res.ToList();
         }
 
@@ -103,6 +103,33 @@ namespace PhongKhamNhi.Models.DAO
             List<PhieuKham_Thuoc> lst = (from s in db.PhieuKham_Thuoc where s.MaPhieuKB == maPK select s).ToList();
             db.PhieuKham_Thuoc.RemoveRange(lst);
             return db.SaveChanges();
+        }
+
+        public int InsertThuocBan(ThuocBan t)
+        {
+            db.ThuocBans.Add(t);//luu tren RAM
+            db.SaveChanges();//luu vao o dia
+            return 1;
+        }
+
+        public ThuocBan FindThuocBan(DateTime d, int cn, int maThuoc, int loai)
+        {
+            var res = db.Database.SqlQuery<ThuocBan>(string.Format("SELECT * FROM ThuocBan WHERE MaChiNhanh = {0} AND NgayThangNam = '{1}' AND MaThuoc = {2} AND Loai = {3}",
+                cn, d.ToString("yyyy-MM-dd"), maThuoc, loai));
+            if (res != null)
+                return res.FirstOrDefault();
+            return null;
+        }
+
+        public int UpdateThuocBan(ThuocBan p)
+        {
+            ThuocBan tmp = FindThuocBan(p.NgayThangNam, p.MaChiNhanh, p.MaThuoc, p.Loai);
+            if (tmp != null)
+            {
+                tmp.SoLuongBan = p.SoLuongBan;
+                db.SaveChanges();//luu vao o dia
+            }
+            return tmp.MaThuoc;
         }
     }
 }

@@ -26,6 +26,11 @@ namespace PhongKhamNhi.Models.Entities
 
         public double? TongTien { get; set; }
 
+        [Key]
+        [Column(Order = 2)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Loai { get; set; }
+
         public virtual ChiNhanh ChiNhanh { get; set; }
     }
 }

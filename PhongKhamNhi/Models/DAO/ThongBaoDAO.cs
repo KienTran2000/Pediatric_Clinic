@@ -15,7 +15,7 @@ namespace PhongKhamNhi.Models.DAO
 
         public IEnumerable<ThongBao> ListThongBao(int maBN, int pageNum, int pageSize)
         {
-            var res = (from s in db.ThongBaos where s.MaBN == maBN select s);
+            var res = (from s in db.ThongBaos where s.MaBN == maBN orderby s.MaThongBao descending select s);
             return res.ToList().ToPagedList<ThongBao>(pageNum, pageSize);
         }
 

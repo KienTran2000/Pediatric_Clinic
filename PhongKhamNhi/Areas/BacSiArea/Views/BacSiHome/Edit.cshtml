@@ -1,7 +1,7 @@
 ﻿@model PhongKhamNhi.Models.Entities.PhieuKhamBenh
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Thông tin phiếu khám";
     Layout = "~/Areas/BacSiArea/Views/Shared/_Layout.cshtml";
 }
 
@@ -91,6 +91,23 @@
                                 @Model.BenhNhi.GioiTinh
                             </div>
                         </div>
+                        @if (Model.Type)
+                        {
+                            <div class="form-group row">
+                                <b class="col-md-2">Thời gian hẹn:</b>
+                                <div class="col-md-2">
+                                    @Model.ThoiGianKham
+                                </div>
+                                <b class="col-md-2 text-right">Số điện thoại:</b>
+                                <div class="col-md-2">
+                                    @Model.BenhNhi.SdtThanNhan
+                                </div>
+                                <b class="col-md-1 text-right">Địa chỉ:</b>
+                                <div class="col-md-3">
+                                    @Model.BenhNhi.DiaChi
+                                </div>
+                            </div>
+                        }
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <b>Biểu hiện:</b>
@@ -114,33 +131,53 @@
     }
     <div class="row">
         <div class="col-md-6">
-            <div id="xn-cha"  class="card card-outline card-info">
+            <div id="xn-cha" class="card card-outline card-info">
                 @if (Model.PhieuDKXNs.Count > 0)
                 {
                     <div class="form-group">
                         <h5 style="margin: 10px 0 0 10px;">Kết quả xét nghiệm</h5>
                     </div>
-                    <table class="table table-xn">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Tên xét nghiệm</th>
-                                <th class="text-center">Trị số bình thường</th>
-                                <th class="text-center">Đơn vị tính</th>
-                                <th class="text-center">Kết quả</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in ViewBag.PhieuDkXn)
-                            {
+                    foreach (var item in ViewBag.PhieuDkXn)
+                    {
+                        <table class="table table-xn">
+                            <thead>
                                 <tr>
-                                    <td>@item.TenXN</td>
-                                    <td class="text-center">@item.TriSoBinhThuong</td>
-                                    <td class="text-center">@item.DonViTinh</td>
-                                    <td class="text-center">@item.KetQua</td>
+                                    <th class="text-center">Tên xét nghiệm</th>
+                                    <th class="text-center">Trị số bình thường</th>
+                                    <th class="text-center">Đơn vị tính</th>
+                                    <th class="text-center">Kết quả</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var kq in item)
+                                {
+                                    <tr>
+                                        <td>@kq.TenXN</td>
+                                        <td class="text-center">@kq.TriSoBinhThuong</td>
+                                        <td class="text-center">@kq.DonViTinh</td>
+                                        <td class="text-center">@kq.KetQua</td>
+                                    </tr>
+                                 }
+                            </tbody>
+                        </table>
+                     }
+                     if(Model.TrangThai == 1)
+                     {
+                        <div id="luu-don-thuoc" class="row" style="margin: 0 10px 10px;">
+                            <div class="col-md-8">
+
+                            </div>
+                            <div id="s-xn" class="col-md-4">
+                                <button class="btn btn-block btn-info btn-lg" onclick="XetNghiem()">
+                                    <i class="fas fa-vial"></i>
+                                    Chỉ định xét nghiệm
+                                </button>
+                            </div>
+                        </div>
+                        <div id="phieu-xn" class="card-body">
+
+                        </div>
+                     } 
                 }
                 else
                 {

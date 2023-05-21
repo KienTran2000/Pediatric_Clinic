@@ -10,16 +10,18 @@ namespace PhongKhamNhi.Areas.Admin.Controllers
     public class AdminHomeController : Controller
     {
         // GET: Admin/AdminHome
-        public ActionResult Index(int? cn, int? year, int? month)
+        public ActionResult Index(int? cn, int? year, int? month, int? loai)
         {
             if (cn == null)
                 cn = 0;
+            if (loai == null)
+                loai = 0;
             if (year == null)
                 year = DateTime.Now.Year;
             if (month == null)
                 month = DateTime.Now.Month;
             DoanhThuDAO dao = new DoanhThuDAO();
-            List<StatisticsDTO> lst = dao.StatisticsByMonth(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
+            List<StatisticsDTO> lst = dao.StatisticsByMonth(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn), Convert.ToInt32(loai));
             List<int> ngay = new List<int>();
             List<double> doanhThu = new List<double>();
             foreach (var item in lst)
@@ -29,16 +31,19 @@ namespace PhongKhamNhi.Areas.Admin.Controllers
             }
             ViewBag.cnSelected = cn;
             ViewBag.days = ngay;
+            ViewBag.loai = loai;
             ViewBag.revenues = doanhThu;
             ViewBag.year = dao.GetYearOrder();
             ViewBag.yearSelected = year;
             ViewBag.month = month;
-            ViewBag.total = dao.GetTotal(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
+            ViewBag.total = dao.GetTotal(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn), Convert.ToInt32(loai));
             return View(new ChiNhanhDAO().ListAllChiNhanh());
         }
 
-        public ActionResult ThuocBan(int? cn, int? year, int? month)
+        public ActionResult ThuocBan(int? cn, int? year, int? month, int? loai)
         {
+            if (loai == null)
+                loai = 0;
             if (cn == null)
                 cn = 0;
             if (year == null)
@@ -49,19 +54,20 @@ namespace PhongKhamNhi.Areas.Admin.Controllers
             ViewBag.cnSelected = cn;
             ViewBag.year = dao.GetYearOrder();
             ViewBag.yearSelected = year;
+            ViewBag.loai = loai;
             ViewBag.month = month;
             ViewBag.lstCn = new ChiNhanhDAO().ListAllChiNhanh();
-            ViewBag.total = dao.DoanhThuThuocBan(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
-            return View(new ThuocDAO().ThongKeThuocBan(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn)));
+            ViewBag.total = dao.DoanhThuThuocBan(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn), Convert.ToInt32(loai));
+            return View(new ThuocDAO().ThongKeThuocBan(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn), Convert.ToInt32(loai)));
         }
 
-        public ActionResult PrintMedicine(int? cn, int? year, int? month)
+        public ActionResult PrintMedicine(int? cn, int? year, int? month, int? loai)
         {
-            return new ActionAsPdf("InMedicine", new { cn = cn, year = year, month = month });
+            return new ActionAsPdf("InMedicine", new { cn = cn, year = year, month = month, loai = loai });
         }
-        public ActionResult InMedicine(int? cn, int? year, int? month)
+        public ActionResult InMedicine(int? cn, int? year, int? month, int? loai)
         {
-            List<ThuocBanDTO> lst = new ThuocDAO().ThongKeThuocBan2(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn));
+            List<ThuocBanDTO> lst = new ThuocDAO().ThongKeThuocBan2(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(cn), Convert.ToInt32(loai));
             double tong = 0;
             foreach (ThuocBanDTO item in lst)
             {

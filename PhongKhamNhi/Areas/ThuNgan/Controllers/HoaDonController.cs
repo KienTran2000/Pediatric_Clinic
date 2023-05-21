@@ -33,7 +33,7 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
             NhanVien nv = (NhanVien)Session["user"];
             p.MaNvLap = nv.MaNV;
             DoanhThuDAO daodt = new DoanhThuDAO();
-            DoanhThu d = daodt.Find(p.ThoiGian, p.MaChiNhanh);
+            DoanhThu d = daodt.Find(p.ThoiGian, p.MaChiNhanh, p.Type ? 2 : 1);
             if (p.TrangThai == false)
             {
                 p.TrangThai = true;
@@ -52,6 +52,7 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
                     d.ThuXetNghiem = 0;
                     d.ThuBanThuoc = p.TongTien;
                     d.TongTien = p.TongTien;
+                    d.Loai = p.Type ? 2 : 1;
                     daodt.Insert(d);
                 }
             }
@@ -89,7 +90,9 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
             NhanVien nv = (NhanVien)Session["user"];
             p.MaNvLap = nv.MaNV;
             DoanhThuDAO daodt = new DoanhThuDAO();
-            DoanhThu d = daodt.Find(p.ThoiGian, p.MaChiNhanh);
+            DoanhThu d = daodt.Find(DateTime.Now, p.MaChiNhanh, p.Type ? 2 : 1);
+            ThuocDAO daoThuoc = new ThuocDAO();
+            List<CtHdThuocDTO> lst = dao.lstThuocByMaHd(h.MaHoaDon);
             if (p.TrangThai == false)
             {
                 p.TrangThai = true;
@@ -102,14 +105,36 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
                 else
                 {
                     d = new DoanhThu();
-                    d.NgayThangNam = p.ThoiGian;
+                    d.NgayThangNam = DateTime.Now;
                     d.MaChiNhanh = p.MaChiNhanh;
                     d.ThuDichVuKham = 0;
                     d.ThuXetNghiem = 0;
                     d.ThuBanThuoc = p.TongTien;
                     d.TongTien = p.TongTien;
+                    d.Loai = p.Type ? 2 : 1;
                     daodt.Insert(d);
                 }
+
+                foreach(CtHdThuocDTO item in lst)
+                {
+                    ThuocBan tb = daoThuoc.FindThuocBan(DateTime.Now, p.MaChiNhanh, item.MaThuoc, p.Type ? 2 : 1);
+                    if (tb != null)
+                    {
+                        tb.SoLuongBan += item.SoLuong;
+                        daoThuoc.UpdateThuocBan(tb);
+                    }
+                    else
+                    {
+                        ThuocBan ban = new ThuocBan();
+                        ban.NgayThangNam = DateTime.Now;
+                        ban.MaChiNhanh = p.MaChiNhanh;
+                        ban.MaThuoc = item.MaThuoc;
+                        ban.SoLuongBan = item.SoLuong;
+                        ban.Loai = p.Type ? 2 : 1;
+                        daoThuoc.InsertThuocBan(ban);
+                    }
+                }
+                
             }
             else if (p.TrangThai == true)
             {
@@ -119,6 +144,12 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
                     d.ThuBanThuoc -= p.TongTien;
                     d.TongTien -= p.TongTien;
                     daodt.Update(d);
+                }
+                foreach (CtHdThuocDTO item in lst)
+                {
+                    ThuocBan tb = daoThuoc.FindThuocBan(p.ThoiGian, p.MaChiNhanh, item.MaThuoc, p.Type ? 2 : 1);
+                    tb.SoLuongBan -= item.SoLuong;
+                    daoThuoc.UpdateThuocBan(tb);
                 }
             }
             dao.UpdateThuNgan(p);

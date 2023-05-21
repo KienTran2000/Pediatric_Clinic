@@ -75,6 +75,7 @@ namespace PhongKhamNhi.Models.DAO
         {
             return db.PhieuKhamBenhs.Find(id);
         }
+
         public int Insert(PhieuKhamBenh p)
         {
             db.PhieuKhamBenhs.Add(p);//luu tren RAM
