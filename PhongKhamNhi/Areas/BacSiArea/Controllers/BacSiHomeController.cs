@@ -49,6 +49,8 @@ namespace PhongKhamNhi.Areas.BacSiArea.Controllers
             List<ChiTietDonThuocDTO> lst = new ThuocDAO().lstThuocByMaPk(id);
             if (lst.Count > 0)
                 ViewBag.DonThuoc = lst;
+            Session["donthuoc"] = null;
+            Session["dkxn"] = null;
             return View(p);
         }
         [HttpPost]

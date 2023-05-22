@@ -117,7 +117,7 @@ namespace PhongKhamNhi.Areas.ThuNgan.Controllers
                     d.ThuXetNghiem = 0;
                     d.ThuBanThuoc = 0;
                     d.TongTien = p.DonGia;
-                    if (pk.Type)
+                    if (p.Type)
                         d.Loai = 2;
                     else
                         d.Loai = 1;
