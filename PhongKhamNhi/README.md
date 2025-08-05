@@ -27,7 +27,7 @@
 
 ### 1. Install Python 3.9+
 
-Make sure Python 3.9 or newer is installed.
+
 
 Download: https://www.python.org/downloads/
 
