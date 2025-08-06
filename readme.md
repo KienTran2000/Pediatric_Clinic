@@ -1,6 +1,5 @@
 <p align="center">
-  <img src="\Content\assets\img\MD\pediatric.png" alt="Banner" width="900" height="250"/>
-  <img src="/Content/assets/img/doctors/doctor_2.jpg" alt="">
+  <img src="/Content/assets/img/MD/pediatric.png" alt="Banner" width="900" height="250"/>
 </p>
 
 <p align="center">
@@ -77,13 +76,12 @@ patients and system users.
 </div>
 
 ### 3. Project Overview
+
 <div align="justify">
 
 The software includes two subsystems:
- - Clinic examination and treatment subsystem
-
- - Home examination and treatment subsystem
-	- 
+ - Clinic examination and treatment subsystem.
+ - Home examination and treatment subsystem.
 Besides, each subsystem includes applications and interfaces for different subjects: patients, doctors, and clinic staff.
 </div>
 
