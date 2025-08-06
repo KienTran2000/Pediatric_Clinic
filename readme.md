@@ -1,6 +1,6 @@
-<p align="center">
-  <img src="/Content/assets/img/MD/pediatric.png" alt="Banner" width="900" height="250"/>
-</p>
+
+  <img src="/Content/assets/img/MD/pediatric.png" alt="Banner" width="900" height="250" align="center"/>
+
 
 <p align="center">
   <strong> Pediatric Clinic Management System.</strong>
@@ -85,7 +85,7 @@ The software includes two subsystems:
 Besides, each subsystem includes applications and interfaces for different subjects: patients, doctors, and clinic staff.
 </div>
 
-### 3. Research Methodology
+### 4. Research Methodology
 <div align="justify">
 
  Analytical method
