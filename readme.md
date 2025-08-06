@@ -1,6 +1,6 @@
-
-  <img src="/Content/assets/img/MD/pediatric.png" alt="Banner" width="900" height="250" align="center"/>
-
+<p align="center">
+  <img src="Content/assets/img/MD/pediatric.png" alt="Banner" width="900" height="250"/>
+</p>
 
 <p align="center">
   <strong> Pediatric Clinic Management System.</strong>
