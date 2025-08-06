@@ -1,5 +1,6 @@
 <p align="center">
   <img src="\Content\assets\img\MD\pediatric.png" alt="Banner" width="900" height="250"/>
+  <img src="/Content/assets/img/doctors/doctor_2.jpg" alt="">
 </p>
 
 <p align="center">
@@ -33,7 +34,7 @@ Dowload Microsoft SQL Server: https://www.microsoft.com/en-us/sql-server/sql-ser
 ### 2. Clone the Repository
 
 ```bash
-	git clone https://github.com/KienTran2000/Pediatric_Clinic
+git clone https://github.com/KienTran2000/Pediatric_Clinic
 ```
 
 ### 3. Connect to the Database
@@ -75,6 +76,17 @@ patients and system users.
 
 </div>
 
+### 3. Project Overview
+<div align="justify">
+
+The software includes two subsystems:
+ - Clinic examination and treatment subsystem
+
+ - Home examination and treatment subsystem
+	- 
+Besides, each subsystem includes applications and interfaces for different subjects: patients, doctors, and clinic staff.
+</div>
+
 ### 3. Research Methodology
 <div align="justify">
 
@@ -107,6 +119,14 @@ The project folder SME_DASHBOARD contains all source files, data, and assets nee
 </div>
 
 ## Result
+
+### 1. Home page of the clinic
+
+### 2. Customers log in and make an appointment
+
+### 3. Staff arrange examination schedule, arrange laboratory
+
+### 4. Doctors manage patient information
 
 ## Licensing, Authors, and Acknowledgements
 <div align="justify">
