@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="assets/doanh-nghiep-sme-1.png" alt="Banner" width="900" height="250"/>
+  <img src="Content/assets/MD/pediatric" alt="Banner" width="900" height="250"/>
 </p>
 
 <p align="center">
-  <strong>2011–2023 Vietnam SME Digital Adoption Analytics.</strong>
+  <strong> Pediatric Clinic Management System.</strong>
 </p>
 
 <p align="center">
-  Gain insights into how SMEs across Vietnam adopt digital technologies
+  Reducing procedures for clinics, supporting the improvement of medical examination and treatment quality in Vietnam
 </p>
 
 <p align="center">
-  <a href="https://www.wider.unu.edu/database/viet-nam-sme-database"><strong>Explore SME Database in Vietnam »</strong></a>
+  <a href="https://www.techsciresearch.com/report/vietnam-clinics-market/8179.html"><strong>Explore Vietnam Clinic Market »</strong></a>
 </p>
 
 
@@ -25,57 +25,71 @@
 
 ## Installation 
 
-### 1. Install Python 3.9+
+### 1. Install Microsoft Visual Studio Code and Microsoft SQL Server
 
-Make sure Python 3.9 or newer is installed.
+Download Microsoft Visual Studio: https://visualstudio.microsoft.com/
+Dowload Microsoft SQL Server: https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 
-Download: https://www.python.org/downloads/
-
-Check version:
-
-```bash
-python --version
-```
 ### 2. Clone the Repository
+
 ```bash
-git clone https://github.com/yourusername/vietnam-sme-dashboard.git
-cd vietnam-sme-dashboard
+	git clone https://github.com/KienTran2000/Pediatric_Clinic
 ```
 
-### 3. Create and Activate Virtual Environment
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-if you have problem related to err"can not be loaded" use:
-```bash
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-```
+### 3. Connect to the Database
+Open Microsoft SQL Server Management Studio and connect to your database instance.
 
-### 4. Install Dependencies
-```bash
-pip install dash pandas plotly geopandas
-```
-### 5. Run the App
-```bash
-python app.py
-```
-Then open your browser at:
-http://127.0.0.1:8050/
+### 4. Run the App
+Open the project folder in Visual Studio Code,check the connection string in the `web.config` file, and run the application.
 
 ## Project Motivation
+### 1. Problem Statement
 <div align="justify">
-The rapid digital transformation in Vietnam has positioned ICT adoption among SMEs as a national priority, recognised by key strategies such as the National Digital Transformation Program to 2025, orientation to 2030. However, many local enterprises still face challenges in effectively utilising digital technologies, resulting in uneven ICT adoption and productivity gaps across provinces and enterprise sizes.
 
-This project aims to analyse the current landscape of ICT adoption and productivity among Vietnamese SMEs through an interactive dashboard. By visualising technology usage rates across provinces, enterprise scales (micro, small, medium, large), and comparing key performance indicators such as productivity, the project supports:
+Our whole country is in the years of transformation with the 4.0 industrial
+revolution with the core of information technology mentioned everywhere. The
+application of information technology and technology in all areas of life brings
+about a breakthrough in efficiency, benefits and is focused on investment more
+than ever.
+One of the most popular application areas of information technology as mentioned
+above is the application of building management software in many jobs and fields
+such as administrative agencies, schools, warehouse systems, retail stores, or
+especially in the medical field, hospitals, clinics... The application of management
+systems in parallel with the gradual elimination of traditional forms of management
+and storage helps to significantly improve efficiency, minimizing cumbersome
+procedures and processes.
 
-Policymakers in identifying digital transformation bottlenecks;
+</div>
 
-Businesses in benchmarking their ICT maturity level;
+### 2. Reason for Choosing the Topic
+<div align="justify">
 
-Researchers and consultants in evaluating the impact of ICT on SME performance.
+To consolidate knowledge after years of studying at school and initially apply
+information technology in the field of management and software development, I chose the
+topic "Building pediatric clinic management software - home examination subsystem
+"as the content of the graduation project. With the desire to build a more improved, more
+productive system to serve the management of pediatric patient information, manage the
+payment of pediatric hospital fees and save pediatric patient medical records after...
+becoming convenient, scientific and accurate, meeting the needs of relatives, pediatric
+patients and system users.
 
-The dashboard leverages official datasets and data visualisation tools to make complex information accessible and actionable. With a focus on regional disparities and enterprise segmentation, the project offers data-driven insights to guide targeted support policies, enhance SME competitiveness, and accelerate Vietnam’s digital economy.
+</div>
+
+### 3. Research Methodology
+<div align="justify">
+
+ Analytical method
+- Refer to pediatric clinic management software systems that have
+appeared on the market.
+- Analyze needs, search for relevant information to build
+features to serve real-world problems.
+- Learn the technologies used.
+• Observational synthesis method:
+- Survey the operation of the pediatric clinic to have a visual view of
+the actual business process.
+• Practical method
+- Test programming.
+
 </div>
 
 ## File Descriptions
@@ -99,21 +113,20 @@ Auto-generated Python virtual environment (when using python -m venv). Contains 
 </div>
 
 ## Result
-https://private-user-images.githubusercontent.com/77290046/473861087-33aff68f-1e1b-48a6-98a4-4b02b6fe5125.mp4?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTQyODExNzMsIm5iZiI6MTc1NDI4MDg3MywicGF0aCI6Ii83NzI5MDA0Ni80NzM4NjEwODctMzNhZmY2OGYtMWUxYi00OGE2LTk4YTQtNGIwMmI2ZmU1MTI1Lm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MDQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODA0VDA0MTQzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTJhMDNkYzg4ZWUxZjFiNzRkYTRjNzhhNmMzYjM2YWVkOTc5NzVmMzRjMjM4NWNkNzczZWZlOGFmNTNiMzhmNmImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.NAJjHIroxmaGulNMQRtlFc9-pfCf1pNM1uI6Ikz7rTg
+
 
 ## Licensing, Authors, and Acknowledgements
 <div align="justify">
+
 We would like to thank the following sources and tools that made this project possible:
-
-Vietnam GSO and Ministry of Information and Communications (MIC) for providing access to open SME datasets.
 <p align="justify">
-  GeoJSON Vietnam provinces shapefile from <a href="https://github.com/highcharts/map-collection-dist/blob/master/countries/vn/vn-all.topo.json?short_path=881c496"></a>
+  Prestigious and quality home nursing service in Hanoi <a href="https://medicviet.vn/vn/dieu-duong.html"></a>
 </p>
-Dash by Plotly – A powerful Python framework for building web-based data applications.
 
-Pandas, Plotly Express, and Geopandas – For efficient data processing and visualisation.
+<p align="justify">
+  Vietnam Family Medical Practice System <a href="https://www.vietnammedicalpractice.com/hanoi/en/our-services/medical-services/pediatrics"></a>
+</p>
 
-The open-source community for continuous contributions and shared knowledge.
 
 Special thanks to all reviewers and mentors who provided feedback during the dashboard development.
 
