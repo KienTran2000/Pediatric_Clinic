@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Content/assets/MD/pediatric" alt="Banner" width="900" height="250"/>
+  <img src="/Content/assets/MD/pediatric.png" alt="Banner" width="900" height="250"/>
 </p>
 
 <p align="center">
@@ -113,7 +113,6 @@ Auto-generated Python virtual environment (when using python -m venv). Contains 
 </div>
 
 ## Result
-
 
 ## Licensing, Authors, and Acknowledgements
 <div align="justify">
