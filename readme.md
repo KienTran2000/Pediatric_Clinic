@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/Content/assets/MD/pediatric.png" alt="Banner" width="900" height="250"/>
+  <img src="\Content\assets\img\MD\pediatric.png" alt="Banner" width="900" height="250"/>
 </p>
 
 <p align="center">
@@ -96,20 +96,14 @@ the actual business process.
 <div align="justify">
 The project folder SME_DASHBOARD contains all source files, data, and assets needed to run the Vietnam SME ICT Dashboard. Below is an overview of each component:
 
-1. app.py
-Main Python script for launching the Dash web application. It defines the dashboard layout, callbacks for interactivity, data filtering logic, and visualisations (map, bar chart, etc.).
-
-2. README.md
-This documentation file explains the installation process, project background, and usage instructions for users or contributors.
-
-2. sme_data.csv
-Preprocessed dataset combining SME ICT adoption indicators and productivity metrics by province, year, and enterprise size.
-
-4. vn_provinces.geojson
-GeoJSON file containing the geographical boundaries of all provinces in Vietnam. Used to generate the interactive choropleth map.
-
-5. venv/
-Auto-generated Python virtual environment (when using python -m venv). Contains installed dependencies like dash, pandas, geopandas, etc.
+- `Areas/` – Role-specific MVC modules (e.g. LeTan, BacSi)
+- `Controllers/` – Application logic and routing
+- `Models/` – Business data classes
+- `Views/` – Razor-based UI for each role
+- `Helpers/` – Shared utilities and logic
+- `Rotativa/` – PDF generation engine
+- `App_Start/` – Routing and bundle configuration
+- `Scripts/Content/` – JavaScript, jQuery, CSS
 </div>
 
 ## Result
@@ -119,11 +113,11 @@ Auto-generated Python virtual environment (when using python -m venv). Contains 
 
 We would like to thank the following sources and tools that made this project possible:
 <p align="justify">
-  Prestigious and quality home nursing service in Hanoi <a href="https://medicviet.vn/vn/dieu-duong.html"></a>
+  <a href="https://medicviet.vn/vn/dieu-duong.html">Prestigious and quality home nursing service in Hanoi </a>
 </p>
 
 <p align="justify">
-  Vietnam Family Medical Practice System <a href="https://www.vietnammedicalpractice.com/hanoi/en/our-services/medical-services/pediatrics"></a>
+  <a href="https://www.vietnammedicalpractice.com/hanoi/en/our-services/medical-services/pediatrics"> Vietnam Family Medical Practice System</a>
 </p>
 
 
